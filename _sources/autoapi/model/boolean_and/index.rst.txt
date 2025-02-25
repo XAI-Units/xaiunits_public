@@ -1,0 +1,78 @@
+model.boolean_and
+=================
+
+.. py:module:: model.boolean_and
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   model.boolean_and.feature
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   model.boolean_and.BooleanAndNN
+
+
+Module Contents
+---------------
+
+.. py:class:: BooleanAndNN(n_features: int = 2)
+
+   Bases: :py:obj:`torch.nn.Sequential`
+
+
+   Implements a neural network model designed to mimic the 'AND' logical operation on input features.
+
+   When only -1 or 1 are passed in as part of the input to this model, it is effectively performing the
+   'AND' operation.
+
+   This model is structured as a sequence of layers that progressively compute the 'AND' operation
+   on the input features, scaling the dimensionality of the input at each step until the final
+   output is obtained. The network employs a specific arrangement of weights and intermediate operations
+   such that it is also equivalent to computing the minimum value among a collection of values given as
+   as the input.
+
+   Inherits from:
+       torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+           sequential manner.
+
+   .. attribute:: dims
+
+      A list that keeps track of the dimensions of each layer in the network.
+
+      :type: list
+
+   Initializes an AND model with the specified input features dimension.
+
+   :param n_features: The dimension (number of features) of the input data. Defaults to 2.
+   :type n_features: int
+
+
+   .. py:attribute:: n_features
+      :value: 2
+
+
+
+   .. py:method:: _create_layer_weights() -> Tuple
+
+      Initializes the layers of the network starting from the input dimension.
+
+      :param in_dim: The dimension of the input to the current layer.
+      :type in_dim: int
+
+      :returns: A list of initialized layers that make up the network.
+      :rtype: list
+
+
+
+.. py:data:: feature
+   :value: 3
+
+

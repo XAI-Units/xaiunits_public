@@ -1,0 +1,123 @@
+datagenerator.text_datasets
+===========================
+
+.. py:module:: datagenerator.text_datasets
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   datagenerator.text_datasets.dataset
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   datagenerator.text_datasets.BaseTextDataset
+   datagenerator.text_datasets.TextTriggerDataset
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   datagenerator.text_datasets._generate_default_metrics
+
+
+Module Contents
+---------------
+
+.. py:class:: BaseTextDataset
+
+   Bases: :py:obj:`torch.utils.data.Dataset`
+
+
+.. py:class:: TextTriggerDataset(index: Optional[Tuple[int, int]] = None, tokenizer: Optional[Any] = None, max_sequence_length: int = 4096, seed: int = 42, baselines: int | str = 220, skip_tokens: List[str] = [], model_name: str = 'XAIUnits/TriggerLLM_v2')
+
+   Bases: :py:obj:`BaseTextDataset`
+
+
+   A PyTorch Dataset for text data with trigger words and feature masks, designed for explainable AI (XAI) tasks.
+
+   This dataset loads text data, tokenizes it, identifies trigger words, and generates feature masks highlighting these words.
+   It's specifically tailored for analyzing the impact of trigger words on model predictions.
+
+   .. attribute:: index
+
+      A tuple specifying the start and end indices for data subset selection. Defaults to None, using the entire dataset.
+
+      :type: tuple, optional
+
+   .. attribute:: tokenizer
+
+      The tokenizer to use for text processing. If None, it's loaded based on the specified model_name.
+
+      :type: transformers.PreTrainedTokenizer, optional
+
+   .. attribute:: max_sequence_length
+
+      The maximum sequence length for input text. Longer sequences are truncated. Defaults to 4096.
+
+      :type: int, optional
+
+   .. attribute:: seed
+
+      Random seed for shuffling the data. Use -1 for no shuffling. Defaults to 42.
+
+      :type: int, optional
+
+   .. attribute:: baselines
+
+      Baseline token ID or string for attribution methods. Defaults to 220 (space token for Llama models).
+
+      :type: int or str, optional
+
+   .. attribute:: skip_tokens
+
+      List of tokens to skip during attribution. Defaults to an empty list.
+
+      :type: list, optional
+
+   .. attribute:: model_name
+
+      The name of the model to use for loading the tokenizer. Defaults to "XAIUnits/TriggerLLM_v2".
+
+      :type: str, optional
+
+
+   .. py:attribute:: model_name
+      :value: 'XAIUnits/TriggerLLM_v2'
+
+
+
+   .. py:attribute:: target
+
+
+   .. py:method:: __getitem__(idx: int) -> Tuple[Any, Ellipsis]
+
+
+   .. py:method:: __len__() -> int
+
+
+   .. py:method:: generate_model() -> Tuple[Any, Any]
+
+
+   .. py:property:: collate_fn
+      :type: Callable
+
+
+
+   .. py:property:: default_metric
+      :type: Callable
+
+
+
+.. py:function:: _generate_default_metrics(region: str, agg_list: str, metric_ratio_mapping: Callable, out_processing: Callable) -> Callable
+
+.. py:data:: dataset
+

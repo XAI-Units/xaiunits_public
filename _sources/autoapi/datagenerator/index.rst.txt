@@ -1,0 +1,2469 @@
+datagenerator
+=============
+
+.. py:module:: datagenerator
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/datagenerator/backgrounds/index
+   /autoapi/datagenerator/boolean/index
+   /autoapi/datagenerator/conflicting/index
+   /autoapi/datagenerator/data_generation/index
+   /autoapi/datagenerator/foregrounds/index
+   /autoapi/datagenerator/image_generation/index
+   /autoapi/datagenerator/interacting_features/index
+   /autoapi/datagenerator/pertinent_negatives/index
+   /autoapi/datagenerator/shattered_grad/index
+   /autoapi/datagenerator/text_datasets/index
+   /autoapi/datagenerator/uncertainty_aware/index
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   datagenerator.data
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   datagenerator.BaseFeaturesDataset
+   datagenerator.WeightedFeaturesDataset
+   datagenerator.BooleanAndDataset
+   datagenerator.BooleanDataset
+   datagenerator.BooleanOrDataset
+   datagenerator.ConflictingDataset
+   datagenerator.BalancedImageDataset
+   datagenerator.ImbalancedImageDataset
+   datagenerator.ImageDataset
+   datagenerator.InteractingFeatureDataset
+   datagenerator.PertinentNegativesDataset
+   datagenerator.ShatteredGradientsDataset
+   datagenerator.UncertaintyAwareDataset
+   datagenerator.TextTriggerDataset
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   datagenerator.load_dataset
+   datagenerator.generate_csv
+
+
+Package Contents
+----------------
+
+.. py:class:: BaseFeaturesDataset(seed: int = 0, n_features: int = 2, n_samples: int = 10, distribution: Union[str, torch.distributions.Distribution] = 'normal', distribution_params: Optional[Dict[str, Any]] = None, **kwargs: Any)
+
+   Bases: :py:obj:`torch.utils.data.Dataset`
+
+
+   Generic synthetic dataset of continuous features for AI explainability.
+
+   This class creates a dataset of continuous features based on a specified distribution,
+   which can be used for training and evaluating AI models. It allows for reproducible
+   sample creation, customizable features and sample sizes, and supports various distributions.
+
+   .. attribute:: seed
+
+      Seed for random number generators to ensure reproducibility.
+
+      :type: int
+
+   .. attribute:: n_features
+
+      Number of features in the dataset.
+
+      :type: int
+
+   .. attribute:: n_samples
+
+      Number of samples in the dataset.
+
+      :type: int
+
+   .. attribute:: distribution
+
+      Distribution used for generating the samples.
+      Defaults to 'normal' which uses a multivariate normal distribution.
+
+      :type: str | torch.distributions.Distribution
+
+   .. attribute:: sample_std_dev
+
+      Standard deviation of the noise added to the samples.
+
+      :type: float
+
+   .. attribute:: label_std_dev
+
+      Standard deviation of the noise added to generate labels.
+
+      :type: float
+
+   .. attribute:: samples
+
+      Generated samples.
+
+      :type: torch.Tensor
+
+   .. attribute:: labels
+
+      Generated labels with optional noise.
+
+      :type: torch.Tensor
+
+   .. attribute:: ground_truth_attribute
+
+      Name of the attribute considered as ground truth.
+
+      :type: str
+
+   .. attribute:: subset_data
+
+      List of attributes to be included in subsets.
+
+      :type: list[str]
+
+   .. attribute:: subset_attribute
+
+      Additional attributes to be considered in subsets.
+
+      :type: list[str]
+
+   .. attribute:: cat_features
+
+      List of categorical feature names, used in perturbations.
+
+      :type: list[str]
+
+   Initializes a dataset of continuous features based on a specified distribution.
+
+   :param seed: For sample creation reproducibility. Defaults to 0.
+   :type seed: int
+   :param n_features: Number of features for each sample. Defaults to 2.
+   :type n_features: int
+   :param n_samples: Total number of samples. Defaults to 10.
+   :type n_samples: int
+   :param distribution: Distribution to use for generating samples.
+                        Defaults to "normal", which indicates multivariate normal distribution.
+   :type distribution: str | torch.distributions.Distribution
+   :param distribution_params: Parameters for the distribution if a string identifier
+                               is used. Defaults to None.
+   :type distribution_params: dict, optional
+   :param \*\*kwargs: Arbitrary keyword arguments, including:
+
+                      - sample_std_dev (float): Standard deviation for sample creation noise. Defaults to 1.
+                      - label_std_dev (float): Noise standard deviation to generate labels. Defaults to 0.
+
+   :raises ValueError: If an unsupported string identifier is provided.
+   :raises TypeError: If 'distribution' is neither a string nor a torch.distributions.Distribution instance.
+
+
+   .. py:attribute:: label_noise
+
+
+   .. py:attribute:: features
+      :value: 'samples'
+
+
+
+   .. py:attribute:: labels
+
+
+   .. py:attribute:: ground_truth_attribute
+      :value: 'samples'
+
+
+
+   .. py:attribute:: subset_data
+      :value: ['samples']
+
+
+
+   .. py:attribute:: subset_attribute
+      :value: ['perturb_function', 'name']
+
+
+
+   .. py:attribute:: cat_features
+      :value: []
+
+
+
+   .. py:attribute:: name
+      :value: 'BaseFeaturesDataset'
+
+
+
+   .. py:method:: __len__() -> int
+
+      Returns the total number of samples in the dataset.
+
+      :returns: Total number of samples.
+      :rtype: int
+
+
+
+   .. py:method:: __getitem__(idx: int, others: List[str] = ['ground_truth_attribute']) -> Union[Tuple[torch.Tensor, torch.Tensor], Tuple[torch.Tensor, torch.Tensor, Dict[str, torch.Tensor]]]
+
+      Retrieves a sample and its label, along with optional attributes, by index.
+
+      :param idx: Index of the sample to retrieve.
+      :type idx: int
+      :param others: Additional attributes to be retrieved with the sample and label.
+                     Defaults to ["ground_truth_attribute"].
+      :type others: list[str]
+
+      :returns:
+
+                A tuple containing the sample and label at the specified index,
+                    and optionally, a dictionary of additional attributes if requested.
+      :rtype: tuple
+
+      :raises IndexError: If the specified index is out of the bounds of the dataset.
+
+
+
+   .. py:method:: split(split_lengths: List[float] = [0.7, 0.3]) -> Tuple[BaseFeaturesDataset, BaseFeaturesDataset]
+
+      Splits the dataset into subsets based on specified proportions.
+
+      :param split_lengths: Proportions to split the dataset into. The values
+                            must sum up to 1. Defaults to [0.7, 0.3] for a 70%/30% split.
+      :type split_lengths: list[float]
+
+      :returns:
+
+                A tuple containing the split subsets
+                    of the dataset.
+      :rtype: tuple[BaseFeaturesDataset]
+
+
+
+   .. py:method:: save_dataset(file_name: str, directory_path: str = os.getcwd()) -> None
+
+      Saves the dataset to a pickle file in the specified directory.
+
+      :param file_name: Name of the file to save the dataset.
+      :type file_name: str
+      :param directory_path: Path to the directory where the file will be saved.
+                             Defaults to the current working directory.
+      :type directory_path: str
+
+
+
+   .. py:method:: _validate_inputs(seed: int, n_features: int, n_samples: int) -> Tuple[int, int, int]
+
+      Validates the input parameters for dataset initialization.
+
+      :param seed: Seed for random number generation.
+      :type seed: int
+      :param n_features: Number of features.
+      :type n_features: int
+      :param n_samples: Number of samples.
+      :type n_samples: int
+
+      :returns: Validated seed and number of features.
+      :rtype: tuple[int, int]
+
+      :raises ValueError: If any input is not an integer or is out of an expected range.
+
+
+
+   .. py:method:: _init_noise_parameters(kwargs: Dict[str, Any]) -> Tuple[float, float]
+
+      Initializes noise parameters from keyword arguments.
+
+      :param kwargs: Keyword arguments passed to the initializer.
+
+      :returns: Initialized sample and label standard deviations.
+      :rtype: tuple
+
+      :raises ValueError: If the standard deviations are not positive numbers.
+
+
+
+   .. py:method:: _init_samples(n_samples: int, distribution: Union[str, torch.distributions.Distribution], distribution_params: Optional[Dict[str, Any]] = None) -> Tuple[torch.Tensor, torch.distributions.Distribution]
+
+      Initializes samples based on the specified distribution and sample size.
+
+      This method supports initialization using either a predefined distribution name (string) or directly
+      with a torch.distributions.Distribution instance.
+
+      :param n_samples: Number of samples to generate, must be positive.
+      :type n_samples: int
+      :param distribution: The distribution to use for
+                           generating samples. Can be a string for predefined distributions ('normal', 'uniform', 'poisson')
+                           or an instance of torch.distributions.Distribution.
+      :type distribution: str | torch.distributions.Distribution
+      :param distribution_params: Parameters for the distribution if a string identifier
+                                  is used. Examples:
+                                  - For 'normal': {'mean': torch.zeros(n_features), 'stddev': torch.ones(n_features)}
+                                  - For 'uniform': {'low': -1.0, 'high': 1.0}
+                                  - For 'poisson': {'rate': 3.0}
+      :type distribution_params: dict, optional
+
+      :returns:
+
+                A tuple containing generated samples (torch.Tensor) with shape [n_samples, n_features]
+                    and the distribution instance used.
+      :rtype: tuple
+
+      :raises ValueError: If 'distribution' is a string and is not one of the supported identifiers or
+          necessary parameters are missing.
+      :raises TypeError: If 'distribution' is neither a string identifier nor a torch.distributions.Distribution instance,
+          or if the provided Distribution instance cannot generate a torch.Tensor.
+      :raises RuntimeError: If the generated samples do not match the expected shape and cannot be adjusted.
+
+
+
+   .. py:method:: perturb_function(noise_scale: float = 0.01, cat_resample_prob: float = 0.2, run_infidelity_decorator: bool = True, multipy_by_inputs: bool = False) -> Callable
+
+      Generates perturb function to be used for feature attribution method evaluation. Applies Gaussian noise
+      for continuous features, and resampling for categorical features.
+
+      :param noise_scale: A standard deviation of the Gaussian noise added to the continuous features.
+                          Defaults to 0.01.
+      :type noise_scale: float
+      :param cat_resample_prob: Probability of resampling a categorical feature. Defaults to 0.2.
+      :type cat_resample_prob: float
+      :param run_infidelity_decorator: Set to True if you want the returned fns to be compatible with infidelity.
+                                       Set flag to False for sensitivity. Defaults to True.
+      :type run_infidelity_decorator: bool
+      :param multiply_by_inputs: Parameters for decorator. Defaults to False.
+      :type multiply_by_inputs: bool
+
+      :returns: A perturbation function compatible with Captum.
+      :rtype: perturb_func (function)
+
+
+
+   .. py:method:: generate_model() -> Any
+      :abstractmethod:
+
+
+      Generates a corresponding model for current dataset.
+
+      :raises NotImplementedError: If the method is not implemented by a subclass.
+
+
+
+   .. py:property:: default_metric
+      :type: Callable
+
+      :abstractmethod:
+
+
+      The default metric for evaluating the performance of explanation methods applied
+      to this dataset.
+
+      :raises NotImplementedError: If the property is not implemented by a subclass.
+
+
+.. py:class:: WeightedFeaturesDataset(seed: int = 0, n_features: int = 2, n_samples: int = 10, distribution: Union[str, torch.distributions.Distribution] = 'normal', weight_range: Tuple[float, float] = (-1.0, 1.0), weights: Optional[torch.Tensor] = None, **kwargs: Any)
+
+   Bases: :py:obj:`BaseFeaturesDataset`
+
+
+   A class extending BaseFeaturesDataset with support for weighted features.
+
+   This class allows for creating a synthetic dataset with continuous features,
+   where each feature can be weighted differently. This is particularly useful for
+   scenarios where the impact of different features on the labels needs to be
+   artificially manipulated or studied.
+
+   Inherits from:
+       BaseFeaturesDataset: The base class for creating continuous feature datasets.
+
+   .. attribute:: weights
+
+      Weights applied to each feature.
+
+      :type: torch.Tensor
+
+   .. attribute:: weight_range
+
+      The range (min, max) within which random weights are generated.
+
+      :type: tuple
+
+   .. attribute:: weighted_samples
+
+      The samples after applying weights.
+
+      :type: torch.Tensor
+
+   Initializes a WeightedFeaturesDataset object.
+
+   :param seed: Seed for reproducibility. Defaults to 0.
+   :type seed: int
+   :param n_features: Number of features. Defaults to 2.
+   :type n_features: int
+   :param n_samples: Number of samples. Defaults to 10.
+   :type n_samples: int
+   :param distribution: Type of distribution to use for generating samples. Defaults to "normal".
+   :type distribution: str
+   :param weight_range: Range (min, max) for generating random weights. Defaults to (-1.0, 1.0).
+   :type weight_range: tuple
+   :param weights: Specific weights for each feature.
+                   If None, weights are generated randomly within `weight_range`. Defaults to None.
+   :type weights: torch.Tensor, optional
+   :param \*\*kwargs: Arbitrary keyword arguments passed to the base class constructor, including:
+
+                      - sample_std_dev (float): Standard deviation for sample creation noise. Defaults to 1.
+                      - label_std_dev (float): Noise standard deviation to generate labels. Defaults to 0.
+
+
+   .. py:attribute:: weighted_samples
+
+
+   .. py:attribute:: label_noise
+
+
+   .. py:attribute:: labels
+
+
+   .. py:attribute:: features
+      :value: 'samples'
+
+
+
+   .. py:attribute:: ground_truth_attribute
+      :value: 'weighted_samples'
+
+
+
+   .. py:attribute:: subset_data
+      :value: ['samples', 'weighted_samples']
+
+
+
+   .. py:attribute:: subset_attribute
+
+
+   .. py:method:: _initialize_weights(weights: Optional[torch.Tensor], weight_range: Tuple[float, float]) -> Tuple[torch.Tensor, Tuple[float, float]]
+
+      Initializes or validates the weights for each feature.
+
+      If weights are not provided, they are randomly generated within the specified range.
+
+      :param weights: If provided, these weights are used directly for the features.
+                      Must be a Tensor with a length equal to `n_features`.
+      :type weights: torch.Tensor | NoneType
+      :param weight_range: Specifies the minimum and maximum values used to generate weights if `weights` is None.
+                           Expected format: (min_value, max_value), where both are floats.
+      :type weight_range: tuple
+
+      :returns: The validated or generated weights and the effective weight range used.
+      :rtype: tuple[torch.Tensor, tuple]
+
+      :raises AssertionError: If the provided weights do not match the number of features or are not a torch.Tensor when provided.
+      :raises ValueError: If `weight_range` is improperly specified.
+
+
+
+   .. py:method:: generate_model() -> Any
+
+      Generates and returns a neural network model configured to use the weighted features of this dataset.
+
+      The model is designed to reflect the differential impact of each feature as specified by the weights.
+
+      :returns:
+
+                A neural network model that includes mechanisms to account for feature weights,
+                    suitable for tasks requiring understanding of feature importance.
+      :rtype: model.ContinuousFeaturesNN
+
+
+
+   .. py:property:: default_metric
+      :type: Callable
+
+
+      The default metric for evaluating the performance of explanation methods applied
+      to this dataset.
+
+      For this dataset, the default metric is the Mean Squared Error (MSE) loss function.
+
+      :returns:
+
+                A class that wraps around the default metric to be instantiated
+                    within the pipeline.
+      :rtype: type
+
+
+.. py:function:: load_dataset(file_path: str, directory_path: str = os.getcwd()) -> Optional[Union[BaseFeaturesDataset, WeightedFeaturesDataset]]
+
+   Loads a previously saved dataset from a binary pickle file.
+
+   This function is designed to retrieve datasets that have been saved to disk, facilitating
+   easy sharing and reloading of data for analysis or model training.
+
+   :param file_path: The name of the file to load.
+   :type file_path: str
+   :param directory_path: The directory where the file is located. Defaults to the current working directory.
+   :type directory_path: str
+
+   :returns: The loaded dataset object, or None, if the file does not exist or an error occurs.
+   :rtype: Object | NoneType
+
+
+.. py:function:: generate_csv(file_label: str, num_rows: int = 5000, num_features: int = 20) -> None
+
+   Generates a CSV file with random data for a specified number of rows and features.
+
+   This function helps create synthetic datasets for testing or development purposes.
+   Each row will have a random label and a specified number of features filled with random values.
+
+   :param file_label: The base name for the CSV file.
+   :type file_label: str
+   :param num_rows: Number of rows (samples) to generate. Defaults to 5000.
+   :type num_rows: int
+   :param num_features: Number of features to generate for each sample. Defaults to 20.
+   :type num_features: int
+
+    Raises:
+       ValueError: If num_rows or num_features are non-positive.
+
+
+.. py:data:: data
+
+.. py:class:: BooleanAndDataset(n_features: int = 2, n_samples: int = 10, seed: int = 0)
+
+   Bases: :py:obj:`BooleanDataset`
+
+
+   Generic synthetic dataset based on a propositional formula.
+
+   The dataset corresponds to sampling rows from the truth table of the given propositional
+   formula. If n_samples is no larger than the size of the truth table, then the generated
+   dataset will always contain non-duplicate samples of the truth table. Otherwise,
+   the dataset will still contain rows for the entire truth table but will also contain
+   duplicates.
+
+   If the input for atoms is None, the corresponding attribute is by default assigned
+   as the atoms that are extracted from the given formula.
+
+   Inherits from:
+       BaseFeaturesDataset: The base class for creating continuous feature datasets.
+
+   .. attribute:: formula
+
+      A propositional formula for which the dataset
+      is generated.
+
+      :type: sympy.core.function.FunctionClass
+
+   .. attribute:: atoms
+
+      The ordered collection of propositional atoms that were used within the
+      propositional formula.
+
+      :type: tuple
+
+   .. attribute:: seed
+
+      Seed for random number generators to ensure reproducibility.
+
+      :type: int
+
+   .. attribute:: n_samples
+
+      Number of samples in the dataset.
+
+      :type: int
+
+   Initializes a BooleanDataset object.
+
+   :param formula: A propositional formula for dataset generation.
+   :type formula: sympy.core.function.FunctionClass
+   :param atoms: Ordered collection of propositional atoms used in the formula.
+                 Defaults to None.
+   :type atoms: Iterable, optional
+   :param seed: Seed for random number generation, ensuring reproducibility. Defaults to 0.
+   :type seed: int
+   :param n_samples: Number of samples to generate for the dataset. Defaults to 10.
+   :type n_samples: int
+
+
+   .. py:attribute:: n_features
+      :value: 2
+
+
+
+   .. py:attribute:: ground_truth
+
+
+   .. py:attribute:: ground_truth_attribute
+      :value: 'ground_truth'
+
+
+
+   .. py:method:: create_baselines() -> None
+
+
+   .. py:method:: __getitem__(idx: int, others: List[str] = ['baseline', 'ground_truth_attribute']) -> Tuple[Any, Ellipsis]
+
+      Retrieve a sample and its associated label by index.
+
+      :param idx: Index of the sample to retrieve.
+      :type idx: int
+      :param others: Additional items to retrieve. Defaults to [].
+      :type others: list
+
+      :returns: Tuple containing the sample and its label.
+      :rtype: tuple
+
+
+
+   .. py:method:: generate_model() -> torch.nn.Module
+
+      Generates a neural network model using the given propositional formula and atoms.
+
+      :returns: A neural network model tailored to the dataset's propositional formula.
+      :rtype: model.PropFormulaNN
+
+
+
+   .. py:method:: create_ground_truth() -> torch.Tensor
+
+
+   .. py:property:: default_metric
+      :type: Callable
+
+
+      The default metric for evaluating the performance of explanation methods applied
+      to this dataset.
+
+      For this dataset, the default metric is the infidelity metric with the
+      default perturb function.
+
+      :returns:
+
+                A class that wraps around the default metric to be instantiated
+                    within the pipeline.
+      :rtype: type
+
+
+.. py:class:: BooleanDataset(formula: sympy.core.function.FunctionClass, atoms: Optional[Iterable] = None, seed: int = 0, n_samples: int = 10)
+
+   Bases: :py:obj:`xaiunits.datagenerator.data_generation.BaseFeaturesDataset`
+
+
+   Generic synthetic dataset based on a propositional formula.
+
+   The dataset corresponds to sampling rows from the truth table of the given propositional
+   formula. If n_samples is no larger than the size of the truth table, then the generated
+   dataset will always contain non-duplicate samples of the truth table. Otherwise,
+   the dataset will still contain rows for the entire truth table but will also contain
+   duplicates.
+
+   If the input for atoms is None, the corresponding attribute is by default assigned
+   as the atoms that are extracted from the given formula.
+
+   Inherits from:
+       BaseFeaturesDataset: The base class for creating continuous feature datasets.
+
+   .. attribute:: formula
+
+      A propositional formula for which the dataset
+      is generated.
+
+      :type: sympy.core.function.FunctionClass
+
+   .. attribute:: atoms
+
+      The ordered collection of propositional atoms that were used within the
+      propositional formula.
+
+      :type: tuple
+
+   .. attribute:: seed
+
+      Seed for random number generators to ensure reproducibility.
+
+      :type: int
+
+   .. attribute:: n_samples
+
+      Number of samples in the dataset.
+
+      :type: int
+
+   Initializes a BooleanDataset object.
+
+   :param formula: A propositional formula for dataset generation.
+   :type formula: sympy.core.function.FunctionClass
+   :param atoms: Ordered collection of propositional atoms used in the formula.
+                 Defaults to None.
+   :type atoms: Iterable, optional
+   :param seed: Seed for random number generation, ensuring reproducibility. Defaults to 0.
+   :type seed: int
+   :param n_samples: Number of samples to generate for the dataset. Defaults to 10.
+   :type n_samples: int
+
+
+   .. py:attribute:: atoms
+
+
+   .. py:attribute:: formula
+
+
+   .. py:attribute:: subset_data
+      :value: ['samples']
+
+
+
+   .. py:attribute:: subset_attribute
+      :value: ['perturb_function', 'default_metric', 'generate_model', 'name']
+
+
+
+   .. py:attribute:: cat_features
+
+
+   .. py:attribute:: name
+      :value: 'BooleanDataset'
+
+
+
+   .. py:method:: _initialize_samples_labels(n_samples: int) -> Tuple[torch.Tensor, torch.Tensor]
+
+      Initializes the samples and labels of the dataset.
+
+      :param n_samples: number of samples/labels contained in the dataset.
+      :type n_samples: int
+
+      :returns:
+
+                Tuple containing the generated samples
+                    and corresponding labels of the dataset.
+      :rtype: tuple[Tensor, Tensor]
+
+
+
+   .. py:method:: perturb_function(cat_resample_prob: float = 0.2, run_infidelity_decorator: bool = True, multipy_by_inputs: bool = False) -> Callable
+
+      Generates perturb function to be used for XAI method evaluation. Applies gaussian noise
+      for continuous features, and resampling for categorical features.
+
+      :param cat_resample_prob: Probability of resampling a categorical feature. Defaults to 0.2.
+      :type cat_resample_prob: float
+      :param run_infidelity_decorator: Set to true if the returned fns is to be compatible with
+                                       infidelity. Set flag to False for sensitivity. Defaults to True.
+      :type run_infidelity_decorator: bool
+      :param multiply_by_inputs: Parameters for decorator. Defaults to False.
+      :type multiply_by_inputs: bool
+
+      :returns: A perturbation function compatible with Captum.
+      :rtype: perturb_func (function)
+
+
+
+   .. py:method:: generate_model() -> torch.nn.Module
+
+      Generates a neural network model using the given propositional formula and atoms.
+
+      :returns: A neural network model tailored to the dataset's propositional formula.
+      :rtype: model.PropFormulaNN
+
+
+
+   .. py:property:: default_metric
+      :type: Callable
+
+
+      The default metric for evaluating the performance of explanation methods applied
+      to this dataset.
+
+      For this dataset, the default metric is the infidelity metric with the
+      default perturb function.
+
+      :returns:
+
+                A class that wraps around the default metric to be instantiated
+                    within the pipeline.
+      :rtype: type
+
+
+   .. py:method:: __getitem__(idx: int, others: List[str] = []) -> Tuple[Any, Ellipsis]
+
+      Retrieve a sample and its associated label by index.
+
+      :param idx: Index of the sample to retrieve.
+      :type idx: int
+      :param others: Additional items to retrieve. Defaults to [].
+      :type others: list
+
+      :returns: Tuple containing the sample and its label.
+      :rtype: tuple
+
+
+
+.. py:class:: BooleanOrDataset(n_features: int = 2, n_samples: int = 10, seed: int = 0)
+
+   Bases: :py:obj:`BooleanDataset`
+
+
+   Generic synthetic dataset based on a propositional formula.
+
+   The dataset corresponds to sampling rows from the truth table of the given propositional
+   formula. If n_samples is no larger than the size of the truth table, then the generated
+   dataset will always contain non-duplicate samples of the truth table. Otherwise,
+   the dataset will still contain rows for the entire truth table but will also contain
+   duplicates.
+
+   If the input for atoms is None, the corresponding attribute is by default assigned
+   as the atoms that are extracted from the given formula.
+
+   Inherits from:
+       BaseFeaturesDataset: The base class for creating continuous feature datasets.
+
+   .. attribute:: formula
+
+      A propositional formula for which the dataset
+      is generated.
+
+      :type: sympy.core.function.FunctionClass
+
+   .. attribute:: atoms
+
+      The ordered collection of propositional atoms that were used within the
+      propositional formula.
+
+      :type: tuple
+
+   .. attribute:: seed
+
+      Seed for random number generators to ensure reproducibility.
+
+      :type: int
+
+   .. attribute:: n_samples
+
+      Number of samples in the dataset.
+
+      :type: int
+
+   Initializes a BooleanDataset object.
+
+   :param formula: A propositional formula for dataset generation.
+   :type formula: sympy.core.function.FunctionClass
+   :param atoms: Ordered collection of propositional atoms used in the formula.
+                 Defaults to None.
+   :type atoms: Iterable, optional
+   :param seed: Seed for random number generation, ensuring reproducibility. Defaults to 0.
+   :type seed: int
+   :param n_samples: Number of samples to generate for the dataset. Defaults to 10.
+   :type n_samples: int
+
+
+   .. py:attribute:: n_features
+      :value: 2
+
+
+
+   .. py:attribute:: ground_truth
+
+
+   .. py:attribute:: ground_truth_attribute
+      :value: 'ground_truth'
+
+
+
+   .. py:method:: create_baselines() -> None
+
+
+   .. py:method:: __getitem__(idx: int, others: List[str] = ['baseline', 'ground_truth_attribute']) -> Tuple[Any, Ellipsis]
+
+      Retrieve a sample and its associated label by index.
+
+      :param idx: Index of the sample to retrieve.
+      :type idx: int
+      :param others: Additional items to retrieve. Defaults to [].
+      :type others: list
+
+      :returns: Tuple containing the sample and its label.
+      :rtype: tuple
+
+
+
+   .. py:method:: generate_model() -> torch.nn.Module
+
+      Generates a neural network model using the given propositional formula and atoms.
+
+      :returns: A neural network model tailored to the dataset's propositional formula.
+      :rtype: model.PropFormulaNN
+
+
+
+   .. py:method:: create_ground_truth() -> torch.Tensor
+
+
+   .. py:property:: default_metric
+      :type: Callable
+
+
+      The default metric for evaluating the performance of explanation methods applied
+      to this dataset.
+
+      For this dataset, the default metric is the infidelity metric with the
+      default perturb function.
+
+      :returns:
+
+                A class that wraps around the default metric to be instantiated
+                    within the pipeline.
+      :rtype: type
+
+
+.. py:class:: ConflictingDataset(seed: int = 0, n_features: int = 2, n_samples: int = 10, distribution: str = 'normal', weight_range: Tuple[float, float] = (-1.0, 1.0), weights: Optional[torch.Tensor] = None, cancellation_features: Optional[List[int]] = None, cancellation_likelihood: float = 0.5)
+
+   Bases: :py:obj:`xaiunits.datagenerator.WeightedFeaturesDataset`
+
+
+   Generic synthetic dataset with feature cancellation capabilities.
+
+   Feature cancellations are based on likelihood. If cancellation_features are not provided,
+   all features in each sample are candidates for cancellation, with a specified likelihood of
+   each feature being canceled. Canceled features are negated in their contributions to the dataset,
+   allowing for the analysis of model behavior under feature absence scenarios.
+
+   Inherits from:
+       WeightedFeaturesDataset: Class extending BaseFeaturesDataset with support for weighted features
+
+   .. attribute:: cancellation_features
+
+      Indices of features subject to cancellation.
+
+      :type: list of int, optional
+
+   .. attribute:: cancellation_likelihood
+
+      Likelihood of feature cancellation, between 0 and 1.
+
+      :type: float
+
+   .. attribute:: cancellation_outcomes
+
+      Binary tensor indicating whether each feature in each sample is canceled.
+
+      :type: torch.Tensor
+
+   .. attribute:: cancellation_samples
+
+      Concatenation of samples with their cancellation outcomes.
+
+      :type: torch.Tensor
+
+   .. attribute:: cancellation_attributions
+
+      The attribution of each feature considering the cancellation.
+
+      :type: torch.Tensor
+
+   .. attribute:: cat_features
+
+      Categorical features derived from the cancellation samples.
+
+      :type: list
+
+   .. attribute:: ground_truth_attributions
+
+      Combined tensor of weighted samples and cancellation attributions for ground truth analysis.
+
+      :type: torch.Tensor
+
+   Initializes a ConflictingDataset object.
+
+   :param seed: Seed for random number generation, ensuring reproducibility. Defaults to 0.
+   :type seed: int
+   :param n_features: Number of features in each sample. Defaults to 2.
+   :type n_features: int
+   :param n_samples: Number of samples to generate. Defaults to 10.
+   :type n_samples: int
+   :param distribution: Type of distribution to use for generating samples. Defaults to 'normal'.
+   :type distribution: str
+   :param weight_range: Range (min, max) for generating random feature weights. Defaults to (-1.0, 1.0).
+   :type weight_range: tuple[float]
+   :param weights: Predefined weights for each feature. Defaults to None.
+   :type weights: torch.Tensor, optional
+   :param cancellation_features: Specific features to apply cancellations to.
+                                 Defaults to None, applying to all features.
+   :type cancellation_features: list[int], optional
+   :param cancellation_likelihood: Probability of each feature being canceled. Defaults to 0.5.
+   :type cancellation_likelihood: float
+
+
+   .. py:attribute:: cancellation_features
+      :value: None
+
+
+
+   .. py:attribute:: cancellation_likelihood
+      :value: 0.5
+
+
+
+   .. py:attribute:: cancellation_outcomes
+
+
+   .. py:attribute:: cancellation_samples
+
+
+   .. py:attribute:: labels
+
+
+   .. py:attribute:: cancellation_attributions
+
+
+   .. py:attribute:: cat_features
+
+
+   .. py:attribute:: ground_truth_attributions
+
+
+   .. py:attribute:: features
+      :value: 'cancellation_samples'
+
+
+
+   .. py:attribute:: ground_truth_attribute
+      :value: 'ground_truth_attributions'
+
+
+
+   .. py:attribute:: subset_data
+      :value: ['weighted_samples', 'cancellation_outcomes', 'cancellation_samples',...
+
+
+
+   .. py:method:: _initialize_cancellation_features() -> None
+
+      Validates and initializes the list of features subject to cancellation. If no specific features
+      are provided, all features are considered candidates for cancellation.
+
+      :raises AssertionError: If cancellation_features is not a list, any element in cancellation_features is not an integer,
+          the maximum element in cancellation_features is greater than the number of features, or cancellation_features
+          is empty. Also, if cancellation_likelihood is not a float or is outside the range [0, 1].
+
+
+
+   .. py:method:: _get_cancellations() -> torch.Tensor
+
+      Generates a binary mask indicating whether each feature in each sample is canceled
+      based on the specified likelihood.
+
+      This method considers only the features specified in cancellation_features for possible cancellation.
+
+      :returns:
+
+                An integer tensor of shape (n_samples, n_features) where 1 represents a canceled feature,
+                    and 0 represents an active feature.
+      :rtype: torch.Tensor
+
+
+
+   .. py:method:: _get_cancellation_samples() -> torch.Tensor
+
+      Concatenates the original samples with their cancellation outcomes to form a comprehensive dataset.
+
+      This allows for analyzing the impact of feature cancellations directly alongside the original features.
+
+      :returns: A tensor containing the original samples augmented with their corresponding cancellation outcomes.
+      :rtype: torch.Tensor
+
+
+
+   .. py:method:: _get_cancellation_attributions() -> torch.Tensor
+
+      Computes the attribution of each feature by negating the effect of canceled features.
+
+      This method helps understand the impact of each feature on the model output when certain features are
+      systematically canceled.
+
+      :returns:
+
+                A tensor of the same shape as the weighted samples, where the values of canceled features are
+                    negated to reflect their absence.
+      :rtype: torch.Tensor
+
+
+
+   .. py:method:: generate_model() -> torch.nn.Module
+
+      Instantiates and returns a neural network model for analyzing datasets with conflicting features.
+
+      The model is configured to use the specified features and weights, allowing for experimentation
+      with feature cancellations.
+
+      :returns: A neural network model designed to work with the specified features and weights.
+      :rtype: model.ConflictingFeaturesNN
+
+
+
+.. py:class:: BalancedImageDataset(*args: Any, **kwargs: Any)
+
+   Bases: :py:obj:`ImageDataset`
+
+
+   A dataset for images where each each image consists of a background and a foreground overlay.
+
+   This 'balanced' dataset ensures that each combination of background (bg), foreground (fg), and foreground color (fg_color)
+   appears the same number of times across the dataset, making it ideal for machine learning models that benefit from
+   uniform exposure to all feature combinations.
+
+   Inherits all parameters from ImageDataset, and introduces no additional parameters, but it overrides the behavior
+   to ensure balance in the dataset composition.
+
+   Inherits from:
+       ImageDataset: Standard dataset that contains images with backgorunds and foregrounds.
+
+   Initializes a BalancedImageDataset with the same parameters as ImageDataset, ensuring each combination
+   of background, foreground, and color appears uniformly across the dataset.
+
+   After initialization, it automatically generates the samples and shuffles them if the 'shuffled' attribute is True.
+
+   :param \*args: Additional arguments passed to the superclass initializer.
+   :param \*\*kwargs: Additional keyword arguments passed to the superclass initializer.
+
+
+   .. py:method:: generate_samples() -> None
+
+      Generates a balanced set of image samples by uniformly distributing each combination of background,
+      foreground shape, and color.
+
+      Iterates over each background, each shape, and each color to create the specified number of variants per combination.
+      Each generated image is stored in the 'samples' list, with corresponding labels in 'labels', and other metadata
+      like foreground shapes, background labels, and foreground colors stored in their respective lists.
+
+      :raises ValueError: If there is an issue with image generation parameters or overlay combinations.
+
+
+
+.. py:class:: ImbalancedImageDataset(backgrounds: Union[int, List[str]] = 5, shapes: Union[int, List[str]] = 3, n_variants: int = 100, shape_colors: Union[str, Tuple[int, int, int, int]] = 'red', imbalance: float = 0.8, **kwargs: Any)
+
+   Bases: :py:obj:`ImageDataset`
+
+
+   Creates Image Dataset where each image comprises of a background image an a foreground image.
+
+   Background images, type of foreground, color of foreground as well as other parameters can be specified.
+
+   Imbalance refers to the fact users can specify the percentage of dominant (bg, fg) pair vs other pair.
+
+   Inherits from:
+       ImageDataset: Standard dataset that contains images with backgorunds and foregrounds.
+
+   .. attribute:: imbalance
+
+      The proportion of samples that should favor a particular background per shape.
+      Should be within the range (0.0 to 1.0) inclusive.
+
+      :type: float
+
+   Initializes an ImbalancedImageDataset object with specified parameters, focusing on creating dataset variations
+   based on an imbalance parameter that dictates the dominance of certain shape-background pairs.
+
+   :param backgrounds: The number or list of specific background filenames. Defaults to 5.
+   :type backgrounds: int | list
+   :param shapes: The number or list of specific shapes. Defaults to 3.
+   :type shapes: int | list
+   :param n_variants: Number of variations per shape-background combination, affects dataset size.
+                      Defaults to 100.
+   :type n_variants: int
+   :param shape_colors: The default color for all shapes in the dataset. Defaults to 'red'.
+   :type shape_colors: str | tuple
+   :param imbalance: The proportion (0.0 to 1.0) of samples that should favor a particular background per shape.
+                     Defaults to 0.8.
+   :type imbalance: float
+   :param \*\*kwargs: Additional keyword arguments passed to the superclass initializer.
+
+
+   .. py:attribute:: imbalance
+
+
+   .. py:method:: _prepare_shape_color(shape_colors: Optional[Union[str, Tuple[int, int, int, int]]]) -> List[Tuple[int, int, int, int]]
+
+      Prepares a single shape color based on the input.
+
+      Selects a random color if None is provided, validates a provided color string or RGBA tuple.
+
+      :param shape_colors: A specific color name, RGBA tuple, or None to select a random color.
+      :type shape_colors: str | tuple | NoneType
+
+      :returns: A list containing a single validated RGBA tuple representing the color.
+      :rtype: list
+
+      :raises ValueError: If the input is invalid or if the color name is not found in the predefined color dictionary.
+
+
+
+   .. py:method:: _validate_imbalance(imbalance: float) -> float
+
+      Validates that the imbalance parameter is a float between 0.0 and 1.0 inclusive, or None.
+
+      Ensures that the dataset can properly reflect the desired level of imbalance, adjusting for the
+      number of variants and available backgrounds.
+
+      :param imbalance: The imbalance value to validate. If None is given as input, then
+                        the argument will be treated as 0.3.
+      :type imbalance: float | NoneType
+
+      :returns: The validated imbalance value.
+      :rtype: float
+
+      :raises ValueError: If the imbalance is not within the inclusive range [0.0, 1.0] or if the imbalance
+          settings are not feasible with the current settings of n_variants and backgrounds.
+
+
+
+   .. py:method:: generate_samples() -> None
+
+      Generates a set of image samples with overlay shapes or dinosaurs on backgrounds, considering imbalance.
+
+      Depending on the 'imbalance' parameter, this method either:
+          - Allocates a specific fraction (defined by 'imbalance') of the samples for each shape to a particular background,
+            with the remainder distributed among the other backgrounds.
+          - Assigns all samples for a shape to a single background (imbalance = 1.0).
+
+
+
+.. py:class:: ImageDataset(seed: int = 0, backgrounds: Union[int, List[str]] = 5, shapes: Union[int, List[str]] = 10, n_variants: int = 4, background_size: Tuple[int, int] = (512, 512), shape_type: str = 'geometric', position: str = 'random', overlay_scale: float = 0.3, rotation: bool = False, shape_colors: Optional[Union[str, Tuple[int, int, int, int], List[Union[str, Tuple[int, int, int, int]]]]] = None, shuffled: bool = True, transform: Optional[Callable] = None, contour_thickness: int = 3, source: str = 'local')
+
+   Bases: :py:obj:`torch.utils.data.Dataset`
+
+
+   A dataset for images with specified configurations for image generation, supporting both balanced and imbalanced datasets.
+
+   Inherits from:
+       torch.utils.data.Dataset: The standard base class for defining a dataset within the PyTorch framework.
+
+   .. attribute:: seed
+
+      Seed for random number generation to ensure reproducibility.
+
+      :type: int
+
+   .. attribute:: backgrounds
+
+      List of background images to use for dataset generation.
+
+      :type: list
+
+   .. attribute:: shapes
+
+      List of shapes to overlay on background images.
+
+      :type: list
+
+   .. attribute:: n_variants
+
+      Number of variations per shape-background combination, affects dataset size.
+
+      :type: int
+
+   .. attribute:: background_size
+
+      Dimensions (width, height) of background images.
+
+      :type: tuple
+
+   .. attribute:: shape_type
+
+      Type of shapes: 'geometric' for geometric shapes, 'dinosaurs' for dinosaur shapes.
+
+      :type: str
+
+   .. attribute:: position
+
+      Overlay position on the background ('center' or 'random').
+
+      :type: str
+
+   .. attribute:: overlay_scale
+
+      Scale factor for overlay relative to the background size.
+
+      :type: float
+
+   .. attribute:: rotation
+
+      If True, applies random rotation to overlays.
+
+      :type: bool
+
+   .. attribute:: shape_colors
+
+      List of default color(s) for shapes, accepts color names or RGBA tuples.
+
+      :type: list
+
+   .. attribute:: shuffled
+
+      If True, shuffles the dataset after generation.
+
+      :type: bool
+
+   .. attribute:: transform
+
+      Transformation function to apply to each image, typically converting to tensor.
+
+      :type: callable
+
+   .. attribute:: contour_thickness
+
+      Thickness of lines the contours are drawn with.
+      If it is negative, the contour interiors are drawn.
+
+      :type: int
+
+   .. attribute:: image_builder
+
+      Instance of ImageBuilder for generating images.
+
+      :type: ImageBuilder
+
+   .. attribute:: samples
+
+      List to store the generated samples.
+
+      :type: list
+
+   .. attribute:: labels
+
+      List to store the labels.
+
+      :type: list
+
+   .. attribute:: fg_shapes
+
+      List to store the foreground shapes.
+
+      :type: list
+
+   .. attribute:: bg_labels
+
+      List to store the background labels.
+
+      :type: list
+
+   .. attribute:: fg_colors
+
+      List to store the foreground colors.
+
+      :type: list
+
+   .. attribute:: ground_truth
+
+      List to store the ground truths.
+
+      :type: list
+
+   Initializes an ImageDataset object.
+
+   :param seed: Seed for random number generation to ensure reproducibility. Defaults to 0.
+   :type seed: int
+   :param backgrounds: Number or list of specific backgrounds to use. Defaults to 5.
+   :type backgrounds: int | list
+   :param shapes: Number or list of specific shapes. Defaults to 10.
+   :type shapes: int | list
+   :param n_variants: Number of variations per shape-background combination, affects dataset size.
+                      Defaults to 4.
+   :type n_variants: int
+   :param background_size: Dimensions (width, height) of background images. Defaults to (512, 512).
+   :type background_size: tuple
+   :param shape_type: 'geometric' for geometric shapes, 'dinosaurs' for dinosaur shapes.
+                      Defaults to 'geometric'.
+   :type shape_type: str
+   :param position: Overlay position on the background ('center' or 'random'). Defaults to 'random'.
+   :type position: str
+   :param overlay_scale: Scale factor for overlay relative to the background size. Defaults to 0.3.
+   :type overlay_scale: float
+   :param rotation: If True, applies random rotation to overlays. Defaults to False.
+   :type rotation: bool
+   :param shape_colors: Default color(s) for shapes, accepts color names or RGBA tuples.
+                        Defaults to None.
+   :type shape_colors: str | tuple, optional
+   :param shuffled: If True, shuffles the dataset after generation. Defaults to True.
+   :type shuffled: bool
+   :param transform: Transformation function to apply to each image, typically converting to tensor.
+                     Defaults to None.
+   :type transform: callable, optional
+   :param contour_thickness: Defaults to 3.
+   :type contour_thickness: int
+
+
+   .. py:attribute:: seed
+      :value: 0
+
+
+
+   .. py:attribute:: n_variants
+      :value: 4
+
+
+
+   .. py:attribute:: image_builder
+
+
+   .. py:attribute:: backgrounds
+
+
+   .. py:attribute:: shapes
+
+
+   .. py:attribute:: shape_colors
+
+
+   .. py:attribute:: transform
+
+
+   .. py:attribute:: samples
+      :value: []
+
+
+
+   .. py:attribute:: labels
+      :value: []
+
+
+
+   .. py:attribute:: fg_shapes
+      :value: []
+
+
+
+   .. py:attribute:: bg_labels
+      :value: []
+
+
+
+   .. py:attribute:: fg_colors
+      :value: []
+
+
+
+   .. py:attribute:: ground_truth
+      :value: []
+
+
+
+   .. py:attribute:: shuffled
+      :value: True
+
+
+
+   .. py:attribute:: contour_thickness
+      :value: 3
+
+
+
+   .. py:method:: _validate_n_variants(n_variants: int) -> int
+
+      Validates that the number of variants per shape-background combination is a positive integer.
+
+      The `n_variants` parameter controls how many different versions of each shape-background combination are generated,
+      varying elements such as position and possibly color if specified. This allows for diverse training data in image
+      recognition tasks, improving the model's ability to generalize from different perspectives and conditions.
+
+      :param n_variants: The number of variations per shape-background combination to generate.
+      :type n_variants: int
+
+      :returns: The validated number of variants.
+      :rtype: int
+
+      :raises ValueError: If `n_variants` is not an integer or is less than or equal to zero.
+
+
+
+   .. py:method:: _prepare_shapes(shape_type: str, shapes: Union[int, List[str]], source: str) -> List[str]
+
+      Prepares a list of shapes or dinosaurs based on the input and the specified shape type.
+
+      This method processes the input to generate a list of specific shapes or dinosaur names.
+      If a numerical input is provided, it selects that many random shapes/dinosaurs from the
+      available names. If a list is provided, it directly uses those specific names.
+
+      :param shape_type: Specifies the type of overlay image, either 'geometric' or 'dinosaurs'.
+      :type shape_type: str
+      :param shapes: Number or list of specific shape names. If an integer is provided,
+                     it indicates how many random shapes or dinosaurs to select.
+      :type shapes: int | list
+
+      :returns: A list of shape names or dinosaur names to be used as overlays.
+      :rtype: list
+
+      :raises ValueError: If the shapes input is neither an integer nor a list, or if the shape_type is
+          not recognized as 'geometric' or 'dinosaurs'.
+
+
+
+   .. py:method:: _prepare_backgrounds(backgrounds: Union[int, List[str]]) -> List[str]
+
+      Prepares background images based on the input.
+
+      This method helps to either randomly select a set number of background images from the available
+      pool or validate and use a provided list of specific background filenames.
+
+      If a numerical value is provided, selects that many random backgrounds. If a list is provided,
+      validates and uses those specific backgrounds.
+
+      :param backgrounds: Number of random backgrounds to select or a list of specific background filenames.
+      :type backgrounds: int | list
+
+      :returns: A list of background filenames to be used in the dataset.
+      :rtype: list
+
+      :raises ValueError: If the input is neither an integer nor a list, or if any specified background filename
+          is not found in the available backgrounds.
+
+
+
+   .. py:method:: _prepare_shape_color(shape_colors: Optional[Union[int, str, Tuple[int, int, int, int], List[Union[str, Tuple[int, int, int, int]]]]]) -> List[Tuple[int, int, int, int]]
+
+      Prepares shape colors by validating input against available colors.
+
+      If no valid colors are provided, a default color is selected. Accepts single or multiple colors.
+
+      :param shape_colors: Specifies how many random colors to select or provides specific color(s).
+                           Can be a single color name, RGBA tuple, or list of names/tuples.
+      :type shape_colors: int | str | tuple | list
+
+      :returns: A list of validated RGBA tuples representing the colors.
+      :rtype: list
+
+      :raises ValueError: If input is invalid or colors are not found in the available color dictionary.
+          Details about the invalid input are provided in the error message.
+
+
+
+   .. py:method:: generate_samples() -> None
+
+      Placeholder method for generating the samples either for balanced or imbalanced datasets.
+
+
+
+   .. py:method:: shuffle_dataset() -> None
+
+      Randomly shuffles the dataset samples and corresponding labels to ensure variety
+      in training and evaluation phases.
+
+      :raises ValueError: If the dataset is empty and shuffling is not possible.
+
+
+
+   .. py:method:: __len__() -> int
+
+      Returns thet number of samples in the dataset.
+
+      :returns: number of samples contained by the dataset.
+      :rtype: int
+
+
+
+   .. py:method:: __getitem__(idx: int) -> Tuple[torch.Tensor, int, Dict[str, Union[str, torch.Tensor, PIL.Image.Image]]]
+
+      Retrieves an image and its label by index.
+
+      The image is transformed into a tensor if a transform is applied.
+
+      :param idx: Index of the sample to retrieve.
+      :type idx: int
+
+      :returns: A tuple containing the transformed image tensor, label, a dict of other attributes.
+      :rtype: tuple
+
+
+
+   .. py:method:: _re_label() -> None
+
+      Re-labels the dataset labels with integer indices.
+
+
+
+   .. py:method:: show_image(img_tensor: torch.Tensor) -> None
+      :staticmethod:
+
+
+      Displays an image given its tensor representation.
+
+      :param img_tensor: The image tensor to display.
+      :type img_tensor: torch.Tensor
+
+
+
+   .. py:property:: default_metric
+      :type: Callable
+
+
+      The default metric for evaluating the performance of explanation methods applied
+      to this dataset.
+
+      For this dataset, the default metric is the mask ratio metric that is constructed
+      based on the ground truth and context. Mask ratio is defined as the ratio of absolute
+      attribution score that lies within the foreground and the image.
+
+      :returns:
+
+                A class that wraps around the default metric to be instantiated
+                    within the pipeline.
+      :rtype: type
+
+
+.. py:class:: InteractingFeatureDataset(seed: int = 0, n_features: int = 4, n_samples: int = 50, weight_range: Tuple[float, float] = (-1.0, 1.0), weights: Optional[List[float]] = None, zero_likelihood: float = 0.5, interacting_features: List[List[int]] = [[1, 0], [3, 2]], **kwargs: Any)
+
+   Bases: :py:obj:`xaiunits.datagenerator.WeightedFeaturesDataset`
+
+
+   A dataset subclass for modeling interactions between categorical and continuous features within weighted datasets.
+
+   This class extends WeightedFeaturesDataset to support scenarios where the influence of one feature on the model
+   is conditional on the value of another, typically categorical, feature. For instance, the model may include terms like
+   `w_i(x_j) * x_i + w_j * x_j`, where the weight `w_i(x_j)` changes based on the value of `x_j`.
+
+   Inherits from:
+       WeightedFeaturesDataset: Class extending BaseFeaturesDataset with support for weighted features
+
+   .. attribute:: interacting_features
+
+      Pairs of indices where the first index is the feature whose
+      weight is influenced by the second, categorical feature.
+
+      :type: list[list[int]]
+
+   .. attribute:: zero_likelihood
+
+      The likelihood of the categorical feature being zero.
+
+      :type: float
+
+   .. attribute:: seed
+
+      Random seed for reproducibility.
+
+      :type: int
+
+   .. attribute:: n_features
+
+      Number of features in the dataset.
+
+      :type: int
+
+   .. attribute:: n_samples
+
+      Number of samples in the dataset.
+
+      :type: int
+
+   .. attribute:: weight_range
+
+      Min and max values for generating weights.
+
+      :type: tuple[float]
+
+   .. attribute:: weights
+
+      Initial weight values for features.
+
+      :type: list | NoneType
+
+   .. attribute:: subset_attribute
+
+      List of attributes that define the subset of the data with specific characteristics.
+
+      :type: list[str]
+
+
+   .. py:attribute:: interacting_features
+      :value: [[1, 0], [3, 2]]
+
+
+
+   .. py:attribute:: zero_likelihood
+      :value: 0.5
+
+
+
+   .. py:attribute:: subset_attribute
+
+
+   .. py:attribute:: cat_features
+
+
+   .. py:method:: make_cat() -> None
+
+      Modifies the dataset to incorporate the specified categorical-to-continuous feature interactions.
+
+      The method ensures that the dataset is correctly modified to reflect the specified feature
+      interactions and their impact on weights and samples.
+
+
+
+   .. py:method:: _get_flat_weights(weights: Optional[List[float]]) -> Optional[torch.Tensor]
+
+      Convert the weights into a flat tensor.
+
+      This method takes a list of weights, which can be tuples representing ranges,
+      and converts them into a flat tensor. If the input weights are None, the method returns None.
+
+      :param weights: List of weights or None if weights are not specified.
+      :type weights: list | NoneType
+
+      :returns: Flat tensor of weights if weights are provided, else None.
+      :rtype: torch.Tensor | NoneType
+
+
+
+   .. py:method:: generate_model() -> torch.nn.Module
+
+      Generates a neural network model for interacting features analysis.
+
+      This method instantiates and returns a neural network model specifically designed
+      for analyzing datasets with interacting features. The model is configured using the
+      specified number of features, feature weights, and interacting features information.
+
+      :returns:
+
+                An instance of the InteractingFeaturesNN class, representing
+                    the neural network model designed for interacting features analysis.
+      :rtype: model.InteractingFeaturesNN
+
+
+
+.. py:class:: PertinentNegativesDataset(seed: int = 0, n_features: int = 5, n_samples: int = 10, distribution: str = 'normal', weight_range: Tuple[float, float] = (-1.0, 1.0), weights: Optional[torch.Tensor] = None, pn_features: Optional[List[int]] = None, pn_zero_likelihood: float = 0.5, pn_weight_factor: float = 10, baseline: str = 'zero')
+
+   Bases: :py:obj:`xaiunits.datagenerator.WeightedFeaturesDataset`
+
+
+   A dataset designed to investigate the impact of pertinent negative (PN) features
+   on model predictions by introducing zero values in selected features, which are
+   expected to significantly impact the output.
+
+   This dataset is useful for scenarios where the absence of certain features
+   (indicated by zero values) provides important information for model predictions.
+
+   Inherits from:
+       WeightedFeaturesDataset: Class extending BaseFeaturesDataset with support for weighted features
+
+   .. attribute:: pn_features
+
+      Indices of features considered as pertinent negatives.
+
+      :type: list[int]
+
+   .. attribute:: pn_zero_likelihood
+
+      Likelihood of a pertinent negative feature being set to zero.
+
+      :type: float
+
+   .. attribute:: pn_weight_factor
+
+      Weight factor applied to the pertinent negative features to emphasize their impact.
+
+      :type: float
+
+   .. attribute:: cat_features
+
+      Categorical features derived from the pertinent negatives.
+
+      :type: list
+
+   .. attribute:: labels
+
+      Generated labels with optional noise.
+
+      :type: torch.Tensor
+
+   .. attribute:: features
+
+      Name of the attribute representing the input features.
+
+      :type: str
+
+   .. attribute:: ground_truth_attribute
+
+      Name of the attribute considered as ground truth for analysis.
+
+      :type: str
+
+   .. attribute:: subset_data
+
+      List of attributes to be included in subsets.
+
+      :type: list[str]
+
+   .. attribute:: subset_attribute
+
+      Additional attributes to be considered in subsets.
+
+      :type: list[str]
+
+
+   .. py:attribute:: pn_zero_likelihood
+      :value: 0.5
+
+
+
+   .. py:attribute:: pn_weight_factor
+      :value: 10
+
+
+
+   .. py:attribute:: pn_features
+      :value: [0]
+
+
+
+   .. py:attribute:: cat_features
+      :value: [0]
+
+
+
+   .. py:attribute:: label_noise
+
+
+   .. py:attribute:: labels
+
+
+   .. py:attribute:: features
+      :value: 'samples'
+
+
+
+   .. py:attribute:: ground_truth_attribute
+      :value: 'ground_truth'
+
+
+
+   .. py:attribute:: subset_data
+      :value: ['samples', 'weighted_samples', 'ground_truth']
+
+
+
+   .. py:attribute:: subset_attribute
+
+
+   .. py:method:: _intialize_pn_features(pn_features: Optional[List[int]]) -> List[int]
+
+      Validates and initializes the indices of features to be considered as pertinent negatives (PN).
+
+      Ensures that specified pertinent negative features are within the valid range of feature indices.
+      Falls back to the first feature if pn_features is not specified or invalid.
+
+      :param pn_features: Indices of features specified as pertinent negatives.
+      :type pn_features: list of int, optional
+
+      :returns: The validated list of indices for pertinent negative features.
+      :rtype: list[int]
+
+      :raises ValueError: If any specified pertinent negative feature index is out of the valid range or if the input is not a list.
+
+
+
+   .. py:method:: _initialize_zeros_for_PN() -> None
+
+      Sets the values of pertinent negative (PN) features to zero with a specified likelihood,
+      across all samples in a vectorized manner.
+
+      This modification is performed directly on the `samples` attribute.
+
+
+
+   .. py:method:: _get_new_weighted_samples() -> None
+
+      Recalculates the weighted samples considering the introduction of zeros
+      for pertinent negative features in a vectorized manner.
+
+      Adjusts the weight of features set to zero to emphasize their impact by using the pn_weight_factor.
+      Updates the `weighted_samples` attribute with the new calculations.
+
+
+
+   .. py:method:: _create_ground_truth_baseline(baseline: str) -> None
+
+      Creates the ground truth baseline based on the specified baseline type ("zero" or "one").
+
+      :param baseline: Specifies the type of baseline to use. Must be either "zero" or "one".
+      :type baseline: str
+
+      :raises KeyError: If the specified baseline is not "zero" or "one".
+
+
+
+   .. py:method:: __getitem__(idx: int, others: List[str] = ['ground_truth_attribute', 'baseline']) -> Tuple[Any, Ellipsis]
+
+      Retrieve a sample and its associated label by index.
+
+      :param idx: Index of the sample to retrieve.
+      :type idx: int
+      :param others: Additional items to retrieve. Defaults to [].
+      :type others: list
+
+      :returns: Tuple containing the sample and its label.
+      :rtype: tuple
+
+
+
+   .. py:method:: generate_model() -> torch.nn.Module
+
+      Generates and returns a neural network model tailored for analyzing the impact of pertinent negatives.
+
+      The model is configured to incorporate the weights, pertinent negatives,
+      and the pertinent negative weight factor.
+
+      :returns:
+
+                A neural network model designed to work with the dataset's specific configuration,
+                    including the pertinent negatives and their associated weight factor.
+      :rtype: model.PertinentNN
+
+
+
+.. py:class:: ShatteredGradientsDataset(seed: int = 0, n_features: int = 5, n_samples: int = 100, discontinuity_ratios: Optional[List] = None, bias: float = 0.5, act_fun: str = 'Relu', two_distributions_flag: bool = False, proportion: float = 0.2, classification: bool = False, **kwargs: Any)
+
+   Bases: :py:obj:`xaiunits.datagenerator.WeightedFeaturesDataset`
+
+
+   A class intended to generate data and weights that exhibit shattered gradient phenomena.
+
+   This class generates weights depending on the activation function and the discontinuity ratios.
+   The discontinuity ratio is a set of real numbers (one per feature), so small perturbations
+   around this discontinuity ratio significantly impact the model's explanation.
+
+   Inherits from:
+       WeightedFeaturesDataset: Class extending BaseFeaturesDataset with support for weighted features
+
+   .. attribute:: weights
+
+      Weights applied to each feature.
+
+      :type: Tensor
+
+   .. attribute:: weight_range
+
+      The range (min, max) within which random weights are generated.
+
+      :type: tuple
+
+   .. attribute:: weighted_samples
+
+      The samples after applying weights.
+
+      :type: Tensor
+
+   Initializes a ShatteredGradientsDataset object.
+
+   :param seed: Seed for reproducibility. Defaults to 0.
+   :type seed: int
+   :param n_features: Number of features. Defaults to 5.
+   :type n_features: int
+   :param n_samples: Number of samples. Defaults to 100.
+   :type n_samples: int
+   :param discontinuity_ratios: Ratios indicating feature discontinuity.
+                                If None, ratios are generated randomly. Defaults to None. Example: (1, -3, 4, 2, -2)
+   :type discontinuity_ratios: list, optional
+   :param bias: Bias value. Defaults to 0.5.
+   :type bias: float
+   :param act_fun: Activation function ("Relu", "Gelu", or "Sigmoid"). Defaults to "Relu".
+   :type act_fun: str
+   :param two_distributions_flag: Flag for using two distributions. Defaults to False.
+   :type two_distributions_flag: bool
+   :param proportion: Proportion of samples for narrow distribution when using two distributions.
+                      Defaults to 0.2.
+   :type proportion: float
+   :param classification: Flag for classification. Defaults to False.
+   :type classification: bool
+   :param \*\*kwargs: Arbitrary keyword arguments passed to the base class constructor, including:
+
+                      - sample_std_dev_narrow (float): Standard deviation for sample creation noise in
+                        narrow distribution. Defaults to 0.05.
+                      - sample_std_dev_wide (float): Standard deviation for sample creation noise in
+                        wide distribution. Defaults to 10.
+                      - weight_scale (float): Scalar value to multiply all generated weights with.
+                      - label_std_dev (float): Noise standard deviation to generate labels. Defaults to 0.
+
+
+   .. py:method:: _initialize_with_narrow_wide_distributions(seed: int, n_features: int, n_samples: int, discontinuity_ratios: List, bias: float, act_fun: str, proportion: float, classification: bool, kwargs: Optional[Dict]) -> None
+
+      Initializes the dataset with narrow and wide distributions.
+
+      This method sets up the dataset with narrow and wide distributions. It generates
+      a dataset with the first portion of data belonging to the narrow distribution
+      dependent on sample_std_dev_narrow. Similarly, the second portion of the dataset will
+      belong to the wider distribution, depending on sample_std_dev_wide.
+
+      It also initializes the weights dependent on discontinuity ratios and weight_scale.
+
+      :param seed: Seed for random number generation to ensure reproducibility.
+      :type seed: int
+      :param n_features: Number of features in the dataset.
+      :type n_features: int
+      :param n_samples: Number of samples in the dataset.
+      :type n_samples: int
+      :param discontinuity_ratios: List of discontinuity ratios for each feature.
+      :type discontinuity_ratios: list
+      :param bias: Bias value to adjust the weight scale.
+      :type bias: float
+      :param act_fun: Activation function name ('Relu', 'Gelu', or 'Sigmoid').
+      :type act_fun: str
+      :param proportion: Proportion of narrow samples to wide samples.
+      :type proportion: float
+      :param classification: Indicates if the dataset is for classification (True) or regression (False).
+      :type classification: bool
+      :param \*\*kwargs: Arbitrary keyword arguments passed to the base class constructor, including:
+
+                         - sample_std_dev_narrow (float): Standard deviation for sample creation noise in
+                           narrow distribution. Defaults to 0.05.
+                         - sample_std_dev_wide (float): Standard deviation for sample creation noise in
+                           wide distribution. Defaults to 10.
+                         - weight_scale (float): Scalar value to multiply all generated weights with.
+                         - label_std_dev (float): Noise standard deviation to generate labels. Defaults to 0.
+
+
+
+   .. py:method:: _initialize_with_narrow_distribution(seed: int, n_features: int, n_samples: int, discontinuity_ratios: List, bias: float, act_fun: str, classification: bool, kwargs: Optional[Dict])
+
+      Initializes the dataset with just a narrow distribution.
+
+      It generates a dataset with the first portion of data belonging
+      to the narrow distribution dependent on sample_std_dev_narrow.
+
+      It also initializes the weights dependent on discontinuity ratios and weight_scale.
+
+      :param seed: Seed for random number generation to ensure reproducibility.
+      :type seed: int
+      :param n_features: Number of features in the dataset.
+      :type n_features: int
+      :param n_samples: Number of samples in the dataset.
+      :type n_samples: int
+      :param discontinuity_ratios: List of discontinuity ratios for each feature.
+      :type discontinuity_ratios: list
+      :param bias: Bias value to adjust the weight scale.
+      :type bias: float
+      :param act_fun: Activation function name ('Relu', 'Gelu', or 'Sigmoid').
+      :type act_fun: str
+      :param proportion: Proportion of narrow samples to wide samples.
+      :type proportion: float
+      :param classification: Indicates if the dataset is for classification (True) or regression (False).
+      :type classification: bool
+      :param \*\*kwargs: Arbitrary keyword arguments passed to the base class constructor, including:
+
+                         - sample_std_dev_narrow (float): Standard deviation for sample creation noise in
+                           narrow distribution. Defaults to 0.05.
+                         - weight_scale (float): Scalar value to multiply all generated weights with.
+                         - label_std_dev (float): Noise standard deviation to generate labels. Defaults to 0.
+
+
+
+   .. py:method:: _initialize_samples_narrow_wide(n_samples: int, proportion: float, distribution_narrow: torch.distributions.Distribution, distribution_wide: torch.distributions.Distribution) -> Tuple[torch.Tensor, torch.distributions.Distribution]
+
+      Initializes synthetic samples with narrow and wide distributions.
+
+      :param n_samples: Total number of samples to generate.
+      :type n_samples: int
+      :param proportion: Proportion of samples that should belong to the narrow distribution.
+                         It should be between 0 and 1, where 0 indicates no narrow samples, and 1 indicates all samples are narrow.
+      :type proportion: float
+      :param distribution_narrow: Narrow distribution object.
+      :type distribution_narrow: torch.distributions.Distribution
+      :param distribution_wide: Wide distribution object.
+      :type distribution_wide: torch.distributions.Distribution
+
+      :returns: A tuple containing the generated samples and the distribution used.
+      :rtype: tuple
+
+
+
+   .. py:method:: _initialize_discontinuity_ratios(discontinuity_ratios: Optional[List], n_features: int) -> List[torch.Tensor]
+
+      Initialize discontinuity ratios for each feature in the dataset.
+
+      If `discontinuity_ratios` is None, this method generates initial discontinuity ratios for each feature
+      based on the specified `n_features`.
+
+      :param discontinuity_ratios: List of discontinuity ratios for each feature.
+                                   If None, new discontinuity ratios will be generated.
+      :type discontinuity_ratios: list | NoneType
+      :param n_features: Number of features in the dataset.
+      :type n_features: int
+
+      :returns: List of discontinuity ratios for each feature.
+      :rtype: list
+
+      :raises AssertionError: If there are no positive or negative ratios, if `discontinuity_ratios`
+          is not a list, or if the length of `discontinuity_ratios` does not match `n_features`.
+
+
+
+   .. py:method:: _get_default_distribution_narrow(n_features: int, kwargs: Optional[Dict]) -> Tuple[torch.distributions.Distribution, Dict]
+
+      Returns the default narrow distribution for the dataset.
+
+      This method sets the default narrow distribution based on the provided `kwargs` or defaults.
+      The sample_std_dev_narrow is used to determine the covariance matrix of the distribution.
+
+      :param n_features: Number of features in the dataset.
+      :type n_features: int
+      :param kwargs: Additional keyword arguments for configuration:
+
+                     - sample_std_dev_narrow (float): Used to determine the covariance
+                       matrix of the distribution.
+      :type kwargs: dict
+
+      :returns: A tuple containing the default narrow distribution and the modified kwargs.
+      :rtype: tuple
+
+
+
+   .. py:method:: _get_default_distribution_wide(n_features: int, kwargs: Optional[Dict]) -> Tuple[torch.distributions.Distribution, Dict]
+
+      Returns the default wide distribution for the dataset.
+
+      This method sets up the default wide distribution based on the provided `kwargs` or defaults.
+      The sample_std_dev_wide is used to determine the covariance matrix of the distribution.
+
+      :param n_features: Number of features in the dataset.
+      :type n_features: int
+      :param kwargs: Additional keyword arguments for configuration:
+
+                     - sample_std_dev_wide (float): Used to determine the covariance
+                       matrix of the distribution.
+      :type kwargs: dict
+
+      :returns: A tuple containing the default wide distribution and the modified kwargs.
+      :rtype: tuple
+
+
+
+   .. py:method:: _default_activation_function(act_fun: str, classification: bool) -> torch.nn.Module
+
+      Returns the default activation function based on the provided function name and task type.
+
+      :param act_fun: Name or instance of the activation function ('Relu', 'Gelu', 'Sigmoid'),
+                      or a custom activation function instance.
+      :type act_fun: str or nn.Module
+      :param classification: Indicates if the dataset is for classification (True) or regression (False).
+      :type classification: bool
+
+      :returns: The default activation function is based on the specified name, instance, and task type.
+      :rtype: nn.Module
+
+      :raises KeyError: If the provided activation function is not one of 'Relu', 'Gelu', or 'Sigmoid',
+          and it does not match the type of a custom activation function already defined in the mapping.
+
+
+
+   .. py:method:: _get_weight_scale(kwargs: Optional[Dict], act_fun: str) -> Dict
+
+      Adjust the weight scaling factor based on the activation function used.
+
+      This method calculates and updates the weight scaling factor in the kwargs dictionary
+      based on the provided activation function. A different default weight scale
+      is applied for' Sigmoid' activation than other activation functions.
+
+      :param kwargs: Additional keyword arguments, potentially including 'weight_scale'.
+                     If the user does not specify weight_scale, Default is implemented.
+      :type kwargs: dict
+      :param act_fun: Name of the activation function ('Relu', 'Gelu', or 'Sigmoid').
+      :type act_fun: str
+
+      :returns: Updated kwargs with the 'weight_scale' value adjusted according to the activation function.
+      :rtype: dict
+
+      :raises KeyError: If the activation function is not one of 'Relu', 'Gelu', or 'Sigmoid'.
+
+
+
+   .. py:method:: _generate_default_weights(n_features: int, weight_scale: float, act_fun: str) -> torch.Tensor
+
+      Generate default weights based on discontinuity ratios, bias, and activation function.
+
+      :param n_features: Number of features in the dataset.
+      :type n_features: int
+      :param weight_scale: Scaling factor for weight initialization.
+      :type weight_scale: float
+      :param act_fun: Name of the activation function ('Relu', 'Gelu', or 'Sigmoid').
+      :type act_fun: str
+
+      :returns: Default weights for each feature, adjusted based on discontinuity ratios, bias, and activation function.
+      :rtype: torch.Tensor
+
+      :raises ZeroDivisionError: If the sum of positive or negative ratios is zero, indicating a configuration issue.
+
+
+
+   .. py:method:: generate_model() -> torch.nn.Module
+
+      Generate a model using the Shattered Gradients Neural Network architecture.
+
+      :returns: An instance of the ShatteredGradientsNN model.
+      :rtype: model.ShatteredGradientsNN
+
+
+
+   .. py:method:: __getitem__(idx: int, others: List[str] = []) -> Tuple[Any, Ellipsis]
+
+      Retrieve a sample and its associated label by index.
+
+      :param idx: Index of the sample to retrieve.
+      :type idx: int
+      :param others: Additional items to retrieve. Defaults to [].
+      :type others: list
+
+      :returns: Tuple containing the sample and its label.
+      :rtype: tuple
+
+
+
+   .. py:property:: default_metric
+      :type: None
+
+
+      The default metric for evaluating the performance of explanation methods applied
+      to this dataset.
+
+      For this dataset, the default metric is the max sensitivity metric.
+
+      :returns:
+
+                A class that wraps around the default metric to be instantiated
+                    within the pipeline.
+      :rtype: type
+
+
+.. py:class:: UncertaintyAwareDataset(n_features: int = 5, weights: Optional[torch.Tensor] = None, common_features: int = 1, seed: int = 0, n_samples: int = 10, **kwargs: Any)
+
+   Bases: :py:obj:`xaiunits.datagenerator.BaseFeaturesDataset`
+
+
+   A dataset designed to investigate how feature attribution methods treat inputs
+   features that equally impact model prediction.
+
+   In particular, uncertainty/common features are input features that contribution equally
+   to output class prediction. feature attribution method is expected not to assign any attribution
+   score to these uncertainty inputs. The last columns of the dataset are uncertainty/common features.
+
+   Users can also pass in their own weights if they wish to test for more complex uncertainty
+   behavior, e.g. uncertainty/common feature only contribution equally to a subset of output classes.
+
+   Inherits from:
+       BaseFeaturesDataset: Base class for generating datasets with features and labels.
+
+   .. attribute:: weighted_samples
+
+      Samples multiplied by weights.
+
+      :type: torch.Tensor
+
+   .. attribute:: weights
+
+      Weights matrix for feature transformation.
+
+      :type: torch.Tensor
+
+   .. attribute:: labels
+
+      Softmax output of weighted samples.
+
+      :type: torch.Tensor
+
+   Initializes an UncertaintyAwareDataset object.
+
+   :param n_features: Number of features in the dataset. Defaults to 5.
+   :type n_features: int
+   :param weights: Custom weights matrix for feature transformation. Defaults to None.
+   :type weights: torch.Tensor, optional
+   :param common_features: Number of uncertainty/common features present. Defaults to 1.
+   :type common_features: int
+   :param seed: Seed for random number generation. Defaults to 0.
+   :type seed: int
+   :param n_samples: Number of samples in the dataset. Defaults to 10.
+   :type n_samples: int
+   :param \*\*kwargs: Additional keyword arguments for the base class constructor.
+
+
+   .. py:attribute:: common_features
+      :value: 1
+
+
+
+   .. py:attribute:: weighted_samples
+
+
+   .. py:attribute:: weights
+
+
+   .. py:attribute:: labels
+
+
+   .. py:attribute:: mask
+
+
+   .. py:attribute:: features
+      :value: 'samples'
+
+
+
+   .. py:attribute:: ground_truth_attribute
+      :value: 'mask'
+
+
+
+   .. py:attribute:: subset_data
+      :value: ['samples', 'weighted_samples', 'mask']
+
+
+
+   .. py:attribute:: subset_attribute
+
+
+   .. py:method:: _create_weights(n_features: int, weights: Optional[torch.Tensor], common_features: int) -> torch.Tensor
+
+      Creates weights matrix based on common features.
+
+      :param n_features: Number of features in the dataset.
+      :type n_features: int
+      :param weights: Custom weights matrix for feature transformation.
+      :type weights: torch.Tensor
+      :param common_features: List of indices representing common features.
+      :type common_features: list
+
+      :returns: Weights matrix for feature transformation.
+      :rtype: weights (torch.Tensor)
+
+
+
+   .. py:method:: __getitem__(idx: int, others: list[str] = ['ground_truth_attribute']) -> Tuple[Any, Ellipsis]
+
+      Retrieve a sample and its associated label by index.
+
+      :param idx: Index of the sample to retrieve.
+      :type idx: int
+      :param others: Additional items to retrieve. Defaults to ["ground_truth_attribute"].
+      :type others: list
+
+      :returns: Tuple containing the sample and its label.
+      :rtype: tuple
+
+
+
+   .. py:method:: generate_model(softmax_layer: bool = True) -> torch.nn.Module
+
+      Generates an UncertaintyNN model based on the dataset.
+
+      :returns: Instance of UncertaintyNN model.
+      :rtype: model.UncertaintyNN
+
+
+
+   .. py:property:: default_metric
+      :type: Callable
+
+
+      The default metric for evaluating the performance of explanation methods applied
+      to this dataset.
+
+      For this dataset, the default metric is modified Mean Squared Error (MSE) loss function.
+      This metric measures the MSE for common/uncertainty features which should be 0.
+
+      :returns:
+
+                A class that wraps around the default metric to be instantiated
+                    within the pipeline.
+      :rtype: type
+
+
+.. py:class:: TextTriggerDataset(index: Optional[Tuple[int, int]] = None, tokenizer: Optional[Any] = None, max_sequence_length: int = 4096, seed: int = 42, baselines: int | str = 220, skip_tokens: List[str] = [], model_name: str = 'XAIUnits/TriggerLLM_v2')
+
+   Bases: :py:obj:`BaseTextDataset`
+
+
+   A PyTorch Dataset for text data with trigger words and feature masks, designed for explainable AI (XAI) tasks.
+
+   This dataset loads text data, tokenizes it, identifies trigger words, and generates feature masks highlighting these words.
+   It's specifically tailored for analyzing the impact of trigger words on model predictions.
+
+   .. attribute:: index
+
+      A tuple specifying the start and end indices for data subset selection. Defaults to None, using the entire dataset.
+
+      :type: tuple, optional
+
+   .. attribute:: tokenizer
+
+      The tokenizer to use for text processing. If None, it's loaded based on the specified model_name.
+
+      :type: transformers.PreTrainedTokenizer, optional
+
+   .. attribute:: max_sequence_length
+
+      The maximum sequence length for input text. Longer sequences are truncated. Defaults to 4096.
+
+      :type: int, optional
+
+   .. attribute:: seed
+
+      Random seed for shuffling the data. Use -1 for no shuffling. Defaults to 42.
+
+      :type: int, optional
+
+   .. attribute:: baselines
+
+      Baseline token ID or string for attribution methods. Defaults to 220 (space token for Llama models).
+
+      :type: int or str, optional
+
+   .. attribute:: skip_tokens
+
+      List of tokens to skip during attribution. Defaults to an empty list.
+
+      :type: list, optional
+
+   .. attribute:: model_name
+
+      The name of the model to use for loading the tokenizer. Defaults to "XAIUnits/TriggerLLM_v2".
+
+      :type: str, optional
+
+
+   .. py:attribute:: model_name
+      :value: 'XAIUnits/TriggerLLM_v2'
+
+
+
+   .. py:attribute:: target
+
+
+   .. py:method:: __getitem__(idx: int) -> Tuple[Any, Ellipsis]
+
+
+   .. py:method:: __len__() -> int
+
+
+   .. py:method:: generate_model() -> Tuple[Any, Any]
+
+
+   .. py:property:: collate_fn
+      :type: Callable
+
+
+
+   .. py:property:: default_metric
+      :type: Callable
+
+
+

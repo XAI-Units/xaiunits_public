@@ -1,0 +1,53 @@
+model.continuous
+================
+
+.. py:module:: model.continuous
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   model.continuous.ContinuousFeaturesNN
+
+
+Module Contents
+---------------
+
+.. py:class:: ContinuousFeaturesNN(n_features: int, weights: torch.Tensor)
+
+   Bases: :py:obj:`torch.nn.Sequential`
+
+
+   A crafted neural network model that incorporates continuous features with ReLU.
+
+   Inherits from:
+       torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+       sequential manner.
+
+   Initializes a ContinuousFeaturesNN object.
+
+   :param n_features: dimensions of the input.
+   :type n_features: int
+   :param weights: weights of the model. Should have length `n_features`.
+   :type weights: torch.Tensor
+
+
+   .. py:method:: _create_layer_weights(n_features: int, weights: torch.Tensor) -> Tuple
+
+      Creates the weights for the layers in a ContinuousFeaturesNN model.
+
+      :param n_features: Number of features.
+      :type n_features: int
+      :param weights: Feature weights of the model. Should have length `continuous_dim`.
+      :type weights: torch.Tensor
+
+      :returns: Tuple containing the weights and activation functions for the
+                neural network model.
+      :rtype: tuple[list, NoneType, list]
+
+      :raises AssertionError: If weights are not specified in a valid shape.
+
+
+

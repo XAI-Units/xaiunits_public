@@ -1,0 +1,217 @@
+datagenerator.pertinent_negatives
+=================================
+
+.. py:module:: datagenerator.pertinent_negatives
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   datagenerator.pertinent_negatives.data
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   datagenerator.pertinent_negatives.PertinentNegativesDataset
+
+
+Module Contents
+---------------
+
+.. py:class:: PertinentNegativesDataset(seed: int = 0, n_features: int = 5, n_samples: int = 10, distribution: str = 'normal', weight_range: Tuple[float, float] = (-1.0, 1.0), weights: Optional[torch.Tensor] = None, pn_features: Optional[List[int]] = None, pn_zero_likelihood: float = 0.5, pn_weight_factor: float = 10, baseline: str = 'zero')
+
+   Bases: :py:obj:`xaiunits.datagenerator.WeightedFeaturesDataset`
+
+
+   A dataset designed to investigate the impact of pertinent negative (PN) features
+   on model predictions by introducing zero values in selected features, which are
+   expected to significantly impact the output.
+
+   This dataset is useful for scenarios where the absence of certain features
+   (indicated by zero values) provides important information for model predictions.
+
+   Inherits from:
+       WeightedFeaturesDataset: Class extending BaseFeaturesDataset with support for weighted features
+
+   .. attribute:: pn_features
+
+      Indices of features considered as pertinent negatives.
+
+      :type: list[int]
+
+   .. attribute:: pn_zero_likelihood
+
+      Likelihood of a pertinent negative feature being set to zero.
+
+      :type: float
+
+   .. attribute:: pn_weight_factor
+
+      Weight factor applied to the pertinent negative features to emphasize their impact.
+
+      :type: float
+
+   .. attribute:: cat_features
+
+      Categorical features derived from the pertinent negatives.
+
+      :type: list
+
+   .. attribute:: labels
+
+      Generated labels with optional noise.
+
+      :type: torch.Tensor
+
+   .. attribute:: features
+
+      Name of the attribute representing the input features.
+
+      :type: str
+
+   .. attribute:: ground_truth_attribute
+
+      Name of the attribute considered as ground truth for analysis.
+
+      :type: str
+
+   .. attribute:: subset_data
+
+      List of attributes to be included in subsets.
+
+      :type: list[str]
+
+   .. attribute:: subset_attribute
+
+      Additional attributes to be considered in subsets.
+
+      :type: list[str]
+
+
+   .. py:attribute:: pn_zero_likelihood
+      :value: 0.5
+
+
+
+   .. py:attribute:: pn_weight_factor
+      :value: 10
+
+
+
+   .. py:attribute:: pn_features
+      :value: [0]
+
+
+
+   .. py:attribute:: cat_features
+      :value: [0]
+
+
+
+   .. py:attribute:: label_noise
+
+
+   .. py:attribute:: labels
+
+
+   .. py:attribute:: features
+      :value: 'samples'
+
+
+
+   .. py:attribute:: ground_truth_attribute
+      :value: 'ground_truth'
+
+
+
+   .. py:attribute:: subset_data
+      :value: ['samples', 'weighted_samples', 'ground_truth']
+
+
+
+   .. py:attribute:: subset_attribute
+
+
+   .. py:method:: _intialize_pn_features(pn_features: Optional[List[int]]) -> List[int]
+
+      Validates and initializes the indices of features to be considered as pertinent negatives (PN).
+
+      Ensures that specified pertinent negative features are within the valid range of feature indices.
+      Falls back to the first feature if pn_features is not specified or invalid.
+
+      :param pn_features: Indices of features specified as pertinent negatives.
+      :type pn_features: list of int, optional
+
+      :returns: The validated list of indices for pertinent negative features.
+      :rtype: list[int]
+
+      :raises ValueError: If any specified pertinent negative feature index is out of the valid range or if the input is not a list.
+
+
+
+   .. py:method:: _initialize_zeros_for_PN() -> None
+
+      Sets the values of pertinent negative (PN) features to zero with a specified likelihood,
+      across all samples in a vectorized manner.
+
+      This modification is performed directly on the `samples` attribute.
+
+
+
+   .. py:method:: _get_new_weighted_samples() -> None
+
+      Recalculates the weighted samples considering the introduction of zeros
+      for pertinent negative features in a vectorized manner.
+
+      Adjusts the weight of features set to zero to emphasize their impact by using the pn_weight_factor.
+      Updates the `weighted_samples` attribute with the new calculations.
+
+
+
+   .. py:method:: _create_ground_truth_baseline(baseline: str) -> None
+
+      Creates the ground truth baseline based on the specified baseline type ("zero" or "one").
+
+      :param baseline: Specifies the type of baseline to use. Must be either "zero" or "one".
+      :type baseline: str
+
+      :raises KeyError: If the specified baseline is not "zero" or "one".
+
+
+
+   .. py:method:: __getitem__(idx: int, others: List[str] = ['ground_truth_attribute', 'baseline']) -> Tuple[Any, Ellipsis]
+
+      Retrieve a sample and its associated label by index.
+
+      :param idx: Index of the sample to retrieve.
+      :type idx: int
+      :param others: Additional items to retrieve. Defaults to [].
+      :type others: list
+
+      :returns: Tuple containing the sample and its label.
+      :rtype: tuple
+
+
+
+   .. py:method:: generate_model() -> torch.nn.Module
+
+      Generates and returns a neural network model tailored for analyzing the impact of pertinent negatives.
+
+      The model is configured to incorporate the weights, pertinent negatives,
+      and the pertinent negative weight factor.
+
+      :returns:
+
+                A neural network model designed to work with the dataset's specific configuration,
+                    including the pertinent negatives and their associated weight factor.
+      :rtype: model.PertinentNN
+
+
+
+.. py:data:: data
+

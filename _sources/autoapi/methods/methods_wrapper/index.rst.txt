@@ -1,0 +1,138 @@
+methods.methods_wrapper
+=======================
+
+.. py:module:: methods.methods_wrapper
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   methods.methods_wrapper.model
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   methods.methods_wrapper._validate_input_gen_arguments
+   methods.methods_wrapper.default_attribute_input_generator
+   methods.methods_wrapper._validate_wrapper_inputs
+   methods.methods_wrapper.wrap_method
+   methods.methods_wrapper.wrap_method_llm
+
+
+Module Contents
+---------------
+
+.. py:function:: _validate_input_gen_arguments(feature_inputs: torch.Tensor, y_labels: Optional[torch.Tensor], target: Optional[torch.Tensor], context: Optional[Dict], model: Any) -> None
+
+   Validates the input arguments for the input generator function.
+
+   :param feature_inputs: Input features.
+   :type feature_inputs: Any
+   :param y_labels: Ground truth labels.
+   :type y_labels: Any
+   :param target: Target labels.
+   :type target: Any
+   :param context: Context.
+   :type context: Any
+   :param model: Model instance.
+   :type model: Any
+
+   :raises AssertionError: If input arguments are not of the expected types.
+
+
+.. py:function:: default_attribute_input_generator(feature_inputs: torch.Tensor, y_labels: Optional[torch.Tensor], target: Optional[torch.Tensor], context: Optional[Dict], model: Any) -> Dict[str, Any]
+
+   Returns the default input generator.
+
+   Input generator collates information from model, model output, dataset and others into
+   single dictionary that will be unpack and used as arguments for the attribute class method.
+
+   The default keys naming schema is that of captum's attribute; create a custom input generator
+   if you are using functions from other libraries.
+
+   Some arguments passed in (see pipeline classes) are not used by the default function (e.g. y_labels).
+   These arguments are there as we anticipate that users who create and pass in their own input generator function
+   may require these arguments.
+
+   :param feature_inputs: Input tensor.
+   :type feature_inputs: torch.Tensor
+   :param y_labels: True y label tensor.
+   :type y_labels: torch.Tensor
+   :param target: Target arguments pass on to Captum attribute function.
+   :type target: torch.Tensor
+   :param context: Dictionary containing other relevant data (e.g. ground truth attribution).
+   :type context: dict
+   :param model: The model that FA method is evaluated on.
+   :type model: torch.nn.Module
+
+   :returns: Dictionary with all argument required for captum attribute function.
+   :rtype: dict
+
+
+.. py:function:: _validate_wrapper_inputs(method: Any, input_generator_fns: Callable, out_processing: Callable) -> None
+
+   Validates the input wrappers.
+
+   :param method: Explanation Method to be extended.
+   :type method: type
+   :param input_generator_fns: Callable to generate input arguments for method.attribute.
+   :type input_generator_fns: Callable
+   :param out_processing: Callable to post-process method.attribute output.
+   :type out_processing: Callable
+
+
+.. py:function:: wrap_method(method: Any, input_generator_fns: Callable = default_attribute_input_generator, out_processing: Optional[Callable] = None, other_inputs: Dict = {}, class_params: Dict = {}, pre_fix: str = 'wrapper_', name: Optional[str] = None)
+
+   Creates Dynamic Subclass to standardize class methods across difference method classes.
+
+   :param method: Explanation Method to be extended.
+   :type method: class
+   :param input_generator_fns: Callable to generate input arguments for method.attribute.
+                               Defaults to default_attribute_input_generator.
+   :type input_generator_fns: Callable
+   :param out_processing: Callable to post-process method.attribute output.
+                          Defaults to None.
+   :type out_processing: Callable, optional
+   :param other_inputs: Other args to be pass on to method.attribute. Defaults to {}.
+   :type other_inputs: dict
+   :param class_params: Other args to be used to initialize method class. Defaults to {}.
+   :type class_params: dict
+   :param pre_fix: prefix to be added to subclass. Defaults to 'wrapper\_'
+   :type pre_fix: str
+   :param name: The name of the method. If None uses the name of the method class. Defaults to None.
+   :type name: str
+
+   :returns: A subclass of method with standardised interface.
+   :rtype: type
+
+
+.. py:function:: wrap_method_llm(method: Any, input_generator_fns: Callable = default_attribute_input_generator, out_processing: Optional[Callable] = None, other_inputs: Dict = {}, class_params: Dict = {}, gen_args: Dict = {'max_new_tokens': 1}, tokenizer: Optional[Any] = None, pre_fix: str = 'wrapper_')
+
+   Creates Dynamic Subclass to standardize class methods across difference method classes.
+
+   :param method: Explanation Method to be extended.
+   :type method: class
+   :param input_generator_fns: Callable to generate input arguments for method.attribute.
+                               Defaults to default_attribute_input_generator.
+   :type input_generator_fns: Callable
+   :param out_processing: Callable to post-process method.attribute output.
+                          Defaults to None.
+   :type out_processing: Callable, optional
+   :param other_inputs: Other args to be pass on to method.attribute. Defaults to {}.
+   :type other_inputs: dict
+   :param class_params: Other args to be used to initialize method class. Defaults to {}.
+   :type class_params: dict
+   :param pre_fix: prefix to be added to subclass. Defaults to 'wrapper_'.
+   :type pre_fix: str
+
+   :returns: A subclass of method with standardized interface.
+   :rtype: type
+
+
+.. py:data:: model
+

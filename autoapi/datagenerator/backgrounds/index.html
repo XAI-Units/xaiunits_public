@@ -1,0 +1,343 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>datagenerator.backgrounds &mdash; XAI-Units 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="datagenerator.boolean" href="../boolean/index.html" />
+    <link rel="prev" title="datagenerator" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            XAI-Units
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../library_quickstart.html">Quickstart - Library Walkthrough</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../image_dataset_example.html">Image Dataset Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../custom_methods_and_custom_datasets.html">Customization Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../model/index.html">model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../methods/index.html">methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../metrics/index.html">metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../trainer/index.html">trainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pipeline/index.html">pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fine_tune/index.html">fine_tune</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../common_lib/index.html">common_lib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">datagenerator</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">datagenerator.backgrounds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../boolean/index.html">datagenerator.boolean</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../conflicting/index.html">datagenerator.conflicting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../data_generation/index.html">datagenerator.data_generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../foregrounds/index.html">datagenerator.foregrounds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../image_generation/index.html">datagenerator.image_generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../interacting_features/index.html">datagenerator.interacting_features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../pertinent_negatives/index.html">datagenerator.pertinent_negatives</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../shattered_grad/index.html">datagenerator.shattered_grad</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../text_datasets/index.html">datagenerator.text_datasets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../uncertainty_aware/index.html">datagenerator.uncertainty_aware</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#attributes">Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">XAI-Units</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">datagenerator</a></li>
+      <li class="breadcrumb-item active">datagenerator.backgrounds</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/datagenerator/backgrounds/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-datagenerator.backgrounds">
+<span id="datagenerator-backgrounds"></span><h1>datagenerator.backgrounds<a class="headerlink" href="#module-datagenerator.backgrounds" title="Link to this heading"></a></h1>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#datagenerator.backgrounds.BackgroundGenerator" title="datagenerator.backgrounds.BackgroundGenerator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BackgroundGenerator</span></code></a></p></td>
+<td><p>Manages and provides background images for dataset generation.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="datagenerator.backgrounds.BackgroundGenerator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">datagenerator.backgrounds.</span></span><span class="sig-name descname"><span class="pre">BackgroundGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">background_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(512,</span> <span class="pre">512)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datagenerator.backgrounds.BackgroundGenerator" title="Link to this definition"></a></dt>
+<dd><p>Manages and provides background images for dataset generation.</p>
+<p>Downloads, stores, and processes a collection of background images from a specified URL.
+This is particularly useful for generating diverse backgrounds in supervised learning datasets.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.backgrounds.BackgroundGenerator.background_size">
+<span class="sig-name descname"><span class="pre">background_size</span></span><a class="headerlink" href="#datagenerator.backgrounds.BackgroundGenerator.background_size" title="Link to this definition"></a></dt>
+<dd><p>Desired size (width, height) of background images, adjusted within a specified
+range due to original image size constraints. Defaults to (512, 512)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.backgrounds.BackgroundGenerator.background_names">
+<span class="sig-name descname"><span class="pre">background_names</span></span><a class="headerlink" href="#datagenerator.backgrounds.BackgroundGenerator.background_names" title="Link to this definition"></a></dt>
+<dd><p>List of all background image files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Initializes the BackgroundGenerator with an optional specific background size.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>background_size</strong> (<em>tuple</em>) – The width and height in pixels of the background images,
+adjusted if outside the 300x300 to 640x640 range. Defaults to (512, 512).</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.backgrounds.BackgroundGenerator._data_url">
+<span class="sig-name descname"><span class="pre">_data_url</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://www.robots.ox.ac.uk/~vgg/data/dtd/download/dtd-r1.0.1.tar.gz'</span></em><a class="headerlink" href="#datagenerator.backgrounds.BackgroundGenerator._data_url" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.backgrounds.BackgroundGenerator._data_folder">
+<span class="sig-name descname"><span class="pre">_data_folder</span></span><a class="headerlink" href="#datagenerator.backgrounds.BackgroundGenerator._data_folder" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.backgrounds.BackgroundGenerator._data_filename">
+<span class="sig-name descname"><span class="pre">_data_filename</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'dtd-r1.0.1.tar.gz'</span></em><a class="headerlink" href="#datagenerator.backgrounds.BackgroundGenerator._data_filename" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">background_size</span></span><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">background_names</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.backgrounds.BackgroundGenerator.get_data_path">
+<span class="sig-name descname"><span class="pre">get_data_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#datagenerator.backgrounds.BackgroundGenerator.get_data_path" title="Link to this definition"></a></dt>
+<dd><p>Determines and ensures the existence of a data storage path.</p>
+<p>Calculates the path for storing downloaded data based on the script’s location.
+Creates the data directory if it does not exist, facilitating consistent data access.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The absolute path to the ‘data’ directory.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.backgrounds.BackgroundGenerator.download">
+<span class="sig-name descname"><span class="pre">download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extract_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#datagenerator.backgrounds.BackgroundGenerator.download" title="Link to this definition"></a></dt>
+<dd><p>Downloads and extracts a dataset archive from a specified URL.</p>
+<p>Handles the download of a compressed file, its storage, and extraction into a target folder.
+Optionally removes the downloaded archive after successful extraction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>) – URL of the file to be downloaded.</p></li>
+<li><p><strong>file_name</strong> (<em>str</em>) – Name for saving the downloaded file.</p></li>
+<li><p><strong>extract_folder</strong> (<em>str</em>) – Target folder for extracting the file’s contents.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.backgrounds.BackgroundGenerator._validate_background_size">
+<span class="sig-name descname"><span class="pre">_validate_background_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">background_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.backgrounds.BackgroundGenerator._validate_background_size" title="Link to this definition"></a></dt>
+<dd><p>Validates and adjusts the provided background size within acceptable limits.</p>
+<p>Ensures the background size dimensions are within the 300 to 640 pixels range.
+Adjusts dimensions outside this range to the nearest valid value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>background_size</strong> (<em>tuple</em>) – Desired background size as a (width, height) tuple.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Validated and possibly adjusted background size.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If input is not a tuple of two integers.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.backgrounds.BackgroundGenerator.get_background_names">
+<span class="sig-name descname"><span class="pre">get_background_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.backgrounds.BackgroundGenerator.get_background_names" title="Link to this definition"></a></dt>
+<dd><p>Retrieves a flattened list of filenames of all background images within the dataset.</p>
+<p>This method scans the dataset’s base folder for all subfolders, listing
+the names of files that are recognized as image files (PNG, JPG, JPEG) across
+all these subfolders. The result is a single list that aggregates the filenames
+from all the subfolders, providing a comprehensive view of the available
+background images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>A list containing the filenames of all background images found within</dt><dd><p>the dataset’s base directory. Filenames are listed as strings and
+include images across all subfolders.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.backgrounds.BackgroundGenerator.get_background">
+<span class="sig-name descname"><span class="pre">get_background</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PIL.Image.Image</span></span></span><a class="headerlink" href="#datagenerator.backgrounds.BackgroundGenerator.get_background" title="Link to this definition"></a></dt>
+<dd><p>Fetches and resizes a background image from the stored dataset to the specified background size.</p>
+<p>This method either selects a specific background image if an image file name is provided,
+or randomly picks one from the dataset. The selected image is then resized to match the
+configured <cite>background_size</cite>. If the specified file does not exist or other errors occur
+during file handling, appropriate exceptions are raised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_file</strong> (<em>str</em><em>, </em><em>optional</em>) – The name of the specific background image file to fetch.
+If None, a random image file from the dataset is selected. The file name should
+be relative to the base dataset directory. Defaults to None.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The selected and resized background image as a PIL Image object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Image</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> – Raised if the specified image file does not exist in the dataset directory.</p></li>
+<li><p><strong>RuntimeError</strong> – Raised if there are issues opening the file, such as corruption or unexpected file format.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">bg_generator</span> <span class="o">=</span> <span class="n">BackgroundGenerator</span><span class="p">(</span><span class="n">background_size</span><span class="o">=</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">background_image</span> <span class="o">=</span> <span class="n">bg_generator</span><span class="o">.</span><span class="n">get_background</span><span class="p">(</span><span class="s1">&#39;example.jpg&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">background_image</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>  <span class="c1"># This will display the image.</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The images are assumed to be stored in a directory structure within a ‘dtd/images’ folder. Each
+subfolder in ‘dtd/images’ represents a different category or type of backgrounds. Image files
+should be in formats recognized by PIL (e.g., PNG, JPG).</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="datagenerator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../boolean/index.html" class="btn btn-neutral float-right" title="datagenerator.boolean" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, XAI-Units.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

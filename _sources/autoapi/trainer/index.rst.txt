@@ -1,0 +1,186 @@
+trainer
+=======
+
+.. py:module:: trainer
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/trainer/trainer/index
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   trainer.data_gen
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   trainer.AutoTrainer
+
+
+Package Contents
+----------------
+
+.. py:class:: AutoTrainer(model: Any, loss: torch.nn.Module, optimizer: Any, optimizer_params: Dict = {'lr': 0.0001}, scheduler: Optional[Any] = None, scheduler_params: Optional[Dict] = None, test_eval: Optional[Any] = None)
+
+   Bases: :py:obj:`lightning.LightningModule`
+
+
+   Class that loads up the configuration for performing training, validation, and testing
+   torch.nn.Module models using functionality from PyTorch Lightning.
+
+   Requires lightning.Trainer to perform training and testing.
+
+   If more elaborate settings is needed, please add the necessary configurations
+   through inheritence, or directly implement as a subclass of lightning.LightningModule.
+
+
+   .. attribute:: model
+
+      The model to be trained.
+
+      :type: torch.nn.Module
+
+   .. attribute:: loss
+
+      The loss function used for training.
+
+      :type: function
+
+   .. attribute:: optimizer
+
+      The optimizer used for training.
+
+      :type: type
+
+   .. attribute:: optimizer_params
+
+      Parameters to be passed to the optimizer.
+
+      :type: dict
+
+   .. attribute:: test_eval
+
+      Evaluation function for testing. Defaults to None.
+
+      :type: function
+
+   Initializes an AutoTrainer object.
+
+   :param model: The model to be trained.
+   :type model: torch.nn.Module
+   :param loss: The loss function used for training.
+   :type loss: function
+   :param optimizer: The class of the optimizer used for training.
+   :type optimizer: type
+   :param optimizer_params: Parameters to be passed to the optimizer.
+                            Defaults to {"lr": 0.0001}.
+   :type optimizer_params: dict
+   :param test_eval: Evaluation function for testing. Defaults to None.
+   :type test_eval: function, optional
+
+
+   .. py:attribute:: model
+
+
+   .. py:attribute:: loss
+
+
+   .. py:attribute:: optimizer
+
+
+   .. py:attribute:: optimizer_params
+
+
+   .. py:attribute:: test_eval
+      :value: None
+
+
+
+   .. py:attribute:: scheduler
+      :value: None
+
+
+
+   .. py:attribute:: scheduler_params
+      :value: None
+
+
+
+   .. py:method:: training_step(batch: Tuple, batch_idx: int) -> torch.Tensor
+
+      Performs a forward pass of the model on a batch of training data
+      and returns corresponding loss.
+
+      The computed loss is logged as "train_loss".
+
+      :param batch: The batch used for training.
+      :type batch: torch.Tensor
+      :param batch_idx: Id corresponding to the used batch.
+      :type batch_idx: int
+
+      :returns: training loss from forward pass of batch into model.
+      :rtype: torch.Tensor
+
+
+
+   .. py:method:: validation_step(batch: Tuple, batch_idx: int) -> None
+
+      Performs a forward pass of the model on a batch of validation data.
+
+      The computed loss is logged as "val_loss".
+
+      :param batch: The batch used for training.
+      :type batch: torch.Tensor
+      :param batch_idx: Id corresponding to the used batch.
+      :type batch_idx: int
+
+
+
+   .. py:method:: test_step(batch: Tuple, batch_idx: int) -> None
+
+      Performs a forward pass of the model on a batch of testing data.
+
+      The computed loss is logged as "test_loss".
+
+      :param batch: The batch used for training.
+      :type batch: torch.Tensor
+      :param batch_idx: Id corresponding to the used batch.
+      :type batch_idx: int
+
+
+
+   .. py:method:: forward(inputs: Union[torch.Tensor, Any]) -> Union[torch.Tensor, Any]
+
+      Perform one forward pass of the model.
+
+      :param inputs: Input to the model.
+      :type inputs: torch.Tensor
+
+      :returns: Model output.
+      :rtype: torch.Tensor
+
+
+
+   .. py:method:: configure_optimizers() -> Dict[str, Any]
+
+      Define the optimizer of the project.
+
+      :returns: The dictionary containing optimizer and scheduler used for training.
+      :rtype: Dict
+
+
+
+.. py:data:: data_gen
+

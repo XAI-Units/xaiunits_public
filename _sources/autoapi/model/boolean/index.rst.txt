@@ -1,0 +1,332 @@
+model.boolean
+=============
+
+.. py:module:: model.boolean
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   model.boolean.k
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   model.boolean.ParseTree
+   model.boolean.PropFormulaNN
+
+
+Module Contents
+---------------
+
+.. py:class:: ParseTree(expr=None)
+
+   A class that parses and represents a propositional formula in a tree structure.
+
+   .. attribute:: node
+
+      The node of the ParseTree.
+
+      :type: str
+
+   .. attribute:: subtrees
+
+      The subtrees of the ParseTree.
+
+      :type: list[ParseTree]
+
+   .. attribute:: height
+
+      The height of the ParseTree relative to the root.
+
+      :type: int
+
+   Initializes a ParseTree instance.
+
+   If no expression is given, then all the attributes will be set to None.
+   If an expression is given, the expression will be parsed, where its
+   node and subtrees will be extracted accordingly. Also, the height of the ParseTree and
+   its subtrees will be determined.
+
+   If this ParseTree instance is the root of the entire expression, then the horizontal
+   position of the ParseTree and its subtrees will be assigned.
+
+   :param expr: The expression to be parsed. Defaults to None.
+   :type expr: str, optional
+
+
+   .. py:method:: get_leafs()
+
+      Retrieves the list of all leafs nodes in the ParseTree.
+
+      :returns:
+
+                List of all ParseTree instances contianing
+                    leaf nodes/atomic variables of ParseTree.
+      :rtype: list[ParseTree]
+
+
+
+   .. py:method:: get_height_subtrees(target_height)
+
+      Returns the list of all subtrees with the specified height within the ParseTree.
+
+      :param target_height: The target height of interest.
+      :type target_height: int
+
+      :returns:
+
+                A list of ParseTree instances with the specified height relative
+                    to the root.
+      :rtype: List[ParseTree]
+
+
+
+   .. py:method:: __repr__()
+
+      Returns the string representation of the ParseTree.
+
+      :returns: The string representation of the node.
+      :rtype: str
+
+
+
+   .. py:method:: _get_height()
+
+      Returns the height of the ParseTree.
+
+      A ParseTree with a single node and no subtree will have height 0.
+
+      :returns: The height of the ParseTree.
+      :rtype: int
+
+
+
+   .. py:method:: _fill_height_gaps()
+
+      Adds trees between nodes such that the height difference between each
+      node is kept at 1.
+
+
+
+   .. py:method:: _create_identity_trees(subtree)
+
+      Creates ParseTrees that carry the idenity operation.
+
+      :param subtree: The subtree to connect with using intermediate
+                      identity trees.
+      :type subtree: ParseTree
+
+      :returns:
+
+                The first ParseTree that is connected with the target subtree
+                    through the chain of intermidate identity trees.
+      :rtype: ParseTree
+
+
+
+   .. py:method:: _parse(expr)
+
+      Parses string expression of a propositional formula to identify its current node/operator
+      and the subtrees/subformulas for its sub-expressions.
+
+      :param expr: The expression to be parsed.
+      :type expr: sympy.Expr
+
+      :returns: A tuple containing the current node and its subtrees.
+      :rtype: tuple[str, list[ParseTree]]
+
+
+
+.. py:class:: PropFormulaNN(formula_expr: sympy.core.function.FunctionClass, atoms: Tuple)
+
+   Bases: :py:obj:`torch.nn.Sequential`
+
+
+   A neural network model representing a propositional formula that is constructed
+   using only NOT (~), OR (|), AND (&) with syntax from SymPy.
+
+   It takes inputs where -1 represents False and +1 represents True.
+
+   Inherits from:
+       torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+       sequential manner.
+
+   .. attribute:: parse_tree
+
+      The ParseTree representation of the formula.
+
+      :type: ParseTree
+
+   .. attribute:: atoms
+
+      The unique atoms in the formula. The ordering of this
+      tuple matters in determining the ordering of the input to the network.
+
+      :type: tuple[str]
+
+   Initializes a PropFormulaNN instance and generates all the torch.nn.Linear
+   layers necessary to construct the neural network.
+
+   :param formula_expr: The expression representing
+                        the propositional formula. Constructed using only syntax from SymPy with
+                        the operators NOT (~), OR (|), AND (&).
+   :type formula_expr: sympy.core.function.FunctionClass
+   :param atoms: A tuple of unique atoms in the formula.
+   :type atoms: tuple[str]
+
+
+   .. py:attribute:: parse_tree
+
+
+   .. py:attribute:: atoms
+
+
+   .. py:method:: _init_layers() -> List[torch.nn.Module]
+
+      Initializes all the layers of the neural network into a list of nn.Module.
+
+      The layers are initialized and created in ascending order of height in the
+      ParseTree representation of the formula.
+
+      :returns: List of neural network layers.
+      :rtype: list[torch.nn.Module]
+
+
+
+   .. py:method:: _atom_layer() -> torch.nn.Module
+
+      Initializes the first layer of the neural network that duplicates and reorders
+      the input propositional atoms based on their ordering in the ParseTree.
+
+      :returns: Linear layer that duplicates and reorders the input atoms.
+      :rtype: torch.nn.Linear
+
+
+
+   .. py:method:: _get_height_layers(height: int) -> List[torch.nn.Module]
+
+      Retrieves layers corresponding to a specific height in the ParseTree.
+
+      :param height: The specified height within the ParseTree representatation.
+      :type height: int
+
+      :returns:
+
+                List of neural network layers for the nodes that are located
+                    at the given height in the ParseTree representation.
+      :rtype: list[torch.nn.Module]
+
+
+
+   .. py:method:: _init_binary_operator_layers(subtree_ls: List[ParseTree]) -> List[torch.nn.Module]
+
+      Initializes the all the layers associated with carrying out the operators
+      involved in the given list of subtrees.
+
+      It assumes that the given list of subtrees contains at least one that involves
+      a binary operator/connective.
+
+      :param subtree_ls: List of ParseTree instances with the same height in the full
+                         ParseTree that includes binary operators.
+      :type subtree_ls: list[ParseTree]
+
+      :returns: List of neural network layers for binary operators.
+      :rtype: list[torch.nn.Module]
+
+
+
+   .. py:method:: _binary_operator_block(arg_num_ls: List[int], subtree_ls: List[ParseTree], first_block: bool = False) -> List[torch.nn.Module]
+
+      Creates a block of layers that simpliefies the subexpression for the given list of subtrees
+      by applying the binary operator/connective once whenever possible.
+
+      The binary operator/connective from the same subtree can be applied simultaneously as long
+      as the number of arguments inputted to it permits (i.e. divisible by two).
+
+      :param arg_num_ls: List of number of arguments that the operator/node of each
+                         subtrees takes.
+      :type arg_num_ls: list[int]
+      :param subtree_ls: List of subtrees with the same height in the ParseTree.
+      :type subtree_ls: list[ParseTree]
+      :param first_block: Indicates if this is the first block of the layers for this
+                          collection of subtrees with the same height.
+      :type first_block: bool
+
+      :returns: List of neural network layers in a single block.
+      :rtype: list[torch.nn.Module]
+
+
+
+   .. py:method:: _identity_weights() -> Tuple[torch.Tensor, torch.Tensor]
+
+      Generates the weights for the two nn.Linear layers in an identity block.
+
+      :returns: Inter and out layer weights for an identity block.
+      :rtype: tuple[torch.Tensor, torch.Tensor]
+
+
+
+   .. py:method:: _and_or_weights(sub_inter_dim: int, operator: str) -> Tuple[torch.Tensor, torch.Tensor]
+
+      Generates weights for the two nn.Linear layers in an AND or OR block.
+
+      :param sub_inter_dim: Dimension of the intermediate layer.
+      :type sub_inter_dim: int
+      :param operator: The operator type (AND or OR).
+      :type operator: str
+
+      :returns: Inter and out layer weights for an AND or OR block.
+      :rtype: tuple[torch.Tensor, torch.Tensor]
+
+
+
+   .. py:method:: _init_unary_operator_layer(subtree_ls: List[ParseTree]) -> List[torch.nn.Module]
+
+      Initializes the all the layers associated with carrying out the operators
+      involved in the given list of subtrees.
+
+      It assumes that the given list of subtrees contains only unary operators.
+
+      :param subtree_ls: List of ParseTree instances with the same height
+                         in the full ParseTree that only has unary operators.
+      :type subtree_ls: list[ParseTree]
+
+      :returns: List of neural network layers for unary operators.
+      :rtype: list[torch.nn.Module]
+
+
+
+   .. py:method:: _count_binary_operators(subtree_ls: List[ParseTree]) -> int
+
+      Counts the occurrences of binary operators in the given list of ParseTree instances.
+
+      :param subtree_ls: List of ParseTree instances with the same height
+                         in the full ParseTree.
+      :type subtree_ls: list[ParseTree]
+
+      :returns: Count of binary operators.
+      :rtype: int
+
+
+
+   .. py:method:: _post_block_arg_num_ls(arg_num_ls: List[int]) -> List[int]
+
+      Returns the list of number of arguments of each subtree after a binary operator block
+      of layers.
+
+      :param arg_num_ls: List of numbers of arguments for each subtree.
+      :type arg_num_ls: list[int]
+
+      :returns: Number of arguments for each subtree after a block.
+      :rtype: list[int]
+
+
+
+.. py:data:: k
+

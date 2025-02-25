@@ -1,0 +1,163 @@
+datagenerator.backgrounds
+=========================
+
+.. py:module:: datagenerator.backgrounds
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   datagenerator.backgrounds.BackgroundGenerator
+
+
+Module Contents
+---------------
+
+.. py:class:: BackgroundGenerator(background_size: Tuple[int, int] = (512, 512))
+
+   Manages and provides background images for dataset generation.
+
+   Downloads, stores, and processes a collection of background images from a specified URL.
+   This is particularly useful for generating diverse backgrounds in supervised learning datasets.
+
+   .. attribute:: background_size
+
+      Desired size (width, height) of background images, adjusted within a specified
+      range due to original image size constraints. Defaults to (512, 512)
+
+      :type: tuple
+
+   .. attribute:: background_names
+
+      List of all background image files.
+
+      :type: list
+
+   Initializes the BackgroundGenerator with an optional specific background size.
+
+   :param background_size: The width and height in pixels of the background images,
+                           adjusted if outside the 300x300 to 640x640 range. Defaults to (512, 512).
+   :type background_size: tuple
+
+
+   .. py:attribute:: _data_url
+      :value: 'https://www.robots.ox.ac.uk/~vgg/data/dtd/download/dtd-r1.0.1.tar.gz'
+
+
+
+   .. py:attribute:: _data_folder
+
+
+   .. py:attribute:: _data_filename
+      :value: 'dtd-r1.0.1.tar.gz'
+
+
+
+   .. py:attribute:: background_size
+
+
+   .. py:attribute:: background_names
+      :value: []
+
+
+
+   .. py:method:: get_data_path() -> str
+
+      Determines and ensures the existence of a data storage path.
+
+      Calculates the path for storing downloaded data based on the script's location.
+      Creates the data directory if it does not exist, facilitating consistent data access.
+
+      :returns: The absolute path to the 'data' directory.
+      :rtype: str
+
+
+
+   .. py:method:: download(url: str, file_name: str, extract_folder: str) -> None
+
+      Downloads and extracts a dataset archive from a specified URL.
+
+      Handles the download of a compressed file, its storage, and extraction into a target folder.
+      Optionally removes the downloaded archive after successful extraction.
+
+      :param url: URL of the file to be downloaded.
+      :type url: str
+      :param file_name: Name for saving the downloaded file.
+      :type file_name: str
+      :param extract_folder: Target folder for extracting the file's contents.
+      :type extract_folder: str
+
+
+
+   .. py:method:: _validate_background_size(background_size: Tuple[int, int]) -> Tuple[int, int]
+
+      Validates and adjusts the provided background size within acceptable limits.
+
+      Ensures the background size dimensions are within the 300 to 640 pixels range.
+      Adjusts dimensions outside this range to the nearest valid value.
+
+      :param background_size: Desired background size as a (width, height) tuple.
+      :type background_size: tuple
+
+      :returns: Validated and possibly adjusted background size.
+      :rtype: tuple
+
+      :raises ValueError: If input is not a tuple of two integers.
+
+
+
+   .. py:method:: get_background_names() -> List[str]
+
+      Retrieves a flattened list of filenames of all background images within the dataset.
+
+      This method scans the dataset's base folder for all subfolders, listing
+      the names of files that are recognized as image files (PNG, JPG, JPEG) across
+      all these subfolders. The result is a single list that aggregates the filenames
+      from all the subfolders, providing a comprehensive view of the available
+      background images.
+
+      :returns:
+
+                A list containing the filenames of all background images found within
+                    the dataset's base directory. Filenames are listed as strings and
+                    include images across all subfolders.
+      :rtype: list
+
+
+
+   .. py:method:: get_background(image_file: Optional[str] = None) -> PIL.Image.Image
+
+      Fetches and resizes a background image from the stored dataset to the specified background size.
+
+      This method either selects a specific background image if an image file name is provided,
+      or randomly picks one from the dataset. The selected image is then resized to match the
+      configured `background_size`. If the specified file does not exist or other errors occur
+      during file handling, appropriate exceptions are raised.
+
+      :param image_file: The name of the specific background image file to fetch.
+                         If None, a random image file from the dataset is selected. The file name should
+                         be relative to the base dataset directory. Defaults to None.
+      :type image_file: str, optional
+
+      :returns: The selected and resized background image as a PIL Image object.
+      :rtype: Image
+
+      :raises FileNotFoundError: Raised if the specified image file does not exist in the dataset directory.
+      :raises RuntimeError: Raised if there are issues opening the file, such as corruption or unexpected file format.
+
+      .. rubric:: Example
+
+      >>> bg_generator = BackgroundGenerator(background_size=(512, 512))
+      >>> background_image = bg_generator.get_background('example.jpg')
+      >>> background_image.show()  # This will display the image.
+
+      .. note::
+
+         The images are assumed to be stored in a directory structure within a 'dtd/images' folder. Each
+         subfolder in 'dtd/images' represents a different category or type of backgrounds. Image files
+         should be in formats recognized by PIL (e.g., PNG, JPG).
+
+
+

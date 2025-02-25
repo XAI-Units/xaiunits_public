@@ -1,0 +1,99 @@
+model.interaction_features
+==========================
+
+.. py:module:: model.interaction_features
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   model.interaction_features.data
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   model.interaction_features.InteractingFeaturesNN
+
+
+Module Contents
+---------------
+
+.. py:class:: InteractingFeaturesNN(n_features: int, weights: List[Union[float, Tuple]], interacting_features: List[Tuple[int, int]])
+
+   Bases: :py:obj:`torch.nn.Sequential`
+
+
+   Implements a neural network model designed to explicitly model interactions between specific pairs of features
+   within the input data.
+
+   This model is capable of emphasizing or de-emphasizing the impact of these interactions
+   on the model's output through a specialized network architecture and custom weight assignments.
+
+   The network consists of linear layers combined with ReLU activation, structured to manipulate the input
+   # features based on the predefined interactions. The interactions are modelled such that the influence of one
+   feature on another can be either enhanced or canceled, according to the specified weights and the interaction
+   mechanism implemented within the network.
+
+   Inherits from:
+       torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+       sequential manner.
+
+   Initializes the InteractingFeaturesNN model with specified dimensions, weights, and interactions.
+
+   The architecture is designed to create a network that can process feature interactions by rearranging
+   and weighting input features according to the specified interactions.
+
+   :param n_features: The total number of features in the input data. This includes both interacting
+                      and non-interacting features.
+   :type n_features: int
+   :param weights: A list of floats or tuples specifying the weights to be applied to the features of
+                   the model. This list should have a len that matches the `n_features`, with each element
+                   corresponding to a feature in the input data.
+   :type weights: list
+   :param interacting_features: A list where each tuple contains two integers representing
+                                the indices of the interacting features. The first element in the tuple is considered the impacting
+                                feature, and the second element is the feature being impacted.
+   :type interacting_features: list[tuple]
+
+
+   .. py:method:: _validate_inputs(weights: List[Union[float, Tuple]], interacting_features: List[Tuple[int, int]]) -> None
+
+      Validates the inputs.
+
+      :param weights: A list of floats or tuples specifying the weights to be applied to the features of
+                      the model.
+      :type weights: list
+      :param interacting_features: A list where each tuple contains two integers representing
+                                   the indices of the interacting features.
+      :type interacting_features: list[tuple]
+
+      :raises AssertionError: If the inputs are not in the valid datatypes.
+
+
+
+   .. py:method:: _create_layer_weights(n_features: int, weights: List[Union[float, Tuple]], interacting_features: List[Tuple[int, int]]) -> Tuple
+
+      Creates the weights for the layers in a InteractingFeaturesNN model.
+
+      :param n_features: The total number of features in the input data.
+      :type n_features: int
+      :param weights: A list of floats or tuples specifying the weights to be applied to the features of
+                      the model.
+      :type weights: list
+      :param interacting_features: A list where each tuple contains two integers representing
+                                   the indices of the interacting features.
+      :type interacting_features: list[tuple]
+
+      :returns: Tuple containing the weights and activation functions for the
+                neural network model.
+      :rtype: tuple[list, NoneType, list]
+
+
+
+.. py:data:: data
+

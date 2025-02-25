@@ -1,0 +1,656 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>datagenerator.foregrounds &mdash; XAI-Units 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="datagenerator.image_generation" href="../image_generation/index.html" />
+    <link rel="prev" title="datagenerator.data_generation" href="../data_generation/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            XAI-Units
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../library_quickstart.html">Quickstart - Library Walkthrough</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../image_dataset_example.html">Image Dataset Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../custom_methods_and_custom_datasets.html">Customization Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../model/index.html">model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../methods/index.html">methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../metrics/index.html">metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../trainer/index.html">trainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pipeline/index.html">pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fine_tune/index.html">fine_tune</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../common_lib/index.html">common_lib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">datagenerator</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../backgrounds/index.html">datagenerator.backgrounds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../boolean/index.html">datagenerator.boolean</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../conflicting/index.html">datagenerator.conflicting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../data_generation/index.html">datagenerator.data_generation</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">datagenerator.foregrounds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../image_generation/index.html">datagenerator.image_generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../interacting_features/index.html">datagenerator.interacting_features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../pertinent_negatives/index.html">datagenerator.pertinent_negatives</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../shattered_grad/index.html">datagenerator.shattered_grad</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../text_datasets/index.html">datagenerator.text_datasets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../uncertainty_aware/index.html">datagenerator.uncertainty_aware</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#attributes">Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">XAI-Units</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">datagenerator</a></li>
+      <li class="breadcrumb-item active">datagenerator.foregrounds</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/datagenerator/foregrounds/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-datagenerator.foregrounds">
+<span id="datagenerator-foregrounds"></span><h1>datagenerator.foregrounds<a class="headerlink" href="#module-datagenerator.foregrounds" title="Link to this heading"></a></h1>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#datagenerator.foregrounds.ForegroundGenerator" title="datagenerator.foregrounds.ForegroundGenerator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForegroundGenerator</span></code></a></p></td>
+<td><p>Abstract base class for generating overlay images (e.g., geometric shapes, dinosaurs) with customizable colors.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#datagenerator.foregrounds.GeometricShapeGenerator" title="datagenerator.foregrounds.GeometricShapeGenerator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GeometricShapeGenerator</span></code></a></p></td>
+<td><p>Generates images of geometric shapes with customizable colors.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#datagenerator.foregrounds.DinosaurShapeGenerator" title="datagenerator.foregrounds.DinosaurShapeGenerator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DinosaurShapeGenerator</span></code></a></p></td>
+<td><p>Generates and manipulates images of dinosaurs with customizable colors.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.ForegroundGenerator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">datagenerator.foregrounds.</span></span><span class="sig-name descname"><span class="pre">ForegroundGenerator</span></span><a class="headerlink" href="#datagenerator.foregrounds.ForegroundGenerator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Abstract base class for generating overlay images (e.g., geometric shapes, dinosaurs) with customizable colors.</p>
+<p>This class sets up common attributes and methods for its subclasses to generate images with specific characteristics
+and colors. Subclasses are expected to implement the <cite>get_shape</cite> method, providing a way to create and retrieve images
+with optional color overlays.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.ForegroundGenerator.shape_names">
+<span class="sig-name descname"><span class="pre">shape_names</span></span><a class="headerlink" href="#datagenerator.foregrounds.ForegroundGenerator.shape_names" title="Link to this definition"></a></dt>
+<dd><p>Names of available shapes or dinosaurs. Populated by subclasses based on their specific image types.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Initializes a ForegroundGenerator object.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.ForegroundGenerator._colors_rgba">
+<span class="sig-name descname"><span class="pre">_colors_rgba</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#datagenerator.foregrounds.ForegroundGenerator._colors_rgba" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.ForegroundGenerator._data_path">
+<span class="sig-name descname"><span class="pre">_data_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#datagenerator.foregrounds.ForegroundGenerator._data_path" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.ForegroundGenerator.validate_color">
+<span class="sig-name descname"><span class="pre">validate_color</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.foregrounds.ForegroundGenerator.validate_color" title="Link to this definition"></a></dt>
+<dd><p>Validates and returns the RGBA value for a given color name or tuple.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>color</strong> (<em>str</em><em> | </em><em>tuple</em>) – The color specified as a name or RGBA tuple.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The RGBA tuple corresponding to the specified color.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If input color is a value that is not supported.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.ForegroundGenerator.apply_color_fill">
+<span class="sig-name descname"><span class="pre">apply_color_fill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PIL.Image.Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PIL.Image.Image</span></span></span><a class="headerlink" href="#datagenerator.foregrounds.ForegroundGenerator.apply_color_fill" title="Link to this definition"></a></dt>
+<dd><p>Applies a color fill to an overlay shape while preserving transparency.</p>
+<p>If a color is provided, apply it to the non-transparent parts of the image,
+effectively changing the shape’s color while keeping the background transparent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>PIL.Image.Image</em>) – Original PIL.Image.Image object of a shape.</p></li>
+<li><p><strong>color</strong> (<em>tuple</em><em> | </em><em>NoneType</em>) – RGBA tuple to apply as the new color.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A new PIL Image object with the color applied.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>PIL.Image.Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.ForegroundGenerator.get_data_path">
+<span class="sig-name descname"><span class="pre">get_data_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#datagenerator.foregrounds.ForegroundGenerator.get_data_path" title="Link to this definition"></a></dt>
+<dd><p>Determines the path for storing downloaded data, locating the ‘data’ directory at a fixed level above
+this script’s location in the directory hierarchy.</p>
+<p>This function calculates an absolute path to a ‘data’ directory intended to reside a few levels above the
+directory containing this script. It ensures the ‘data’ directory exists, creating it if necessary.
+This approach allows for a consistent data storage location relative to the script’s position in the project
+structure, facilitating access across different environments and setups.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The absolute path to the ‘data’ directory, ensuring it is consistently located relative to the</dt><dd><p>script’s position in the project’s directory hierarchy.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.ForegroundGenerator.get_shape">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_shape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">PIL.Image.Image</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.foregrounds.ForegroundGenerator.get_shape" title="Link to this definition"></a></dt>
+<dd><p>Abstract method to generate and return an image of a specific overlay type (shape or dinosaur) in a specified color.</p>
+<p>Subclasses must implement this method to create images according to their specialization (geometric shapes or dinosaurs)
+and optionally apply a color overlay based on the provided color parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – The name of the specific shape or dinosaur to generate.
+Defaults to a random selection if None.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em> | </em><em>tuple</em><em>, </em><em>optional</em>) – The color to apply to the image. It can be a color name or an RGBA tuple.
+Defaults to no color overlay if None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A tuple with the PIL.Image.Image object of the generated foreground with the applied color overlay,</dt><dd><p>and the name of the generated foreground.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[PIL.Image.Image, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.GeometricShapeGenerator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">datagenerator.foregrounds.</span></span><span class="sig-name descname"><span class="pre">GeometricShapeGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">200</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datagenerator.foregrounds.GeometricShapeGenerator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#datagenerator.foregrounds.ForegroundGenerator" title="datagenerator.foregrounds.ForegroundGenerator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForegroundGenerator</span></code></a></p>
+<p>Generates images of geometric shapes with customizable colors.</p>
+<p>This class provides functionality to generate images of various geometric shapes,
+such as circles, ellipses, rectangles, and polygons with a specified number of sides,
+each with a specified or default color. Shapes are drawn on a transparent background.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><p>ForegroundGenerator: The base class for generating foreground images.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.GeometricShapeGenerator.size">
+<span class="sig-name descname"><span class="pre">size</span></span><a class="headerlink" href="#datagenerator.foregrounds.GeometricShapeGenerator.size" title="Link to this definition"></a></dt>
+<dd><p>The size of the square image in pixels. Defaults to 200.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.GeometricShapeGenerator.shape_names">
+<span class="sig-name descname"><span class="pre">shape_names</span></span><a class="headerlink" href="#datagenerator.foregrounds.GeometricShapeGenerator.shape_names" title="Link to this definition"></a></dt>
+<dd><p>List of all possible shape names to be drawn.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.GeometricShapeGenerator.shape_id_map">
+<span class="sig-name descname"><span class="pre">shape_id_map</span></span><a class="headerlink" href="#datagenerator.foregrounds.GeometricShapeGenerator.shape_id_map" title="Link to this definition"></a></dt>
+<dd><p>Maps an integer to each name in shape_names list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Initializes a GeometricShapeGenerator object.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">200</span></em><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">shape_names</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['circle',</span> <span class="pre">'ellipse',</span> <span class="pre">'triangle',</span> <span class="pre">'square',</span> <span class="pre">'rectangle',</span> <span class="pre">'pentagon',</span> <span class="pre">'hexagon',</span> <span class="pre">'heptagon',...</span></em><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">shape_id_map</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.GeometricShapeGenerator.geometric_shapes">
+<span class="sig-name descname"><span class="pre">geometric_shapes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PIL.Image.Image</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.foregrounds.GeometricShapeGenerator.geometric_shapes" title="Link to this definition"></a></dt>
+<dd><p>Provides a dictionary of lambdas for generating geometric shapes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping shape names to lambdas that generate shape images.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.GeometricShapeGenerator.calculate_ngon_vertices">
+<span class="sig-name descname"><span class="pre">calculate_ngon_vertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">center_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sides</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.foregrounds.GeometricShapeGenerator.calculate_ngon_vertices" title="Link to this definition"></a></dt>
+<dd><p>Calculates the vertices of a regular polygon.</p>
+<p>Given the center coordinates, radius, and number of sides, this method calculates
+the vertices of a regular polygon centered at the given point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>center_x</strong> (<em>int</em>) – The x-coordinate of the polygon’s center.</p></li>
+<li><p><strong>center_y</strong> (<em>int</em>) – The y-coordinate of the polygon’s center.</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – The radius of the circumcircle of the polygon.</p></li>
+<li><p><strong>sides</strong> (<em>int</em>) – The number of sides (and vertices) of the polygon.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of vertices, where each vertex is a tuple (x, y).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[tuple]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.GeometricShapeGenerator.make_ngon">
+<span class="sig-name descname"><span class="pre">make_ngon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sides</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PIL.Image.Image</span></span></span><a class="headerlink" href="#datagenerator.foregrounds.GeometricShapeGenerator.make_ngon" title="Link to this definition"></a></dt>
+<dd><p>Generates an image of a regular polygon with a specified number of sides.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sides</strong> (<em>int</em>) – The number of sides of the polygon.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A PIL.Image.Image object containing the drawn polygon.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>PIL.Image.Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.GeometricShapeGenerator.make_rectangle">
+<span class="sig-name descname"><span class="pre">make_rectangle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PIL.Image.Image</span></span></span><a class="headerlink" href="#datagenerator.foregrounds.GeometricShapeGenerator.make_rectangle" title="Link to this definition"></a></dt>
+<dd><p>Generates an image of a rectangle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A PIL.Image.Image object containing the drawn rectangle.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>PIL.Image.Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.GeometricShapeGenerator.make_circle">
+<span class="sig-name descname"><span class="pre">make_circle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PIL.Image.Image</span></span></span><a class="headerlink" href="#datagenerator.foregrounds.GeometricShapeGenerator.make_circle" title="Link to this definition"></a></dt>
+<dd><p>Generates an image of a circle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A PIL.Image.Image object containing the drawn circle.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>PIL.Image.Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.GeometricShapeGenerator.make_ellipse">
+<span class="sig-name descname"><span class="pre">make_ellipse</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PIL.Image.Image</span></span></span><a class="headerlink" href="#datagenerator.foregrounds.GeometricShapeGenerator.make_ellipse" title="Link to this definition"></a></dt>
+<dd><p>Generates an image of an ellipse.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An image object containing the drawn ellipse.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>PIL.Image.Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.GeometricShapeGenerator.get_shape">
+<span class="sig-name descname"><span class="pre">get_shape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">PIL.Image.Image</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.foregrounds.GeometricShapeGenerator.get_shape" title="Link to this definition"></a></dt>
+<dd><p>Retrieves and returns an image of a specified geometric shape in a specified color.</p>
+<p>If no shape name is specified, a shape is randomly selected from the available shapes.
+The specified color can be a color name or an RGBA tuple. If no color is specified,
+the shape is generated in black by default.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – The name of the shape to generate. Defaults to a random shape if None.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em> | </em><em>tuple</em><em>, </em><em>optional</em>) – The color of the shape, specified as a color name or RGBA tuple.
+Defaults to black if None or invalid.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A tuple containing an PIL.Image.Image object containing the drawn shape,</dt><dd><p>and the name of the generated shape.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[PIL.Image.Image, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.DinosaurShapeGenerator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">datagenerator.foregrounds.</span></span><span class="sig-name descname"><span class="pre">DinosaurShapeGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">meta_data_source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'local'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datagenerator.foregrounds.DinosaurShapeGenerator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#datagenerator.foregrounds.ForegroundGenerator" title="datagenerator.foregrounds.ForegroundGenerator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForegroundGenerator</span></code></a></p>
+<p>Generates and manipulates images of dinosaurs with customizable colors.</p>
+<p>This class fetches dinosaur images with transparent backgrounds from Wikimedia Commons,
+enabling the generation of images for supervised learning datasets. It supports
+customizing the color of dinosaurs post-download.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.DinosaurShapeGenerator.dino_meta_data">
+<span class="sig-name descname"><span class="pre">dino_meta_data</span></span><a class="headerlink" href="#datagenerator.foregrounds.DinosaurShapeGenerator.dino_meta_data" title="Link to this definition"></a></dt>
+<dd><p>Metadata for the fetched dinosaur images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.DinosaurShapeGenerator.dino_dict">
+<span class="sig-name descname"><span class="pre">dino_dict</span></span><a class="headerlink" href="#datagenerator.foregrounds.DinosaurShapeGenerator.dino_dict" title="Link to this definition"></a></dt>
+<dd><p>Maps dinosaur names to their Image objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.DinosaurShapeGenerator.shape_names">
+<span class="sig-name descname"><span class="pre">shape_names</span></span><a class="headerlink" href="#datagenerator.foregrounds.DinosaurShapeGenerator.shape_names" title="Link to this definition"></a></dt>
+<dd><p>List of all dinosaur names that we can use for sampling.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.DinosaurShapeGenerator.shape_id_map">
+<span class="sig-name descname"><span class="pre">shape_id_map</span></span><a class="headerlink" href="#datagenerator.foregrounds.DinosaurShapeGenerator.shape_id_map" title="Link to this definition"></a></dt>
+<dd><p>Maps an integer to each name in shape_names list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Initializes a DinosaurShapeGenerator object and downloads dinosaur images for local use.</p>
+<p>Downloads images from Wikimedia Commons and prepares them for generating datasets,
+storing them locally for efficient access.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.DinosaurShapeGenerator._url">
+<span class="sig-name descname"><span class="pre">_url</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'https://commons.wikimedia.org/wiki/Category:Dinosaurs_on_transparent_background'</span></em><a class="headerlink" href="#datagenerator.foregrounds.DinosaurShapeGenerator._url" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.DinosaurShapeGenerator._data_folder">
+<span class="sig-name descname"><span class="pre">_data_folder</span></span><a class="headerlink" href="#datagenerator.foregrounds.DinosaurShapeGenerator._data_folder" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.DinosaurShapeGenerator.meta_data_source">
+<span class="sig-name descname"><span class="pre">meta_data_source</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'local'</span></em><a class="headerlink" href="#datagenerator.foregrounds.DinosaurShapeGenerator.meta_data_source" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">dino_meta_data</span></span><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">dino_dict</span></span><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">shape_names</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">shape_id_map</span></span><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.DinosaurShapeGenerator.clean_dino_name_from_URL">
+<span class="sig-name descname"><span class="pre">clean_dino_name_from_URL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#datagenerator.foregrounds.DinosaurShapeGenerator.clean_dino_name_from_URL" title="Link to this definition"></a></dt>
+<dd><p>Extracts and cleans the dinosaur name from a given URL.</p>
+<p>Parses the URL to extract the dinosaur name, removing URL encoding
+and invalid filename characters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>url</strong> (<em>str</em>) – URL containing the dinosaur name.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Cleaned dinosaur name suitable for filenames.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.DinosaurShapeGenerator.dino_image_metadata">
+<span class="sig-name descname"><span class="pre">dino_image_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">meta_data_source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.foregrounds.DinosaurShapeGenerator.dino_image_metadata" title="Link to this definition"></a></dt>
+<dd><p>Fetches metadata for dinosaur images from the specified URL.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of dictionaries, each containing metadata for a dinosaur image.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.DinosaurShapeGenerator.load_dino_image">
+<span class="sig-name descname"><span class="pre">load_dino_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PIL.Image.Image</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#datagenerator.foregrounds.DinosaurShapeGenerator.load_dino_image" title="Link to this definition"></a></dt>
+<dd><p>Downloads a dinosaur image from a URL and saves it locally.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>) – URL of the image to be downloaded.</p></li>
+<li><p><strong>save_path</strong> (<em>str</em>) – Local file path to save the downloaded image.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The downloaded PIL.Image.Image object, or None if the download fails.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>PIL.Image.Image | NoneType</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.DinosaurShapeGenerator.load_all_dinos">
+<span class="sig-name descname"><span class="pre">load_all_dinos</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#datagenerator.foregrounds.DinosaurShapeGenerator.load_all_dinos" title="Link to this definition"></a></dt>
+<dd><p>Loads all available dinosaur images into memory from the local storage.</p>
+<p>Ensures that images are downloaded based on metadata if they are not already present
+locally, making them readily available in memory for image generation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.foregrounds.DinosaurShapeGenerator.get_shape">
+<span class="sig-name descname"><span class="pre">get_shape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">PIL.Image.Image</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.foregrounds.DinosaurShapeGenerator.get_shape" title="Link to this definition"></a></dt>
+<dd><p>Retrieves a dinosaur image by name with an optional color overlay.</p>
+<p>If no name is specified, selects a dinosaur randomly. Optionally applies a color
+to the dinosaur image before returning.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the dinosaur. Selects randomly if None.
+Defaults to None.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em> | </em><em>tuple</em><em>, </em><em>optional</em>) – color to apply. Uses predefined or RGBA tuple.
+Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the colored PIL.Image.Image object of the dinosaur and its name.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[PIL.Image.Image, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../data_generation/index.html" class="btn btn-neutral float-left" title="datagenerator.data_generation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../image_generation/index.html" class="btn btn-neutral float-right" title="datagenerator.image_generation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, XAI-Units.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

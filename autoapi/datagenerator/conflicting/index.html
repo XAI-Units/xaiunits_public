@@ -1,0 +1,423 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>datagenerator.conflicting &mdash; XAI-Units 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="datagenerator.data_generation" href="../data_generation/index.html" />
+    <link rel="prev" title="datagenerator.boolean" href="../boolean/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            XAI-Units
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../library_quickstart.html">Quickstart - Library Walkthrough</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../image_dataset_example.html">Image Dataset Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../custom_methods_and_custom_datasets.html">Customization Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../model/index.html">model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../methods/index.html">methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../metrics/index.html">metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../trainer/index.html">trainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pipeline/index.html">pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fine_tune/index.html">fine_tune</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../common_lib/index.html">common_lib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">datagenerator</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../backgrounds/index.html">datagenerator.backgrounds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../boolean/index.html">datagenerator.boolean</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">datagenerator.conflicting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../data_generation/index.html">datagenerator.data_generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../foregrounds/index.html">datagenerator.foregrounds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../image_generation/index.html">datagenerator.image_generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../interacting_features/index.html">datagenerator.interacting_features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../pertinent_negatives/index.html">datagenerator.pertinent_negatives</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../shattered_grad/index.html">datagenerator.shattered_grad</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../text_datasets/index.html">datagenerator.text_datasets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../uncertainty_aware/index.html">datagenerator.uncertainty_aware</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#attributes">Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">XAI-Units</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">datagenerator</a></li>
+      <li class="breadcrumb-item active">datagenerator.conflicting</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/datagenerator/conflicting/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-datagenerator.conflicting">
+<span id="datagenerator-conflicting"></span><h1>datagenerator.conflicting<a class="headerlink" href="#module-datagenerator.conflicting" title="Link to this heading"></a></h1>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#datagenerator.conflicting.data" title="datagenerator.conflicting.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#datagenerator.conflicting.ConflictingDataset" title="datagenerator.conflicting.ConflictingDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConflictingDataset</span></code></a></p></td>
+<td><p>Generic synthetic dataset with feature cancellation capabilities.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="datagenerator.conflicting.ConflictingDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">datagenerator.conflicting.</span></span><span class="sig-name descname"><span class="pre">ConflictingDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'normal'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(-1.0,</span> <span class="pre">1.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cancellation_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cancellation_likelihood</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datagenerator.conflicting.ConflictingDataset" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">xaiunits.datagenerator.WeightedFeaturesDataset</span></code></p>
+<p>Generic synthetic dataset with feature cancellation capabilities.</p>
+<p>Feature cancellations are based on likelihood. If cancellation_features are not provided,
+all features in each sample are candidates for cancellation, with a specified likelihood of
+each feature being canceled. Canceled features are negated in their contributions to the dataset,
+allowing for the analysis of model behavior under feature absence scenarios.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><p>WeightedFeaturesDataset: Class extending BaseFeaturesDataset with support for weighted features</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.conflicting.ConflictingDataset.cancellation_features">
+<span class="sig-name descname"><span class="pre">cancellation_features</span></span><a class="headerlink" href="#datagenerator.conflicting.ConflictingDataset.cancellation_features" title="Link to this definition"></a></dt>
+<dd><p>Indices of features subject to cancellation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of int, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.conflicting.ConflictingDataset.cancellation_likelihood">
+<span class="sig-name descname"><span class="pre">cancellation_likelihood</span></span><a class="headerlink" href="#datagenerator.conflicting.ConflictingDataset.cancellation_likelihood" title="Link to this definition"></a></dt>
+<dd><p>Likelihood of feature cancellation, between 0 and 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.conflicting.ConflictingDataset.cancellation_outcomes">
+<span class="sig-name descname"><span class="pre">cancellation_outcomes</span></span><a class="headerlink" href="#datagenerator.conflicting.ConflictingDataset.cancellation_outcomes" title="Link to this definition"></a></dt>
+<dd><p>Binary tensor indicating whether each feature in each sample is canceled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.conflicting.ConflictingDataset.cancellation_samples">
+<span class="sig-name descname"><span class="pre">cancellation_samples</span></span><a class="headerlink" href="#datagenerator.conflicting.ConflictingDataset.cancellation_samples" title="Link to this definition"></a></dt>
+<dd><p>Concatenation of samples with their cancellation outcomes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.conflicting.ConflictingDataset.cancellation_attributions">
+<span class="sig-name descname"><span class="pre">cancellation_attributions</span></span><a class="headerlink" href="#datagenerator.conflicting.ConflictingDataset.cancellation_attributions" title="Link to this definition"></a></dt>
+<dd><p>The attribution of each feature considering the cancellation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.conflicting.ConflictingDataset.cat_features">
+<span class="sig-name descname"><span class="pre">cat_features</span></span><a class="headerlink" href="#datagenerator.conflicting.ConflictingDataset.cat_features" title="Link to this definition"></a></dt>
+<dd><p>Categorical features derived from the cancellation samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.conflicting.ConflictingDataset.ground_truth_attributions">
+<span class="sig-name descname"><span class="pre">ground_truth_attributions</span></span><a class="headerlink" href="#datagenerator.conflicting.ConflictingDataset.ground_truth_attributions" title="Link to this definition"></a></dt>
+<dd><p>Combined tensor of weighted samples and cancellation attributions for ground truth analysis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Initializes a ConflictingDataset object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seed</strong> (<em>int</em>) – Seed for random number generation, ensuring reproducibility. Defaults to 0.</p></li>
+<li><p><strong>n_features</strong> (<em>int</em>) – Number of features in each sample. Defaults to 2.</p></li>
+<li><p><strong>n_samples</strong> (<em>int</em>) – Number of samples to generate. Defaults to 10.</p></li>
+<li><p><strong>distribution</strong> (<em>str</em>) – Type of distribution to use for generating samples. Defaults to ‘normal’.</p></li>
+<li><p><strong>weight_range</strong> (<em>tuple</em><em>[</em><em>float</em><em>]</em>) – Range (min, max) for generating random feature weights. Defaults to (-1.0, 1.0).</p></li>
+<li><p><strong>weights</strong> (<em>torch.Tensor</em><em>, </em><em>optional</em>) – Predefined weights for each feature. Defaults to None.</p></li>
+<li><p><strong>cancellation_features</strong> (<em>list</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – Specific features to apply cancellations to.
+Defaults to None, applying to all features.</p></li>
+<li><p><strong>cancellation_likelihood</strong> (<em>float</em>) – Probability of each feature being canceled. Defaults to 0.5.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">cancellation_features</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">cancellation_likelihood</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.5</span></em><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">cancellation_outcomes</span></span><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">cancellation_samples</span></span><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.conflicting.ConflictingDataset.labels">
+<span class="sig-name descname"><span class="pre">labels</span></span><a class="headerlink" href="#datagenerator.conflicting.ConflictingDataset.labels" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">cancellation_attributions</span></span><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">cat_features</span></span><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">ground_truth_attributions</span></span><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.conflicting.ConflictingDataset.features">
+<span class="sig-name descname"><span class="pre">features</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cancellation_samples'</span></em><a class="headerlink" href="#datagenerator.conflicting.ConflictingDataset.features" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.conflicting.ConflictingDataset.ground_truth_attribute">
+<span class="sig-name descname"><span class="pre">ground_truth_attribute</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ground_truth_attributions'</span></em><a class="headerlink" href="#datagenerator.conflicting.ConflictingDataset.ground_truth_attribute" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.conflicting.ConflictingDataset.subset_data">
+<span class="sig-name descname"><span class="pre">subset_data</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['weighted_samples',</span> <span class="pre">'cancellation_outcomes',</span> <span class="pre">'cancellation_samples',...</span></em><a class="headerlink" href="#datagenerator.conflicting.ConflictingDataset.subset_data" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.conflicting.ConflictingDataset._initialize_cancellation_features">
+<span class="sig-name descname"><span class="pre">_initialize_cancellation_features</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#datagenerator.conflicting.ConflictingDataset._initialize_cancellation_features" title="Link to this definition"></a></dt>
+<dd><p>Validates and initializes the list of features subject to cancellation. If no specific features
+are provided, all features are considered candidates for cancellation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>AssertionError</strong> – If cancellation_features is not a list, any element in cancellation_features is not an integer,
+the maximum element in cancellation_features is greater than the number of features, or cancellation_features
+is empty. Also, if cancellation_likelihood is not a float or is outside the range [0, 1].</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.conflicting.ConflictingDataset._get_cancellations">
+<span class="sig-name descname"><span class="pre">_get_cancellations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="headerlink" href="#datagenerator.conflicting.ConflictingDataset._get_cancellations" title="Link to this definition"></a></dt>
+<dd><p>Generates a binary mask indicating whether each feature in each sample is canceled
+based on the specified likelihood.</p>
+<p>This method considers only the features specified in cancellation_features for possible cancellation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>An integer tensor of shape (n_samples, n_features) where 1 represents a canceled feature,</dt><dd><p>and 0 represents an active feature.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.conflicting.ConflictingDataset._get_cancellation_samples">
+<span class="sig-name descname"><span class="pre">_get_cancellation_samples</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="headerlink" href="#datagenerator.conflicting.ConflictingDataset._get_cancellation_samples" title="Link to this definition"></a></dt>
+<dd><p>Concatenates the original samples with their cancellation outcomes to form a comprehensive dataset.</p>
+<p>This allows for analyzing the impact of feature cancellations directly alongside the original features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A tensor containing the original samples augmented with their corresponding cancellation outcomes.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.conflicting.ConflictingDataset._get_cancellation_attributions">
+<span class="sig-name descname"><span class="pre">_get_cancellation_attributions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="headerlink" href="#datagenerator.conflicting.ConflictingDataset._get_cancellation_attributions" title="Link to this definition"></a></dt>
+<dd><p>Computes the attribution of each feature by negating the effect of canceled features.</p>
+<p>This method helps understand the impact of each feature on the model output when certain features are
+systematically canceled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>A tensor of the same shape as the weighted samples, where the values of canceled features are</dt><dd><p>negated to reflect their absence.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.conflicting.ConflictingDataset.generate_model">
+<span class="sig-name descname"><span class="pre">generate_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.nn.Module</span></span></span><a class="headerlink" href="#datagenerator.conflicting.ConflictingDataset.generate_model" title="Link to this definition"></a></dt>
+<dd><p>Instantiates and returns a neural network model for analyzing datasets with conflicting features.</p>
+<p>The model is configured to use the specified features and weights, allowing for experimentation
+with feature cancellations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A neural network model designed to work with the specified features and weights.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../../model/index.html#model.ConflictingFeaturesNN" title="model.ConflictingFeaturesNN">model.ConflictingFeaturesNN</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="datagenerator.conflicting.data">
+<span class="sig-prename descclassname"><span class="pre">datagenerator.conflicting.</span></span><span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#datagenerator.conflicting.data" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../boolean/index.html" class="btn btn-neutral float-left" title="datagenerator.boolean" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../data_generation/index.html" class="btn btn-neutral float-right" title="datagenerator.data_generation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, XAI-Units.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+model.conflicting
+=================
+
+.. py:module:: model.conflicting
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   model.conflicting.continuous_dim
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   model.conflicting.ConflictingFeaturesNN
+
+
+Module Contents
+---------------
+
+.. py:class:: ConflictingFeaturesNN(continuous_dim: int, weights: torch.Tensor)
+
+   Bases: :py:obj:`torch.nn.Sequential`
+
+
+   A crafted neural network model that incorporates cancellation features.
+
+   Inherits from:
+       torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+       sequential manner.
+
+   Initializes a ConflictingFeaturesNN object.
+
+   :param continuous_dim: Dimension length of the continuous features, excluding cancellation features.
+   :type continuous_dim: int
+   :param weights: Feature weights of the model. Should have length `continuous_dim`.
+   :type weights: torch.Tensor
+
+
+   .. py:method:: _create_layer_weights(continuous_dim: int, weights: torch.Tensor) -> Tuple
+
+      Creates the weights for the layers in a ConflictingFeaturesNN model.
+
+      :param continuous_dim: Number of continuous features.
+      :type continuous_dim: int
+      :param weights: Feature weights of the model. Should have length `continuous_dim`.
+      :type weights: torch.Tensor
+
+      :returns: Tuple containing the weights and activation functions for the
+                neural network model.
+      :rtype: tuple[list, NoneType, list]
+
+      :raises AssertionError: If weights are not specified in a valid shape.
+
+
+
+.. py:data:: continuous_dim
+   :value: 2
+
+

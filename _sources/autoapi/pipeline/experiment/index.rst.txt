@@ -1,0 +1,292 @@
+pipeline.experiment
+===================
+
+.. py:module:: pipeline.experiment
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pipeline.experiment.Experiment
+
+
+Module Contents
+---------------
+
+.. py:class:: Experiment(data: Any, models: Union[List[torch.nn.Module], torch.nn.Module, None], methods: Union[Any, List[Any]], metrics: Optional[Union[Any, List[Any]]] = None, seeds: int = 0, method_seeds: int = 0, data_params: Optional[Dict] = None, name: Optional[str] = None)
+
+   A class representing an experimental setup for evaluating explanation methods on specific dataset and
+   neural network models.
+
+   It should be ensured that the class corresponding to the dataset contains the generate_model() method
+   in order for a model to be generated in the case that no model is defined for the experiment at
+   initialization.
+
+   .. attribute:: data
+
+      The class of the dataset used for experiments.
+
+      :type: torch.utils.data.Dataset
+
+   .. attribute:: models
+
+      List of neural network models to apply the explanation methods on.
+
+      :type: list | NoneType
+
+   .. attribute:: methods
+
+      List of explanation methods to apply and evaluate.
+
+      :type: list
+
+   .. attribute:: metrics
+
+      List of evaluation metrics to compute.
+
+      :type: list
+
+   .. attribute:: seeds
+
+      List of random seeds to use for the instantiation of the dataset.
+
+      :type: list
+
+   .. attribute:: method_seeds
+
+      List of random seeds to use for explanation methods.
+
+      :type: list
+
+   .. attribute:: data_params
+
+      Additional parameters to be passed to the instantiation of the dataset.
+
+      :type: dict
+
+   Initializes an Experiment instance.
+
+   :param data: The dataset or data class to be used for experiments. Can be passed in as
+                an instantiated object or as a subclass of torch.utils.data.Dataset.
+   :type data: Any
+   :param models: List of neural network models to apply the
+                  explanation methods on.
+   :type models: list | NoneType | torch.nn.Module
+   :param methods: List of explanation methods to apply and evaluate.
+   :type methods: Any
+   :param metrics: List of evaluation metrics to compute. Defaults to None.
+   :type metrics: Any | NoneType, optional
+   :param seeds: List of random seeds to use for the instantiation of the dataset.
+                 Defaults to 0.
+   :type seeds: int | list
+   :param method_seeds: List of random seeds to use for explanation methods.
+                        Defaults to 0.
+   :type method_seeds: int | list
+   :param data_params: Additional parameters to be passed during the instantiation
+                       of the dataset. Defaults to None.
+   :type data_params: dict | NoneType, optional
+   :param name: string representing name of the experiment.
+   :type name: str, optional
+
+   :raises Exception: If input to any attribute initialization method is invalid.
+
+
+   .. py:attribute:: seeds
+
+
+   .. py:attribute:: data
+
+
+   .. py:attribute:: data_params
+      :value: None
+
+
+
+   .. py:attribute:: models
+
+
+   .. py:attribute:: metrics
+      :value: [None]
+
+
+
+   .. py:attribute:: methods
+
+
+   .. py:attribute:: method_seeds
+
+
+   .. py:attribute:: exp_name
+      :value: None
+
+
+
+   .. py:method:: get_data(seed: int) -> Any
+
+      Returns the dataset instance generated with the specified seed.
+
+      :param seed: the seed for instantiating the dataset.
+      :type seed: int
+
+      :returns: The dataset instance with the specified seed.
+      :rtype: torch.utils.data.Dataset
+
+
+
+   .. py:method:: get_models(data_instance: Any) -> List[torch.nn.Module]
+
+      Returns the list of neural networks to apply the explanation methods on.
+
+      A default neural network compatible with the given dataset will be generated
+      if the Experiment object has None as its models.
+
+      :param data_instance: The dataset instance.
+      :type data_instance: torch.utils.data.Dataset
+
+      :returns: List of neural networks to apply the explanation methods on.
+      :rtype: list
+
+
+
+   .. py:method:: get_methods(data_instance: Any) -> List[Any]
+
+      Returns the list of explanation methods to apply and evaluate.
+
+      :param data_instance: The dataset instance and
+                            a placeholder to keep input standardized.
+      :type data_instance: torch.utils.data.Dataset
+
+      :returns: List of explanation methods to apply and evaluate.
+      :rtype: list
+
+
+
+   .. py:method:: get_metrics(data_instance: Any) -> List[Any]
+
+      Returns the list of evaluation metrics to compute.
+
+      :param data_instance: The dataset instance.
+      :type data_instance: torch.utils.data.Dataset
+
+      :returns: List of evaluation metrics to compute.
+      :rtype: list
+
+
+
+   .. py:method:: _init_seeds(seeds: int) -> List[int]
+
+      Initializes the seeds attribute and transforms the input to the desired datatype.
+
+      :param seeds: Random seeds to use for data.
+      :type seeds: int | list
+
+      :returns: List of random seeds to use for the instantiation of the dataset.
+      :rtype: list
+
+      :raises Exception: If input to seeds initialization is not an integer or an Iterable of integers.
+
+
+
+   .. py:method:: _init_data(data: Any) -> Any
+
+      Initializes the data attribute.
+
+      :param data: The instantiated dataset or data class.
+      :type data: type
+
+      :returns: The dataset or data class.
+      :rtype: torch.utils.data.Dataset | type
+
+      :raises Exception: If input to data initialization is neither a torch.utils.data.Dataset instance
+          or subclass of torch.utils.data.Dataset.
+
+
+
+   .. py:method:: _init_methods(methods: Any) -> Any
+
+      Initializes the methods attribute.
+
+      :param methods: List of explanation methods.
+      :type methods: list | NoneType
+
+      :returns: List of explanation methods.
+      :rtype: list
+
+      :raises Exception: If input to methods initialization is None.
+
+
+
+   .. py:method:: _init_metrics(metrics: Any) -> Any
+
+      Initializes the metrics attribute.
+
+      :param metrics: List of evaluation metrics.
+      :type metrics: list | NoneType
+
+      :returns: List of evaluation metrics.
+      :rtype: list
+
+      :raises Exception: If input to metrics initialization is None and the dataset
+          does not provide a default metric.
+
+
+
+   .. py:method:: _init_models(models: Any) -> Any
+
+      Initializes the models attribute and transforms it to the desired datatype.
+
+      :param models: Neural network models.
+      :type models: list | torch.nn.Module
+
+      :returns: List of neural network models.
+      :rtype: list
+
+      :raises Exception: If input to models initialization is not an torch.nn.Module object or
+          Iterable of torch.nn.Module objects.
+
+
+
+   .. py:method:: _init_data_params(data_params: Dict) -> Dict
+
+      Initializes the data_params attribute.
+
+      :param data_params: Additional parameters for the instantiation of the dataset.
+      :type data_params: dict
+
+      :returns: Dictionary of additional data parameters.
+      :rtype: dict
+
+      :raises Exception: If input to data parameters initialization is not a dictionary.
+
+
+
+   .. py:method:: _init_method_seeds(method_seeds: Union[int, collections.abc.Iterable[int]]) -> collections.abc.Iterable[int]
+
+      Initializes the method seeds attribute and transforms the input to the desired datatype.
+
+      :param method_seeds: Random seeds to use for applying the explanation
+                           methods.
+      :type method_seeds: int | list
+
+      :returns: List of random seeds for applying the explanation methods.
+      :rtype: list
+
+      :raises Exception: If input to method seeds initialization is not an integer nor an Iterable
+          of integers.
+
+
+
+   .. py:method:: _verify_metric(metrics: Any) -> None
+
+      Verifies whether evaluation metrics have unique labels and each of them is in a valid datatype.
+
+      :param metrics: A list of evaluation metrics.
+      :type metrics: list
+
+      :raises Exception: If evaluation metric is defined in an invalid datatype or if evaluation metrics
+          do not have unique labels.
+
+
+

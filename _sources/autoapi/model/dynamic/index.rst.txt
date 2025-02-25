@@ -1,0 +1,48 @@
+model.dynamic
+=============
+
+.. py:module:: model.dynamic
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   model.dynamic.mlp_example
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   model.dynamic.DynamicNN
+
+
+Module Contents
+---------------
+
+.. py:class:: DynamicNN(config: List[Dict], custom_layers: Optional[List] = None)
+
+   Bases: :py:obj:`torch.nn.Sequential`
+
+
+   Class that enables the instantiation of custom neural network architectures using a list
+   of layer configurations.
+
+   Inherits from:
+       torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+       sequential manner.
+
+   Initializes a DynamicNN object.
+
+   :param config: List of layer configurations. Each configuration is a dictionary
+                  specifying the layer type and its corresponding parameters.
+   :type config: list[dict]
+   :param custom_layers: List of custom layer classes. Defaults to None.
+   :type custom_layers: list, optional
+
+
+.. py:data:: mlp_example
+

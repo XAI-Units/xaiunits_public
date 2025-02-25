@@ -1,0 +1,718 @@
+model
+=====
+
+.. py:module:: model
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/model/boolean/index
+   /autoapi/model/boolean_and/index
+   /autoapi/model/boolean_not/index
+   /autoapi/model/boolean_or/index
+   /autoapi/model/conflicting/index
+   /autoapi/model/continuous/index
+   /autoapi/model/dynamic/index
+   /autoapi/model/generic/index
+   /autoapi/model/interaction_features/index
+   /autoapi/model/pertinent_negative/index
+   /autoapi/model/shattered_gradients/index
+   /autoapi/model/uncertainty_model/index
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   model.GenericNN
+   model.ConflictingFeaturesNN
+   model.ContinuousFeaturesNN
+   model.DynamicNN
+   model.InteractingFeaturesNN
+   model.PertinentNN
+   model.ShatteredGradientsNN
+   model.UncertaintyNN
+   model.PropFormulaNN
+   model.BooleanAndNN
+   model.BooleanNotNN
+   model.BooleanOrNN
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   model.generate_layers
+
+
+Package Contents
+----------------
+
+.. py:class:: GenericNN(weights: torch.Tensor, biases: Optional[torch.Tensor] = None, act_fns: Optional[torch.nn.Module] = None)
+
+   Bases: :py:obj:`torch.nn.Sequential`
+
+
+   Class for creating custom neural network architectures using specified weights,
+   biases, and activation functions.
+
+   Inherits from:
+       torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+       sequential manner.
+
+   Initializes a GenericNN object.
+
+   :param weights: Weights for each linear layer.
+   :type weights: torch.Tensor | list[torch.Tensor]
+   :param biases: Bias for each linear layer.
+                  Length of weights and biases must match if list.
+   :type biases: torch.Tensor | list[torch.Tensor], optional
+   :param act_fns: Activation for each linear layer.
+   :type act_fns: nn.module.activation | list, optional
+
+
+.. py:function:: generate_layers(weights: Union[torch.Tensor, List[torch.Tensor]], biases: Union[torch.Tensor, List[torch.Tensor]], act_fns: Union[torch.nn.Module, List[torch.nn.Module]]) -> List[torch.nn.Module]
+
+   Creates linear layers and activation function to be used as inputs for nn.Sequential.
+
+   :param weights: Weights for each linear layer.
+   :type weights: torch.Tensor | list[torch.Tensor]
+   :param biases: Bias for each linear layer.
+                  Length of weights and biases must match if list.
+   :type biases: torch.Tensor | list[torch.Tensor] | NoneType
+   :param act_fns: Activation for each linear layer.
+                   If activation Layer (i.e. not list) act_fns will be repeated for each linear layer.
+                   It is recommended to pass in the class rather than instance of activation Layer,
+                   as certain FA methods require no duplicate layers in the model.
+   :type act_fns: nn.module.activation | list | NoneType
+
+
+.. py:class:: ConflictingFeaturesNN(continuous_dim: int, weights: torch.Tensor)
+
+   Bases: :py:obj:`torch.nn.Sequential`
+
+
+   A crafted neural network model that incorporates cancellation features.
+
+   Inherits from:
+       torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+       sequential manner.
+
+   Initializes a ConflictingFeaturesNN object.
+
+   :param continuous_dim: Dimension length of the continuous features, excluding cancellation features.
+   :type continuous_dim: int
+   :param weights: Feature weights of the model. Should have length `continuous_dim`.
+   :type weights: torch.Tensor
+
+
+   .. py:method:: _create_layer_weights(continuous_dim: int, weights: torch.Tensor) -> Tuple
+
+      Creates the weights for the layers in a ConflictingFeaturesNN model.
+
+      :param continuous_dim: Number of continuous features.
+      :type continuous_dim: int
+      :param weights: Feature weights of the model. Should have length `continuous_dim`.
+      :type weights: torch.Tensor
+
+      :returns: Tuple containing the weights and activation functions for the
+                neural network model.
+      :rtype: tuple[list, NoneType, list]
+
+      :raises AssertionError: If weights are not specified in a valid shape.
+
+
+
+.. py:class:: ContinuousFeaturesNN(n_features: int, weights: torch.Tensor)
+
+   Bases: :py:obj:`torch.nn.Sequential`
+
+
+   A crafted neural network model that incorporates continuous features with ReLU.
+
+   Inherits from:
+       torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+       sequential manner.
+
+   Initializes a ContinuousFeaturesNN object.
+
+   :param n_features: dimensions of the input.
+   :type n_features: int
+   :param weights: weights of the model. Should have length `n_features`.
+   :type weights: torch.Tensor
+
+
+   .. py:method:: _create_layer_weights(n_features: int, weights: torch.Tensor) -> Tuple
+
+      Creates the weights for the layers in a ContinuousFeaturesNN model.
+
+      :param n_features: Number of features.
+      :type n_features: int
+      :param weights: Feature weights of the model. Should have length `continuous_dim`.
+      :type weights: torch.Tensor
+
+      :returns: Tuple containing the weights and activation functions for the
+                neural network model.
+      :rtype: tuple[list, NoneType, list]
+
+      :raises AssertionError: If weights are not specified in a valid shape.
+
+
+
+.. py:class:: DynamicNN(config: List[Dict], custom_layers: Optional[List] = None)
+
+   Bases: :py:obj:`torch.nn.Sequential`
+
+
+   Class that enables the instantiation of custom neural network architectures using a list
+   of layer configurations.
+
+   Inherits from:
+       torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+       sequential manner.
+
+   Initializes a DynamicNN object.
+
+   :param config: List of layer configurations. Each configuration is a dictionary
+                  specifying the layer type and its corresponding parameters.
+   :type config: list[dict]
+   :param custom_layers: List of custom layer classes. Defaults to None.
+   :type custom_layers: list, optional
+
+
+.. py:class:: InteractingFeaturesNN(n_features: int, weights: List[Union[float, Tuple]], interacting_features: List[Tuple[int, int]])
+
+   Bases: :py:obj:`torch.nn.Sequential`
+
+
+   Implements a neural network model designed to explicitly model interactions between specific pairs of features
+   within the input data.
+
+   This model is capable of emphasizing or de-emphasizing the impact of these interactions
+   on the model's output through a specialized network architecture and custom weight assignments.
+
+   The network consists of linear layers combined with ReLU activation, structured to manipulate the input
+   # features based on the predefined interactions. The interactions are modelled such that the influence of one
+   feature on another can be either enhanced or canceled, according to the specified weights and the interaction
+   mechanism implemented within the network.
+
+   Inherits from:
+       torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+       sequential manner.
+
+   Initializes the InteractingFeaturesNN model with specified dimensions, weights, and interactions.
+
+   The architecture is designed to create a network that can process feature interactions by rearranging
+   and weighting input features according to the specified interactions.
+
+   :param n_features: The total number of features in the input data. This includes both interacting
+                      and non-interacting features.
+   :type n_features: int
+   :param weights: A list of floats or tuples specifying the weights to be applied to the features of
+                   the model. This list should have a len that matches the `n_features`, with each element
+                   corresponding to a feature in the input data.
+   :type weights: list
+   :param interacting_features: A list where each tuple contains two integers representing
+                                the indices of the interacting features. The first element in the tuple is considered the impacting
+                                feature, and the second element is the feature being impacted.
+   :type interacting_features: list[tuple]
+
+
+   .. py:method:: _validate_inputs(weights: List[Union[float, Tuple]], interacting_features: List[Tuple[int, int]]) -> None
+
+      Validates the inputs.
+
+      :param weights: A list of floats or tuples specifying the weights to be applied to the features of
+                      the model.
+      :type weights: list
+      :param interacting_features: A list where each tuple contains two integers representing
+                                   the indices of the interacting features.
+      :type interacting_features: list[tuple]
+
+      :raises AssertionError: If the inputs are not in the valid datatypes.
+
+
+
+   .. py:method:: _create_layer_weights(n_features: int, weights: List[Union[float, Tuple]], interacting_features: List[Tuple[int, int]]) -> Tuple
+
+      Creates the weights for the layers in a InteractingFeaturesNN model.
+
+      :param n_features: The total number of features in the input data.
+      :type n_features: int
+      :param weights: A list of floats or tuples specifying the weights to be applied to the features of
+                      the model.
+      :type weights: list
+      :param interacting_features: A list where each tuple contains two integers representing
+                                   the indices of the interacting features.
+      :type interacting_features: list[tuple]
+
+      :returns: Tuple containing the weights and activation functions for the
+                neural network model.
+      :rtype: tuple[list, NoneType, list]
+
+
+
+.. py:class:: PertinentNN(n_features: int, weights: torch.Tensor, pn_features: torch.Tensor, pn_weight_factor: float)
+
+   Bases: :py:obj:`torch.nn.Sequential`
+
+
+   Implements a neural network model specifically designed to handle pertinent negatives in input features.
+
+   This model modifies input features based on their relevance and the presence of pertinent negatives,
+   employing a specialized network architecture with custom weights and biases to emphasize or suppress
+   certain features according to their pertinence.
+
+   The network consists of linear layers combined with ReLU activation functions, structured to manipulate
+   the input features dynamically. It uses the provided weights and a 'pertinence' tensor to adjust the
+   impact of each feature on the model's output, effectively highlighting the role of
+   pertinent negatives in the prediction process.
+
+
+   Inherits from:
+       torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+       sequential manner.
+
+   Initializes the PertinentNN model with specified dimensions, weights, pertinent negatives, and a multiplier.
+
+   The architecture is designed to first adjust the input features based on their pertinence, then to process
+   these adjusted features through a series of layers that further manipulate and combine them based on the
+   specified weights and the multiplier for pertinent negatives. The final output is a single value obtained
+   through a linear combination of the processed features.
+
+   :param n_features: The total number of features in the input data.
+   :type n_features: int
+   :param weights: A tensor specifying the weights to be applied to the features of the model.
+                   This tensor should have a shape that matches the `n_features`, with each weight corresponding to
+                   a feature in the input data.
+   :type weights: torch.Tensor
+   :param pn_features: A tensor indicating the presence (1) or absence (0) of pertinent negatives for each
+                       feature. The length of this tensor can be equal to or less than `n_features`. If it is less, the missing
+                       values are assumed to be 0 (no pertinent negative).
+   :type pn_features: torch.Tensor
+   :param pn_weight_factor: A multiplier used to adjust the weights of the features identified as pertinent negatives.
+   :type pn_weight_factor: float
+
+
+   .. py:method:: _reformat_pn_weight(n_features: int, pn_features: torch.Tensor) -> torch.Tensor
+
+      Reformats pn_features into tensors.
+
+      :param n_features: The total number of features in the input data.
+      :type n_features: int
+      :param pn_features: A torch.Tensor object indicating which feature is a pertinent negative.
+      :type pn_features: torch.Tensor
+
+      :returns: Reformatted tensor representing the features.
+      :rtype: torch.Tensor
+
+
+
+   .. py:method:: _create_layer_weights(n_features: int, weights: torch.Tensor, pn_features: torch.Tensor, pn_weight_factor: float) -> Tuple
+
+      Creates the weights for the layers in a PertinentNN model.
+
+      :param n_features: The total number of features in the input data.
+      :type n_features: int
+      :param weights: A tensor specifying the weights to be applied to the features of the model.
+      :type weights: torch.Tensor
+      :param pn_features: A tensor indicating the presence (1) or absence (0) of pertinent negatives for each
+                          feature.
+      :type pn_features: torch.Tensor
+      :param pn_weight_factor: A multiplier used to adjust the weights of the features identified as pertinent negatives.
+      :type pn_weight_factor: float
+
+      :returns: Tuple containing the weights and activation functions for the
+                neural network model.
+      :rtype: tuple[list, list, list]
+
+
+
+.. py:class:: ShatteredGradientsNN(weights: torch.Tensor, act_fun: str = 'Relu')
+
+   Bases: :py:obj:`torch.nn.Sequential`
+
+
+   Implements a neural network model using a linear layer followed by an activation function.
+
+   This model is designed to exhibit shattered gradients. To generate a model that exhibits
+   shattered gradients, use shattered_grad.py, located in datagenerator.
+
+   Inherits from:
+       torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+       sequential manner.
+
+   Initializes a ShatteredGradientsNN object.
+
+   :param weights: The weights to be applied to the linear layer.
+   :type weights: torch.Tensor
+   :param act_fun: The activation function to be used. Valid options are "Relu", "Gelu", or "Sigmoid".
+                   Defaults to 'Relu'.
+   :type act_fun: str
+
+
+   .. py:method:: _default_activation_function(act_fun: str) -> torch.nn.Module
+
+      Returns the default activation function based on the provided string.
+
+      The `_default_activation_function` method maps the provided activation function name
+      to the corresponding PyTorch activation function module. Supported activation functions
+      include "Relu" (ReLU), "Gelu" (GELU), and "Sigmoid" (Sigmoid). If the provided name
+      is not in the supported list, a KeyError is raised.
+
+      :param act_fun: The activation function name or class.
+      :type act_fun: str
+
+      :returns: The corresponding PyTorch activation function module.
+      :rtype: torch.nn.Module
+
+      :raises KeyError: If the given activation function is not supported.
+
+
+
+.. py:class:: UncertaintyNN(n_features: int, weights: torch.Tensor, softmax_layer: bool = True)
+
+   Bases: :py:obj:`torch.nn.Sequential`
+
+
+   Implements a neural network model designed to capture behaviour were an input node impact all or several output nodes equally.
+
+   This model uses a linear layer followed by a softmax activation function to compute a distribution over the
+   input features, effectively capturing the uncertainty or confidence level associated with each feature.
+
+   For best practice, please create an instance of network using generate_model() method of UncertaintyAwareDataset.
+
+   Inherits from:
+       torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+       sequential manner.
+
+   Initializes the UncertaintyNN model with a specified dimension for the input features and custom weights.
+
+   The initialized model consists of a single linear layer without bias, followed by a softmax layer
+   to normalize the output of the linear layer into a probability distribution,
+   representing the model's confidence or uncertainty regarding each input feature.
+
+   :param n_features: The total number of features in the input data. This parameter determines the
+                      dimensionality of the input to the linear layer and subsequently the output dimension of the model
+                      before applying the softmax.
+   :type n_features: int
+   :param weights: A torch.Tensor object to directly specify the weights for the linear
+                   transformation of the input features.
+   :type weights: torch.Tensor
+
+
+.. py:class:: PropFormulaNN(formula_expr: sympy.core.function.FunctionClass, atoms: Tuple)
+
+   Bases: :py:obj:`torch.nn.Sequential`
+
+
+   A neural network model representing a propositional formula that is constructed
+   using only NOT (~), OR (|), AND (&) with syntax from SymPy.
+
+   It takes inputs where -1 represents False and +1 represents True.
+
+   Inherits from:
+       torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+       sequential manner.
+
+   .. attribute:: parse_tree
+
+      The ParseTree representation of the formula.
+
+      :type: ParseTree
+
+   .. attribute:: atoms
+
+      The unique atoms in the formula. The ordering of this
+      tuple matters in determining the ordering of the input to the network.
+
+      :type: tuple[str]
+
+   Initializes a PropFormulaNN instance and generates all the torch.nn.Linear
+   layers necessary to construct the neural network.
+
+   :param formula_expr: The expression representing
+                        the propositional formula. Constructed using only syntax from SymPy with
+                        the operators NOT (~), OR (|), AND (&).
+   :type formula_expr: sympy.core.function.FunctionClass
+   :param atoms: A tuple of unique atoms in the formula.
+   :type atoms: tuple[str]
+
+
+   .. py:attribute:: parse_tree
+
+
+   .. py:attribute:: atoms
+
+
+   .. py:method:: _init_layers() -> List[torch.nn.Module]
+
+      Initializes all the layers of the neural network into a list of nn.Module.
+
+      The layers are initialized and created in ascending order of height in the
+      ParseTree representation of the formula.
+
+      :returns: List of neural network layers.
+      :rtype: list[torch.nn.Module]
+
+
+
+   .. py:method:: _atom_layer() -> torch.nn.Module
+
+      Initializes the first layer of the neural network that duplicates and reorders
+      the input propositional atoms based on their ordering in the ParseTree.
+
+      :returns: Linear layer that duplicates and reorders the input atoms.
+      :rtype: torch.nn.Linear
+
+
+
+   .. py:method:: _get_height_layers(height: int) -> List[torch.nn.Module]
+
+      Retrieves layers corresponding to a specific height in the ParseTree.
+
+      :param height: The specified height within the ParseTree representatation.
+      :type height: int
+
+      :returns:
+
+                List of neural network layers for the nodes that are located
+                    at the given height in the ParseTree representation.
+      :rtype: list[torch.nn.Module]
+
+
+
+   .. py:method:: _init_binary_operator_layers(subtree_ls: List[ParseTree]) -> List[torch.nn.Module]
+
+      Initializes the all the layers associated with carrying out the operators
+      involved in the given list of subtrees.
+
+      It assumes that the given list of subtrees contains at least one that involves
+      a binary operator/connective.
+
+      :param subtree_ls: List of ParseTree instances with the same height in the full
+                         ParseTree that includes binary operators.
+      :type subtree_ls: list[ParseTree]
+
+      :returns: List of neural network layers for binary operators.
+      :rtype: list[torch.nn.Module]
+
+
+
+   .. py:method:: _binary_operator_block(arg_num_ls: List[int], subtree_ls: List[ParseTree], first_block: bool = False) -> List[torch.nn.Module]
+
+      Creates a block of layers that simpliefies the subexpression for the given list of subtrees
+      by applying the binary operator/connective once whenever possible.
+
+      The binary operator/connective from the same subtree can be applied simultaneously as long
+      as the number of arguments inputted to it permits (i.e. divisible by two).
+
+      :param arg_num_ls: List of number of arguments that the operator/node of each
+                         subtrees takes.
+      :type arg_num_ls: list[int]
+      :param subtree_ls: List of subtrees with the same height in the ParseTree.
+      :type subtree_ls: list[ParseTree]
+      :param first_block: Indicates if this is the first block of the layers for this
+                          collection of subtrees with the same height.
+      :type first_block: bool
+
+      :returns: List of neural network layers in a single block.
+      :rtype: list[torch.nn.Module]
+
+
+
+   .. py:method:: _identity_weights() -> Tuple[torch.Tensor, torch.Tensor]
+
+      Generates the weights for the two nn.Linear layers in an identity block.
+
+      :returns: Inter and out layer weights for an identity block.
+      :rtype: tuple[torch.Tensor, torch.Tensor]
+
+
+
+   .. py:method:: _and_or_weights(sub_inter_dim: int, operator: str) -> Tuple[torch.Tensor, torch.Tensor]
+
+      Generates weights for the two nn.Linear layers in an AND or OR block.
+
+      :param sub_inter_dim: Dimension of the intermediate layer.
+      :type sub_inter_dim: int
+      :param operator: The operator type (AND or OR).
+      :type operator: str
+
+      :returns: Inter and out layer weights for an AND or OR block.
+      :rtype: tuple[torch.Tensor, torch.Tensor]
+
+
+
+   .. py:method:: _init_unary_operator_layer(subtree_ls: List[ParseTree]) -> List[torch.nn.Module]
+
+      Initializes the all the layers associated with carrying out the operators
+      involved in the given list of subtrees.
+
+      It assumes that the given list of subtrees contains only unary operators.
+
+      :param subtree_ls: List of ParseTree instances with the same height
+                         in the full ParseTree that only has unary operators.
+      :type subtree_ls: list[ParseTree]
+
+      :returns: List of neural network layers for unary operators.
+      :rtype: list[torch.nn.Module]
+
+
+
+   .. py:method:: _count_binary_operators(subtree_ls: List[ParseTree]) -> int
+
+      Counts the occurrences of binary operators in the given list of ParseTree instances.
+
+      :param subtree_ls: List of ParseTree instances with the same height
+                         in the full ParseTree.
+      :type subtree_ls: list[ParseTree]
+
+      :returns: Count of binary operators.
+      :rtype: int
+
+
+
+   .. py:method:: _post_block_arg_num_ls(arg_num_ls: List[int]) -> List[int]
+
+      Returns the list of number of arguments of each subtree after a binary operator block
+      of layers.
+
+      :param arg_num_ls: List of numbers of arguments for each subtree.
+      :type arg_num_ls: list[int]
+
+      :returns: Number of arguments for each subtree after a block.
+      :rtype: list[int]
+
+
+
+.. py:class:: BooleanAndNN(n_features: int = 2)
+
+   Bases: :py:obj:`torch.nn.Sequential`
+
+
+   Implements a neural network model designed to mimic the 'AND' logical operation on input features.
+
+   When only -1 or 1 are passed in as part of the input to this model, it is effectively performing the
+   'AND' operation.
+
+   This model is structured as a sequence of layers that progressively compute the 'AND' operation
+   on the input features, scaling the dimensionality of the input at each step until the final
+   output is obtained. The network employs a specific arrangement of weights and intermediate operations
+   such that it is also equivalent to computing the minimum value among a collection of values given as
+   as the input.
+
+   Inherits from:
+       torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+           sequential manner.
+
+   .. attribute:: dims
+
+      A list that keeps track of the dimensions of each layer in the network.
+
+      :type: list
+
+   Initializes an AND model with the specified input features dimension.
+
+   :param n_features: The dimension (number of features) of the input data. Defaults to 2.
+   :type n_features: int
+
+
+   .. py:attribute:: n_features
+      :value: 2
+
+
+
+   .. py:method:: _create_layer_weights() -> Tuple
+
+      Initializes the layers of the network starting from the input dimension.
+
+      :param in_dim: The dimension of the input to the current layer.
+      :type in_dim: int
+
+      :returns: A list of initialized layers that make up the network.
+      :rtype: list
+
+
+
+.. py:class:: BooleanNotNN(n_features: int)
+
+   Bases: :py:obj:`torch.nn.Sequential`
+
+
+   Implements a neural network model designed to apply the logical NOT operation to input features.
+
+   This model consists of a single linear layer without bias, configured to negate each input feature.
+   The weights of the layer are initialized to -1 for each feature, effectively performing the 'NOT' operation
+   in a bitwise manner when the inputs are considered to be -1 or 1.
+
+   Inherits from:
+       torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+       sequential manner.
+
+   Initializes a NOT model with a specified dimension for the input features.
+
+   The initialized model consists of a single linear layer without bias. The weights of this layer are
+   set to -1 for each input feature, enabling the layer to negate the values of all input features.
+
+   :param n_features: The total number of features in the input data. This parameter determines the
+                      dimensionality of the input to the linear layer as well as the output dimension, allowing the
+                      model to apply the NOT operation to each feature independently.
+   :type n_features: int
+
+
+.. py:class:: BooleanOrNN(n_features: int = 2)
+
+   Bases: :py:obj:`torch.nn.Sequential`
+
+
+   Implements a neural network model designed to mimic the 'OR' logical operation on input features.
+
+   When only -1 or 1 are passed in as part of the input to this model, it is effectively performing the
+   'OR' operation.
+
+   This model is structured as a sequence of layers that progressively compute the 'OR' operation
+   on the input features, scaling the dimensionality of the input at each step until the final
+   output is obtained. The network employs a specific arrangement of weights and intermediate operations
+   such that it is also equivalent to computing the maximum value among a collection of values given as
+   as the input.
+
+   Inherits from:
+       torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+       sequential manner.
+
+   .. attribute:: dims
+
+      A list that keeps track of the dimensions of each layer in the network.
+
+      :type: list
+
+   Initializes an AND model with the specified input features dimension.
+
+   :param n_features: The dimension (number of features) of the input data. Defaults to 2.
+   :type n_features: int
+
+
+   .. py:attribute:: n_features
+      :value: 2
+
+
+
+   .. py:method:: _create_layer_weights() -> Tuple
+
+      Initializes the layers of the network starting from the input dimension.
+
+      :param in_dim: The dimension of the input to the current layer.
+      :type in_dim: int
+
+      :returns: A list of initialized layers that make up the network.
+      :rtype: list
+
+
+

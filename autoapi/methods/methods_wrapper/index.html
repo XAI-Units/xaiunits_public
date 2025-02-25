@@ -1,0 +1,294 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>methods.methods_wrapper &mdash; XAI-Units 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="metrics" href="../../metrics/index.html" />
+    <link rel="prev" title="methods" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            XAI-Units
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../library_quickstart.html">Quickstart - Library Walkthrough</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../image_dataset_example.html">Image Dataset Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../custom_methods_and_custom_datasets.html">Customization Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../model/index.html">model</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">methods</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">methods.methods_wrapper</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#attributes">Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../metrics/index.html">metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../trainer/index.html">trainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pipeline/index.html">pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fine_tune/index.html">fine_tune</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../common_lib/index.html">common_lib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../datagenerator/index.html">datagenerator</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">XAI-Units</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">methods</a></li>
+      <li class="breadcrumb-item active">methods.methods_wrapper</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/methods/methods_wrapper/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-methods.methods_wrapper">
+<span id="methods-methods-wrapper"></span><h1>methods.methods_wrapper<a class="headerlink" href="#module-methods.methods_wrapper" title="Link to this heading"></a></h1>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#methods.methods_wrapper.model" title="methods.methods_wrapper.model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">model</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#methods.methods_wrapper._validate_input_gen_arguments" title="methods.methods_wrapper._validate_input_gen_arguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_validate_input_gen_arguments</span></code></a>(→ None)</p></td>
+<td><p>Validates the input arguments for the input generator function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#methods.methods_wrapper.default_attribute_input_generator" title="methods.methods_wrapper.default_attribute_input_generator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_attribute_input_generator</span></code></a>(→ Dict[str, Any])</p></td>
+<td><p>Returns the default input generator.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#methods.methods_wrapper._validate_wrapper_inputs" title="methods.methods_wrapper._validate_wrapper_inputs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_validate_wrapper_inputs</span></code></a>(→ None)</p></td>
+<td><p>Validates the input wrappers.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#methods.methods_wrapper.wrap_method" title="methods.methods_wrapper.wrap_method"><code class="xref py py-obj docutils literal notranslate"><span class="pre">wrap_method</span></code></a>(method[, input_generator_fns, ...])</p></td>
+<td><p>Creates Dynamic Subclass to standardize class methods across difference method classes.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#methods.methods_wrapper.wrap_method_llm" title="methods.methods_wrapper.wrap_method_llm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">wrap_method_llm</span></code></a>(method[, input_generator_fns, ...])</p></td>
+<td><p>Creates Dynamic Subclass to standardize class methods across difference method classes.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="methods.methods_wrapper._validate_input_gen_arguments">
+<span class="sig-prename descclassname"><span class="pre">methods.methods_wrapper.</span></span><span class="sig-name descname"><span class="pre">_validate_input_gen_arguments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#methods.methods_wrapper._validate_input_gen_arguments" title="Link to this definition"></a></dt>
+<dd><p>Validates the input arguments for the input generator function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feature_inputs</strong> (<em>Any</em>) – Input features.</p></li>
+<li><p><strong>y_labels</strong> (<em>Any</em>) – Ground truth labels.</p></li>
+<li><p><strong>target</strong> (<em>Any</em>) – Target labels.</p></li>
+<li><p><strong>context</strong> (<em>Any</em>) – Context.</p></li>
+<li><p><strong>model</strong> (<em>Any</em>) – Model instance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>AssertionError</strong> – If input arguments are not of the expected types.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="methods.methods_wrapper.default_attribute_input_generator">
+<span class="sig-prename descclassname"><span class="pre">methods.methods_wrapper.</span></span><span class="sig-name descname"><span class="pre">default_attribute_input_generator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#methods.methods_wrapper.default_attribute_input_generator" title="Link to this definition"></a></dt>
+<dd><p>Returns the default input generator.</p>
+<p>Input generator collates information from model, model output, dataset and others into
+single dictionary that will be unpack and used as arguments for the attribute class method.</p>
+<p>The default keys naming schema is that of captum’s attribute; create a custom input generator
+if you are using functions from other libraries.</p>
+<p>Some arguments passed in (see pipeline classes) are not used by the default function (e.g. y_labels).
+These arguments are there as we anticipate that users who create and pass in their own input generator function
+may require these arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feature_inputs</strong> (<em>torch.Tensor</em>) – Input tensor.</p></li>
+<li><p><strong>y_labels</strong> (<em>torch.Tensor</em>) – True y label tensor.</p></li>
+<li><p><strong>target</strong> (<em>torch.Tensor</em>) – Target arguments pass on to Captum attribute function.</p></li>
+<li><p><strong>context</strong> (<em>dict</em>) – Dictionary containing other relevant data (e.g. ground truth attribution).</p></li>
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – The model that FA method is evaluated on.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with all argument required for captum attribute function.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="methods.methods_wrapper._validate_wrapper_inputs">
+<span class="sig-prename descclassname"><span class="pre">methods.methods_wrapper.</span></span><span class="sig-name descname"><span class="pre">_validate_wrapper_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_generator_fns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_processing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#methods.methods_wrapper._validate_wrapper_inputs" title="Link to this definition"></a></dt>
+<dd><p>Validates the input wrappers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>method</strong> (<em>type</em>) – Explanation Method to be extended.</p></li>
+<li><p><strong>input_generator_fns</strong> (<em>Callable</em>) – Callable to generate input arguments for method.attribute.</p></li>
+<li><p><strong>out_processing</strong> (<em>Callable</em>) – Callable to post-process method.attribute output.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="methods.methods_wrapper.wrap_method">
+<span class="sig-prename descclassname"><span class="pre">methods.methods_wrapper.</span></span><span class="sig-name descname"><span class="pre">wrap_method</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_generator_fns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">default_attribute_input_generator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_processing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_fix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'wrapper_'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#methods.methods_wrapper.wrap_method" title="Link to this definition"></a></dt>
+<dd><p>Creates Dynamic Subclass to standardize class methods across difference method classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>method</strong> (<em>class</em>) – Explanation Method to be extended.</p></li>
+<li><p><strong>input_generator_fns</strong> (<em>Callable</em>) – Callable to generate input arguments for method.attribute.
+Defaults to default_attribute_input_generator.</p></li>
+<li><p><strong>out_processing</strong> (<em>Callable</em><em>, </em><em>optional</em>) – Callable to post-process method.attribute output.
+Defaults to None.</p></li>
+<li><p><strong>other_inputs</strong> (<em>dict</em>) – Other args to be pass on to method.attribute. Defaults to {}.</p></li>
+<li><p><strong>class_params</strong> (<em>dict</em>) – Other args to be used to initialize method class. Defaults to {}.</p></li>
+<li><p><strong>pre_fix</strong> (<em>str</em>) – prefix to be added to subclass. Defaults to ‘wrapper_’</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The name of the method. If None uses the name of the method class. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A subclass of method with standardised interface.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>type</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="methods.methods_wrapper.wrap_method_llm">
+<span class="sig-prename descclassname"><span class="pre">methods.methods_wrapper.</span></span><span class="sig-name descname"><span class="pre">wrap_method_llm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_generator_fns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">default_attribute_input_generator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_processing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gen_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{'max_new_tokens':</span> <span class="pre">1}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_fix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'wrapper_'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#methods.methods_wrapper.wrap_method_llm" title="Link to this definition"></a></dt>
+<dd><p>Creates Dynamic Subclass to standardize class methods across difference method classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>method</strong> (<em>class</em>) – Explanation Method to be extended.</p></li>
+<li><p><strong>input_generator_fns</strong> (<em>Callable</em>) – Callable to generate input arguments for method.attribute.
+Defaults to default_attribute_input_generator.</p></li>
+<li><p><strong>out_processing</strong> (<em>Callable</em><em>, </em><em>optional</em>) – Callable to post-process method.attribute output.
+Defaults to None.</p></li>
+<li><p><strong>other_inputs</strong> (<em>dict</em>) – Other args to be pass on to method.attribute. Defaults to {}.</p></li>
+<li><p><strong>class_params</strong> (<em>dict</em>) – Other args to be used to initialize method class. Defaults to {}.</p></li>
+<li><p><strong>pre_fix</strong> (<em>str</em>) – prefix to be added to subclass. Defaults to ‘<a href="#id1"><span class="problematic" id="id2">wrapper_</span></a>’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A subclass of method with standardized interface.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>type</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="methods.methods_wrapper.model">
+<span class="sig-prename descclassname"><span class="pre">methods.methods_wrapper.</span></span><span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#methods.methods_wrapper.model" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../metrics/index.html" class="btn btn-neutral float-right" title="metrics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, XAI-Units.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

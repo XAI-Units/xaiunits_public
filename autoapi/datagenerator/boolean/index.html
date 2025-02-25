@@ -1,0 +1,698 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>datagenerator.boolean &mdash; XAI-Units 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="datagenerator.conflicting" href="../conflicting/index.html" />
+    <link rel="prev" title="datagenerator.backgrounds" href="../backgrounds/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            XAI-Units
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../library_quickstart.html">Quickstart - Library Walkthrough</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../image_dataset_example.html">Image Dataset Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../custom_methods_and_custom_datasets.html">Customization Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../model/index.html">model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../methods/index.html">methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../metrics/index.html">metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../trainer/index.html">trainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pipeline/index.html">pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fine_tune/index.html">fine_tune</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../common_lib/index.html">common_lib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">datagenerator</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../backgrounds/index.html">datagenerator.backgrounds</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">datagenerator.boolean</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../conflicting/index.html">datagenerator.conflicting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../data_generation/index.html">datagenerator.data_generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../foregrounds/index.html">datagenerator.foregrounds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../image_generation/index.html">datagenerator.image_generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../interacting_features/index.html">datagenerator.interacting_features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../pertinent_negatives/index.html">datagenerator.pertinent_negatives</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../shattered_grad/index.html">datagenerator.shattered_grad</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../text_datasets/index.html">datagenerator.text_datasets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../uncertainty_aware/index.html">datagenerator.uncertainty_aware</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#attributes">Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">XAI-Units</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">datagenerator</a></li>
+      <li class="breadcrumb-item active">datagenerator.boolean</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/datagenerator/boolean/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-datagenerator.boolean">
+<span id="datagenerator-boolean"></span><h1>datagenerator.boolean<a class="headerlink" href="#module-datagenerator.boolean" title="Link to this heading"></a></h1>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#datagenerator.boolean.data" title="datagenerator.boolean.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#datagenerator.boolean.BooleanDataset" title="datagenerator.boolean.BooleanDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BooleanDataset</span></code></a></p></td>
+<td><p>Generic synthetic dataset based on a propositional formula.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#datagenerator.boolean.BooleanAndDataset" title="datagenerator.boolean.BooleanAndDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BooleanAndDataset</span></code></a></p></td>
+<td><p>Generic synthetic dataset based on a propositional formula.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#datagenerator.boolean.BooleanOrDataset" title="datagenerator.boolean.BooleanOrDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BooleanOrDataset</span></code></a></p></td>
+<td><p>Generic synthetic dataset based on a propositional formula.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">datagenerator.boolean.</span></span><span class="sig-name descname"><span class="pre">BooleanDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">formula</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sympy.core.function.FunctionClass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atoms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datagenerator.boolean.BooleanDataset" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">xaiunits.datagenerator.data_generation.BaseFeaturesDataset</span></code></p>
+<p>Generic synthetic dataset based on a propositional formula.</p>
+<p>The dataset corresponds to sampling rows from the truth table of the given propositional
+formula. If n_samples is no larger than the size of the truth table, then the generated
+dataset will always contain non-duplicate samples of the truth table. Otherwise,
+the dataset will still contain rows for the entire truth table but will also contain
+duplicates.</p>
+<p>If the input for atoms is None, the corresponding attribute is by default assigned
+as the atoms that are extracted from the given formula.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><p>BaseFeaturesDataset: The base class for creating continuous feature datasets.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanDataset.formula">
+<span class="sig-name descname"><span class="pre">formula</span></span><a class="headerlink" href="#datagenerator.boolean.BooleanDataset.formula" title="Link to this definition"></a></dt>
+<dd><p>A propositional formula for which the dataset
+is generated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>sympy.core.function.FunctionClass</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanDataset.atoms">
+<span class="sig-name descname"><span class="pre">atoms</span></span><a class="headerlink" href="#datagenerator.boolean.BooleanDataset.atoms" title="Link to this definition"></a></dt>
+<dd><p>The ordered collection of propositional atoms that were used within the
+propositional formula.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanDataset.seed">
+<span class="sig-name descname"><span class="pre">seed</span></span><a class="headerlink" href="#datagenerator.boolean.BooleanDataset.seed" title="Link to this definition"></a></dt>
+<dd><p>Seed for random number generators to ensure reproducibility.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanDataset.n_samples">
+<span class="sig-name descname"><span class="pre">n_samples</span></span><a class="headerlink" href="#datagenerator.boolean.BooleanDataset.n_samples" title="Link to this definition"></a></dt>
+<dd><p>Number of samples in the dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Initializes a BooleanDataset object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>formula</strong> (<em>sympy.core.function.FunctionClass</em>) – A propositional formula for dataset generation.</p></li>
+<li><p><strong>atoms</strong> (<em>Iterable</em><em>, </em><em>optional</em>) – Ordered collection of propositional atoms used in the formula.
+Defaults to None.</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – Seed for random number generation, ensuring reproducibility. Defaults to 0.</p></li>
+<li><p><strong>n_samples</strong> (<em>int</em>) – Number of samples to generate for the dataset. Defaults to 10.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">atoms</span></span><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">formula</span></span><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanDataset.subset_data">
+<span class="sig-name descname"><span class="pre">subset_data</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['samples']</span></em><a class="headerlink" href="#datagenerator.boolean.BooleanDataset.subset_data" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanDataset.subset_attribute">
+<span class="sig-name descname"><span class="pre">subset_attribute</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['perturb_function',</span> <span class="pre">'default_metric',</span> <span class="pre">'generate_model',</span> <span class="pre">'name']</span></em><a class="headerlink" href="#datagenerator.boolean.BooleanDataset.subset_attribute" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanDataset.cat_features">
+<span class="sig-name descname"><span class="pre">cat_features</span></span><a class="headerlink" href="#datagenerator.boolean.BooleanDataset.cat_features" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanDataset.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'BooleanDataset'</span></em><a class="headerlink" href="#datagenerator.boolean.BooleanDataset.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanDataset._initialize_samples_labels">
+<span class="sig-name descname"><span class="pre">_initialize_samples_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.boolean.BooleanDataset._initialize_samples_labels" title="Link to this definition"></a></dt>
+<dd><p>Initializes the samples and labels of the dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>n_samples</strong> (<em>int</em>) – number of samples/labels contained in the dataset.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Tuple containing the generated samples</dt><dd><p>and corresponding labels of the dataset.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[Tensor, Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanDataset.perturb_function">
+<span class="sig-name descname"><span class="pre">perturb_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cat_resample_prob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_infidelity_decorator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multipy_by_inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span></span></span><a class="headerlink" href="#datagenerator.boolean.BooleanDataset.perturb_function" title="Link to this definition"></a></dt>
+<dd><p>Generates perturb function to be used for XAI method evaluation. Applies gaussian noise
+for continuous features, and resampling for categorical features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cat_resample_prob</strong> (<em>float</em>) – Probability of resampling a categorical feature. Defaults to 0.2.</p></li>
+<li><p><strong>run_infidelity_decorator</strong> (<em>bool</em>) – Set to true if the returned fns is to be compatible with
+infidelity. Set flag to False for sensitivity. Defaults to True.</p></li>
+<li><p><strong>multiply_by_inputs</strong> (<em>bool</em>) – Parameters for decorator. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A perturbation function compatible with Captum.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>perturb_func (function)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanDataset.generate_model">
+<span class="sig-name descname"><span class="pre">generate_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.nn.Module</span></span></span><a class="headerlink" href="#datagenerator.boolean.BooleanDataset.generate_model" title="Link to this definition"></a></dt>
+<dd><p>Generates a neural network model using the given propositional formula and atoms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A neural network model tailored to the dataset’s propositional formula.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../../model/index.html#model.PropFormulaNN" title="model.PropFormulaNN">model.PropFormulaNN</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanDataset.default_metric">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_metric</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Callable</span></em><a class="headerlink" href="#datagenerator.boolean.BooleanDataset.default_metric" title="Link to this definition"></a></dt>
+<dd><p>The default metric for evaluating the performance of explanation methods applied
+to this dataset.</p>
+<p>For this dataset, the default metric is the infidelity metric with the
+default perturb function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>A class that wraps around the default metric to be instantiated</dt><dd><p>within the pipeline.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>type</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanDataset.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">others</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.boolean.BooleanDataset.__getitem__" title="Link to this definition"></a></dt>
+<dd><p>Retrieve a sample and its associated label by index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>idx</strong> (<em>int</em>) – Index of the sample to retrieve.</p></li>
+<li><p><strong>others</strong> (<em>list</em>) – Additional items to retrieve. Defaults to [].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple containing the sample and its label.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanAndDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">datagenerator.boolean.</span></span><span class="sig-name descname"><span class="pre">BooleanAndDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datagenerator.boolean.BooleanAndDataset" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#datagenerator.boolean.BooleanDataset" title="datagenerator.boolean.BooleanDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BooleanDataset</span></code></a></p>
+<p>Generic synthetic dataset based on a propositional formula.</p>
+<p>The dataset corresponds to sampling rows from the truth table of the given propositional
+formula. If n_samples is no larger than the size of the truth table, then the generated
+dataset will always contain non-duplicate samples of the truth table. Otherwise,
+the dataset will still contain rows for the entire truth table but will also contain
+duplicates.</p>
+<p>If the input for atoms is None, the corresponding attribute is by default assigned
+as the atoms that are extracted from the given formula.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><p>BaseFeaturesDataset: The base class for creating continuous feature datasets.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanAndDataset.formula">
+<span class="sig-name descname"><span class="pre">formula</span></span><a class="headerlink" href="#datagenerator.boolean.BooleanAndDataset.formula" title="Link to this definition"></a></dt>
+<dd><p>A propositional formula for which the dataset
+is generated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>sympy.core.function.FunctionClass</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanAndDataset.atoms">
+<span class="sig-name descname"><span class="pre">atoms</span></span><a class="headerlink" href="#datagenerator.boolean.BooleanAndDataset.atoms" title="Link to this definition"></a></dt>
+<dd><p>The ordered collection of propositional atoms that were used within the
+propositional formula.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanAndDataset.seed">
+<span class="sig-name descname"><span class="pre">seed</span></span><a class="headerlink" href="#datagenerator.boolean.BooleanAndDataset.seed" title="Link to this definition"></a></dt>
+<dd><p>Seed for random number generators to ensure reproducibility.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanAndDataset.n_samples">
+<span class="sig-name descname"><span class="pre">n_samples</span></span><a class="headerlink" href="#datagenerator.boolean.BooleanAndDataset.n_samples" title="Link to this definition"></a></dt>
+<dd><p>Number of samples in the dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Initializes a BooleanDataset object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>formula</strong> (<em>sympy.core.function.FunctionClass</em>) – A propositional formula for dataset generation.</p></li>
+<li><p><strong>atoms</strong> (<em>Iterable</em><em>, </em><em>optional</em>) – Ordered collection of propositional atoms used in the formula.
+Defaults to None.</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – Seed for random number generation, ensuring reproducibility. Defaults to 0.</p></li>
+<li><p><strong>n_samples</strong> (<em>int</em>) – Number of samples to generate for the dataset. Defaults to 10.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanAndDataset.n_features">
+<span class="sig-name descname"><span class="pre">n_features</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#datagenerator.boolean.BooleanAndDataset.n_features" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanAndDataset.ground_truth">
+<span class="sig-name descname"><span class="pre">ground_truth</span></span><a class="headerlink" href="#datagenerator.boolean.BooleanAndDataset.ground_truth" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanAndDataset.ground_truth_attribute">
+<span class="sig-name descname"><span class="pre">ground_truth_attribute</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ground_truth'</span></em><a class="headerlink" href="#datagenerator.boolean.BooleanAndDataset.ground_truth_attribute" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanAndDataset.create_baselines">
+<span class="sig-name descname"><span class="pre">create_baselines</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#datagenerator.boolean.BooleanAndDataset.create_baselines" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanAndDataset.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">others</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['baseline',</span> <span class="pre">'ground_truth_attribute']</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.boolean.BooleanAndDataset.__getitem__" title="Link to this definition"></a></dt>
+<dd><p>Retrieve a sample and its associated label by index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>idx</strong> (<em>int</em>) – Index of the sample to retrieve.</p></li>
+<li><p><strong>others</strong> (<em>list</em>) – Additional items to retrieve. Defaults to [].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple containing the sample and its label.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanAndDataset.generate_model">
+<span class="sig-name descname"><span class="pre">generate_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.nn.Module</span></span></span><a class="headerlink" href="#datagenerator.boolean.BooleanAndDataset.generate_model" title="Link to this definition"></a></dt>
+<dd><p>Generates a neural network model using the given propositional formula and atoms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A neural network model tailored to the dataset’s propositional formula.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../../model/index.html#model.PropFormulaNN" title="model.PropFormulaNN">model.PropFormulaNN</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanAndDataset.create_ground_truth">
+<span class="sig-name descname"><span class="pre">create_ground_truth</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="headerlink" href="#datagenerator.boolean.BooleanAndDataset.create_ground_truth" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanAndDataset.default_metric">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_metric</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Callable</span></em><a class="headerlink" href="#datagenerator.boolean.BooleanAndDataset.default_metric" title="Link to this definition"></a></dt>
+<dd><p>The default metric for evaluating the performance of explanation methods applied
+to this dataset.</p>
+<p>For this dataset, the default metric is the infidelity metric with the
+default perturb function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>A class that wraps around the default metric to be instantiated</dt><dd><p>within the pipeline.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>type</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanOrDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">datagenerator.boolean.</span></span><span class="sig-name descname"><span class="pre">BooleanOrDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datagenerator.boolean.BooleanOrDataset" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#datagenerator.boolean.BooleanDataset" title="datagenerator.boolean.BooleanDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BooleanDataset</span></code></a></p>
+<p>Generic synthetic dataset based on a propositional formula.</p>
+<p>The dataset corresponds to sampling rows from the truth table of the given propositional
+formula. If n_samples is no larger than the size of the truth table, then the generated
+dataset will always contain non-duplicate samples of the truth table. Otherwise,
+the dataset will still contain rows for the entire truth table but will also contain
+duplicates.</p>
+<p>If the input for atoms is None, the corresponding attribute is by default assigned
+as the atoms that are extracted from the given formula.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><p>BaseFeaturesDataset: The base class for creating continuous feature datasets.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanOrDataset.formula">
+<span class="sig-name descname"><span class="pre">formula</span></span><a class="headerlink" href="#datagenerator.boolean.BooleanOrDataset.formula" title="Link to this definition"></a></dt>
+<dd><p>A propositional formula for which the dataset
+is generated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>sympy.core.function.FunctionClass</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanOrDataset.atoms">
+<span class="sig-name descname"><span class="pre">atoms</span></span><a class="headerlink" href="#datagenerator.boolean.BooleanOrDataset.atoms" title="Link to this definition"></a></dt>
+<dd><p>The ordered collection of propositional atoms that were used within the
+propositional formula.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanOrDataset.seed">
+<span class="sig-name descname"><span class="pre">seed</span></span><a class="headerlink" href="#datagenerator.boolean.BooleanOrDataset.seed" title="Link to this definition"></a></dt>
+<dd><p>Seed for random number generators to ensure reproducibility.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanOrDataset.n_samples">
+<span class="sig-name descname"><span class="pre">n_samples</span></span><a class="headerlink" href="#datagenerator.boolean.BooleanOrDataset.n_samples" title="Link to this definition"></a></dt>
+<dd><p>Number of samples in the dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Initializes a BooleanDataset object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>formula</strong> (<em>sympy.core.function.FunctionClass</em>) – A propositional formula for dataset generation.</p></li>
+<li><p><strong>atoms</strong> (<em>Iterable</em><em>, </em><em>optional</em>) – Ordered collection of propositional atoms used in the formula.
+Defaults to None.</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – Seed for random number generation, ensuring reproducibility. Defaults to 0.</p></li>
+<li><p><strong>n_samples</strong> (<em>int</em>) – Number of samples to generate for the dataset. Defaults to 10.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanOrDataset.n_features">
+<span class="sig-name descname"><span class="pre">n_features</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#datagenerator.boolean.BooleanOrDataset.n_features" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanOrDataset.ground_truth">
+<span class="sig-name descname"><span class="pre">ground_truth</span></span><a class="headerlink" href="#datagenerator.boolean.BooleanOrDataset.ground_truth" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanOrDataset.ground_truth_attribute">
+<span class="sig-name descname"><span class="pre">ground_truth_attribute</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ground_truth'</span></em><a class="headerlink" href="#datagenerator.boolean.BooleanOrDataset.ground_truth_attribute" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanOrDataset.create_baselines">
+<span class="sig-name descname"><span class="pre">create_baselines</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#datagenerator.boolean.BooleanOrDataset.create_baselines" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanOrDataset.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">others</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['baseline',</span> <span class="pre">'ground_truth_attribute']</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.boolean.BooleanOrDataset.__getitem__" title="Link to this definition"></a></dt>
+<dd><p>Retrieve a sample and its associated label by index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>idx</strong> (<em>int</em>) – Index of the sample to retrieve.</p></li>
+<li><p><strong>others</strong> (<em>list</em>) – Additional items to retrieve. Defaults to [].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple containing the sample and its label.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanOrDataset.generate_model">
+<span class="sig-name descname"><span class="pre">generate_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.nn.Module</span></span></span><a class="headerlink" href="#datagenerator.boolean.BooleanOrDataset.generate_model" title="Link to this definition"></a></dt>
+<dd><p>Generates a neural network model using the given propositional formula and atoms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A neural network model tailored to the dataset’s propositional formula.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../../model/index.html#model.PropFormulaNN" title="model.PropFormulaNN">model.PropFormulaNN</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanOrDataset.create_ground_truth">
+<span class="sig-name descname"><span class="pre">create_ground_truth</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="headerlink" href="#datagenerator.boolean.BooleanOrDataset.create_ground_truth" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="datagenerator.boolean.BooleanOrDataset.default_metric">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_metric</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Callable</span></em><a class="headerlink" href="#datagenerator.boolean.BooleanOrDataset.default_metric" title="Link to this definition"></a></dt>
+<dd><p>The default metric for evaluating the performance of explanation methods applied
+to this dataset.</p>
+<p>For this dataset, the default metric is the infidelity metric with the
+default perturb function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>A class that wraps around the default metric to be instantiated</dt><dd><p>within the pipeline.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>type</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="datagenerator.boolean.data">
+<span class="sig-prename descclassname"><span class="pre">datagenerator.boolean.</span></span><span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#datagenerator.boolean.data" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../backgrounds/index.html" class="btn btn-neutral float-left" title="datagenerator.backgrounds" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../conflicting/index.html" class="btn btn-neutral float-right" title="datagenerator.conflicting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, XAI-Units.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

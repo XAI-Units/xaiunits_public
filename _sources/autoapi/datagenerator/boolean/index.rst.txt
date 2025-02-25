@@ -1,0 +1,418 @@
+datagenerator.boolean
+=====================
+
+.. py:module:: datagenerator.boolean
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   datagenerator.boolean.data
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   datagenerator.boolean.BooleanDataset
+   datagenerator.boolean.BooleanAndDataset
+   datagenerator.boolean.BooleanOrDataset
+
+
+Module Contents
+---------------
+
+.. py:class:: BooleanDataset(formula: sympy.core.function.FunctionClass, atoms: Optional[Iterable] = None, seed: int = 0, n_samples: int = 10)
+
+   Bases: :py:obj:`xaiunits.datagenerator.data_generation.BaseFeaturesDataset`
+
+
+   Generic synthetic dataset based on a propositional formula.
+
+   The dataset corresponds to sampling rows from the truth table of the given propositional
+   formula. If n_samples is no larger than the size of the truth table, then the generated
+   dataset will always contain non-duplicate samples of the truth table. Otherwise,
+   the dataset will still contain rows for the entire truth table but will also contain
+   duplicates.
+
+   If the input for atoms is None, the corresponding attribute is by default assigned
+   as the atoms that are extracted from the given formula.
+
+   Inherits from:
+       BaseFeaturesDataset: The base class for creating continuous feature datasets.
+
+   .. attribute:: formula
+
+      A propositional formula for which the dataset
+      is generated.
+
+      :type: sympy.core.function.FunctionClass
+
+   .. attribute:: atoms
+
+      The ordered collection of propositional atoms that were used within the
+      propositional formula.
+
+      :type: tuple
+
+   .. attribute:: seed
+
+      Seed for random number generators to ensure reproducibility.
+
+      :type: int
+
+   .. attribute:: n_samples
+
+      Number of samples in the dataset.
+
+      :type: int
+
+   Initializes a BooleanDataset object.
+
+   :param formula: A propositional formula for dataset generation.
+   :type formula: sympy.core.function.FunctionClass
+   :param atoms: Ordered collection of propositional atoms used in the formula.
+                 Defaults to None.
+   :type atoms: Iterable, optional
+   :param seed: Seed for random number generation, ensuring reproducibility. Defaults to 0.
+   :type seed: int
+   :param n_samples: Number of samples to generate for the dataset. Defaults to 10.
+   :type n_samples: int
+
+
+   .. py:attribute:: atoms
+
+
+   .. py:attribute:: formula
+
+
+   .. py:attribute:: subset_data
+      :value: ['samples']
+
+
+
+   .. py:attribute:: subset_attribute
+      :value: ['perturb_function', 'default_metric', 'generate_model', 'name']
+
+
+
+   .. py:attribute:: cat_features
+
+
+   .. py:attribute:: name
+      :value: 'BooleanDataset'
+
+
+
+   .. py:method:: _initialize_samples_labels(n_samples: int) -> Tuple[torch.Tensor, torch.Tensor]
+
+      Initializes the samples and labels of the dataset.
+
+      :param n_samples: number of samples/labels contained in the dataset.
+      :type n_samples: int
+
+      :returns:
+
+                Tuple containing the generated samples
+                    and corresponding labels of the dataset.
+      :rtype: tuple[Tensor, Tensor]
+
+
+
+   .. py:method:: perturb_function(cat_resample_prob: float = 0.2, run_infidelity_decorator: bool = True, multipy_by_inputs: bool = False) -> Callable
+
+      Generates perturb function to be used for XAI method evaluation. Applies gaussian noise
+      for continuous features, and resampling for categorical features.
+
+      :param cat_resample_prob: Probability of resampling a categorical feature. Defaults to 0.2.
+      :type cat_resample_prob: float
+      :param run_infidelity_decorator: Set to true if the returned fns is to be compatible with
+                                       infidelity. Set flag to False for sensitivity. Defaults to True.
+      :type run_infidelity_decorator: bool
+      :param multiply_by_inputs: Parameters for decorator. Defaults to False.
+      :type multiply_by_inputs: bool
+
+      :returns: A perturbation function compatible with Captum.
+      :rtype: perturb_func (function)
+
+
+
+   .. py:method:: generate_model() -> torch.nn.Module
+
+      Generates a neural network model using the given propositional formula and atoms.
+
+      :returns: A neural network model tailored to the dataset's propositional formula.
+      :rtype: model.PropFormulaNN
+
+
+
+   .. py:property:: default_metric
+      :type: Callable
+
+
+      The default metric for evaluating the performance of explanation methods applied
+      to this dataset.
+
+      For this dataset, the default metric is the infidelity metric with the
+      default perturb function.
+
+      :returns:
+
+                A class that wraps around the default metric to be instantiated
+                    within the pipeline.
+      :rtype: type
+
+
+   .. py:method:: __getitem__(idx: int, others: List[str] = []) -> Tuple[Any, Ellipsis]
+
+      Retrieve a sample and its associated label by index.
+
+      :param idx: Index of the sample to retrieve.
+      :type idx: int
+      :param others: Additional items to retrieve. Defaults to [].
+      :type others: list
+
+      :returns: Tuple containing the sample and its label.
+      :rtype: tuple
+
+
+
+.. py:class:: BooleanAndDataset(n_features: int = 2, n_samples: int = 10, seed: int = 0)
+
+   Bases: :py:obj:`BooleanDataset`
+
+
+   Generic synthetic dataset based on a propositional formula.
+
+   The dataset corresponds to sampling rows from the truth table of the given propositional
+   formula. If n_samples is no larger than the size of the truth table, then the generated
+   dataset will always contain non-duplicate samples of the truth table. Otherwise,
+   the dataset will still contain rows for the entire truth table but will also contain
+   duplicates.
+
+   If the input for atoms is None, the corresponding attribute is by default assigned
+   as the atoms that are extracted from the given formula.
+
+   Inherits from:
+       BaseFeaturesDataset: The base class for creating continuous feature datasets.
+
+   .. attribute:: formula
+
+      A propositional formula for which the dataset
+      is generated.
+
+      :type: sympy.core.function.FunctionClass
+
+   .. attribute:: atoms
+
+      The ordered collection of propositional atoms that were used within the
+      propositional formula.
+
+      :type: tuple
+
+   .. attribute:: seed
+
+      Seed for random number generators to ensure reproducibility.
+
+      :type: int
+
+   .. attribute:: n_samples
+
+      Number of samples in the dataset.
+
+      :type: int
+
+   Initializes a BooleanDataset object.
+
+   :param formula: A propositional formula for dataset generation.
+   :type formula: sympy.core.function.FunctionClass
+   :param atoms: Ordered collection of propositional atoms used in the formula.
+                 Defaults to None.
+   :type atoms: Iterable, optional
+   :param seed: Seed for random number generation, ensuring reproducibility. Defaults to 0.
+   :type seed: int
+   :param n_samples: Number of samples to generate for the dataset. Defaults to 10.
+   :type n_samples: int
+
+
+   .. py:attribute:: n_features
+      :value: 2
+
+
+
+   .. py:attribute:: ground_truth
+
+
+   .. py:attribute:: ground_truth_attribute
+      :value: 'ground_truth'
+
+
+
+   .. py:method:: create_baselines() -> None
+
+
+   .. py:method:: __getitem__(idx: int, others: List[str] = ['baseline', 'ground_truth_attribute']) -> Tuple[Any, Ellipsis]
+
+      Retrieve a sample and its associated label by index.
+
+      :param idx: Index of the sample to retrieve.
+      :type idx: int
+      :param others: Additional items to retrieve. Defaults to [].
+      :type others: list
+
+      :returns: Tuple containing the sample and its label.
+      :rtype: tuple
+
+
+
+   .. py:method:: generate_model() -> torch.nn.Module
+
+      Generates a neural network model using the given propositional formula and atoms.
+
+      :returns: A neural network model tailored to the dataset's propositional formula.
+      :rtype: model.PropFormulaNN
+
+
+
+   .. py:method:: create_ground_truth() -> torch.Tensor
+
+
+   .. py:property:: default_metric
+      :type: Callable
+
+
+      The default metric for evaluating the performance of explanation methods applied
+      to this dataset.
+
+      For this dataset, the default metric is the infidelity metric with the
+      default perturb function.
+
+      :returns:
+
+                A class that wraps around the default metric to be instantiated
+                    within the pipeline.
+      :rtype: type
+
+
+.. py:class:: BooleanOrDataset(n_features: int = 2, n_samples: int = 10, seed: int = 0)
+
+   Bases: :py:obj:`BooleanDataset`
+
+
+   Generic synthetic dataset based on a propositional formula.
+
+   The dataset corresponds to sampling rows from the truth table of the given propositional
+   formula. If n_samples is no larger than the size of the truth table, then the generated
+   dataset will always contain non-duplicate samples of the truth table. Otherwise,
+   the dataset will still contain rows for the entire truth table but will also contain
+   duplicates.
+
+   If the input for atoms is None, the corresponding attribute is by default assigned
+   as the atoms that are extracted from the given formula.
+
+   Inherits from:
+       BaseFeaturesDataset: The base class for creating continuous feature datasets.
+
+   .. attribute:: formula
+
+      A propositional formula for which the dataset
+      is generated.
+
+      :type: sympy.core.function.FunctionClass
+
+   .. attribute:: atoms
+
+      The ordered collection of propositional atoms that were used within the
+      propositional formula.
+
+      :type: tuple
+
+   .. attribute:: seed
+
+      Seed for random number generators to ensure reproducibility.
+
+      :type: int
+
+   .. attribute:: n_samples
+
+      Number of samples in the dataset.
+
+      :type: int
+
+   Initializes a BooleanDataset object.
+
+   :param formula: A propositional formula for dataset generation.
+   :type formula: sympy.core.function.FunctionClass
+   :param atoms: Ordered collection of propositional atoms used in the formula.
+                 Defaults to None.
+   :type atoms: Iterable, optional
+   :param seed: Seed for random number generation, ensuring reproducibility. Defaults to 0.
+   :type seed: int
+   :param n_samples: Number of samples to generate for the dataset. Defaults to 10.
+   :type n_samples: int
+
+
+   .. py:attribute:: n_features
+      :value: 2
+
+
+
+   .. py:attribute:: ground_truth
+
+
+   .. py:attribute:: ground_truth_attribute
+      :value: 'ground_truth'
+
+
+
+   .. py:method:: create_baselines() -> None
+
+
+   .. py:method:: __getitem__(idx: int, others: List[str] = ['baseline', 'ground_truth_attribute']) -> Tuple[Any, Ellipsis]
+
+      Retrieve a sample and its associated label by index.
+
+      :param idx: Index of the sample to retrieve.
+      :type idx: int
+      :param others: Additional items to retrieve. Defaults to [].
+      :type others: list
+
+      :returns: Tuple containing the sample and its label.
+      :rtype: tuple
+
+
+
+   .. py:method:: generate_model() -> torch.nn.Module
+
+      Generates a neural network model using the given propositional formula and atoms.
+
+      :returns: A neural network model tailored to the dataset's propositional formula.
+      :rtype: model.PropFormulaNN
+
+
+
+   .. py:method:: create_ground_truth() -> torch.Tensor
+
+
+   .. py:property:: default_metric
+      :type: Callable
+
+
+      The default metric for evaluating the performance of explanation methods applied
+      to this dataset.
+
+      For this dataset, the default metric is the infidelity metric with the
+      default perturb function.
+
+      :returns:
+
+                A class that wraps around the default metric to be instantiated
+                    within the pipeline.
+      :rtype: type
+
+
+.. py:data:: data
+

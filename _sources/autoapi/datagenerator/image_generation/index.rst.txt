@@ -1,0 +1,732 @@
+datagenerator.image_generation
+==============================
+
+.. py:module:: datagenerator.image_generation
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   datagenerator.image_generation.balanced_dataset
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   datagenerator.image_generation.ImageBuilder
+   datagenerator.image_generation.ImageDataset
+   datagenerator.image_generation.BalancedImageDataset
+   datagenerator.image_generation.ImbalancedImageDataset
+
+
+Module Contents
+---------------
+
+.. py:class:: ImageBuilder(shape_type: str = 'geometric', rotation: bool = False, color: Optional[Union[str, Tuple[int, int, int, int]]] = None, position: str = 'center', overlay_scale: float = 0.3, background_size: Tuple[int, int] = (512, 512), default_background_imagefile: Optional[str] = None, source: str = 'local')
+
+   A class to build images with either geometric shapes or dinosaurs superimposed on various backgrounds,
+   including options for color customization, image rotation, and positioning of the overlay image.
+
+   A specific background image can be set as default for all generated samples.
+
+   .. attribute:: shape_type
+
+      Specifies the type of overlay shape, either 'geometric' or 'dinosaurs'.
+
+      :type: str
+
+   .. attribute:: rotation
+
+      If True, the overlay image will be randomly rotated.
+
+      :type: bool
+
+   .. attribute:: color
+
+      RGBA range (0-255) for the color of overlay shape. Used as default unless overridden.
+
+      :type: str | tuple
+
+   .. attribute:: position
+
+      Specifies the positioning of the overlay image on the background, either 'center' or 'random'.
+
+      :type: str
+
+   .. attribute:: overlay_scale
+
+      The scale of the overlay image relative to the background size.
+
+      :type: float
+
+   .. attribute:: background_size
+
+      The size of the background image.
+
+      :type: tuple
+
+   .. attribute:: default_background_imagefile
+
+      Specific background image filename to use as default for all samples.
+
+      :type: str
+
+   .. attribute:: back_gen
+
+      An instance of BackgroundGenerator to fetch background images.
+
+      :type: BackgroundGenerator
+
+   .. attribute:: image_gen
+
+      The generator for overlay images, either shapes or dinosaurs.
+
+      :type: ShapeGenerator | DinoGenerator
+
+   Initializes the ImageBuilder object with specified configurations for image generation.
+
+   :param shape_type: The type of shapes to overlay ('geometric' or 'dinosaurs'). Defaults to 'geometric'.
+   :type shape_type: str
+   :param rotation: Whether to apply random rotation to the overlay images. Defaults to False.
+   :type rotation: bool
+   :param color: The color of the shape, specified by name or RGBA tuple. Defaults to None.
+   :type color: str | tuple, optional
+   :param position: The positioning of the overlay image ('center' or 'random'). Defaults to 'center'.
+   :type position: str
+   :param overlay_scale: Scale of the overlay image relative to the background. Defaults to 0.3.
+   :type overlay_scale: float
+   :param background_size: The size (width, height) of the background image. Defaults to (512, 512).
+   :type background_size: tuple
+   :param default_background_imagefile: Specific background image filename to use as default for all samples.
+                                        Defaults to None.
+   :type default_background_imagefile: str, optional
+
+   :raises ValueError: If input other than 'geometric' or 'dinosaurs' is passed to shape_type.
+
+
+   .. py:attribute:: shape_type
+      :value: 'geometric'
+
+
+
+   .. py:attribute:: rotation
+      :value: False
+
+
+
+   .. py:attribute:: color
+      :value: None
+
+
+
+   .. py:attribute:: position
+      :value: 'center'
+
+
+
+   .. py:attribute:: overlay_scale
+      :value: 0.3
+
+
+
+   .. py:attribute:: background_size
+      :value: (512, 512)
+
+
+
+   .. py:attribute:: back_gen
+
+
+   .. py:attribute:: default_background_imagefile
+      :value: None
+
+
+
+   .. py:method:: resize_overlay_to_background(background: PIL.Image.Image, overlay: PIL.Image.Image) -> PIL.Image.Image
+
+      Resizes the overlay image to maintain its aspect ratio and fit within the specified background size,
+      calculated based on the overlay_scale.
+
+      This method ensures that the overlay fits aesthetically with the background without distorting its original aspect ratio.
+
+      :param background: The background image onto which the overlay will be placed.
+      :type background: PIL.Image.Image
+      :param overlay: The overlay image to be resized.
+      :type overlay: PIL.Image.Image
+
+      :returns: The resized overlay image, maintaining its original aspect ratio.
+      :rtype: PIL.Image.Image
+
+
+
+   .. py:method:: img_rotation(img: PIL.Image.Image, angle: Optional[int] = None) -> PIL.Image.Image
+
+      Rotates the image by a specified angle or a random angle between 0 and 360 degrees if none is provided.
+
+      :param img: The image to be rotated.
+      :type img: PIL.Image.Image
+      :param angle: The angle in degrees for rotation. If None, a random angle will be used.
+                    Defaults to None.
+      :type angle: int, optional
+
+      :returns: The rotated image, resized to accommodate its new dimensions if necessary.
+      :rtype: PIL.Image.Image
+
+      :raises ValueError: If the specified angle is not within the expected range of 0-360 degrees.
+
+
+
+   .. py:method:: overlay_pos(background_image: PIL.Image.Image, overlay_image: PIL.Image.Image) -> Tuple[int, int]
+
+      Calculates the position of the overlay image on the background based on the specified position setting.
+
+      :param background_image: The background image.
+      :type background_image: PIL.Image.Image
+      :param overlay_image: The overlay image.
+      :type overlay_image: PIL.Image.Image
+
+      :returns: A tuple (x, y) representing the top-left corner of the overlay image's position on the background.
+      :rtype: tuple
+
+      :raises ValueError: If the position attribute is not 'center' or 'random'.
+
+
+
+   .. py:method:: generate_sample(name: Optional[str] = None, background_imagefile: Optional[str] = None, color: Optional[Union[str, Tuple[int, int, int, int]]] = None, contour_thickness: int = 3) -> Tuple[PIL.Image.Image, int, str, PIL.Image.Image]
+
+      Generates a single image sample with a specified shape (or randomly selected if none is provided), color, and background.
+      This method allows for specific customization of the image sample or can use default settings defined in the class.
+      Useful for generating varied datasets for image recognition tasks.
+
+      :param name: The name of the shape or dinosaur to use. Randomly selects a shape if None.
+                   Defaults to None.
+      :type name: str, optional
+      :param background_imagefile: Path to a specific background image file to use. Uses the class-level default if None.
+                                   Defaults to None.
+      :type background_imagefile: str, optional
+      :param color: The color to apply to the shape, specified as a name or RGBA tuple. Uses the class-level default if None.
+                    Defaults to None.
+      :type color: str | tuple, optional
+      :param contour_thickness:
+      :type contour_thickness: int
+
+      :returns: Contains the composite image (PIL.Image.Image), the numeric label representing the shape, a string label describing the shape and the gorund truth.
+      :rtype: tuple
+
+
+
+.. py:class:: ImageDataset(seed: int = 0, backgrounds: Union[int, List[str]] = 5, shapes: Union[int, List[str]] = 10, n_variants: int = 4, background_size: Tuple[int, int] = (512, 512), shape_type: str = 'geometric', position: str = 'random', overlay_scale: float = 0.3, rotation: bool = False, shape_colors: Optional[Union[str, Tuple[int, int, int, int], List[Union[str, Tuple[int, int, int, int]]]]] = None, shuffled: bool = True, transform: Optional[Callable] = None, contour_thickness: int = 3, source: str = 'local')
+
+   Bases: :py:obj:`torch.utils.data.Dataset`
+
+
+   A dataset for images with specified configurations for image generation, supporting both balanced and imbalanced datasets.
+
+   Inherits from:
+       torch.utils.data.Dataset: The standard base class for defining a dataset within the PyTorch framework.
+
+   .. attribute:: seed
+
+      Seed for random number generation to ensure reproducibility.
+
+      :type: int
+
+   .. attribute:: backgrounds
+
+      List of background images to use for dataset generation.
+
+      :type: list
+
+   .. attribute:: shapes
+
+      List of shapes to overlay on background images.
+
+      :type: list
+
+   .. attribute:: n_variants
+
+      Number of variations per shape-background combination, affects dataset size.
+
+      :type: int
+
+   .. attribute:: background_size
+
+      Dimensions (width, height) of background images.
+
+      :type: tuple
+
+   .. attribute:: shape_type
+
+      Type of shapes: 'geometric' for geometric shapes, 'dinosaurs' for dinosaur shapes.
+
+      :type: str
+
+   .. attribute:: position
+
+      Overlay position on the background ('center' or 'random').
+
+      :type: str
+
+   .. attribute:: overlay_scale
+
+      Scale factor for overlay relative to the background size.
+
+      :type: float
+
+   .. attribute:: rotation
+
+      If True, applies random rotation to overlays.
+
+      :type: bool
+
+   .. attribute:: shape_colors
+
+      List of default color(s) for shapes, accepts color names or RGBA tuples.
+
+      :type: list
+
+   .. attribute:: shuffled
+
+      If True, shuffles the dataset after generation.
+
+      :type: bool
+
+   .. attribute:: transform
+
+      Transformation function to apply to each image, typically converting to tensor.
+
+      :type: callable
+
+   .. attribute:: contour_thickness
+
+      Thickness of lines the contours are drawn with.
+      If it is negative, the contour interiors are drawn.
+
+      :type: int
+
+   .. attribute:: image_builder
+
+      Instance of ImageBuilder for generating images.
+
+      :type: ImageBuilder
+
+   .. attribute:: samples
+
+      List to store the generated samples.
+
+      :type: list
+
+   .. attribute:: labels
+
+      List to store the labels.
+
+      :type: list
+
+   .. attribute:: fg_shapes
+
+      List to store the foreground shapes.
+
+      :type: list
+
+   .. attribute:: bg_labels
+
+      List to store the background labels.
+
+      :type: list
+
+   .. attribute:: fg_colors
+
+      List to store the foreground colors.
+
+      :type: list
+
+   .. attribute:: ground_truth
+
+      List to store the ground truths.
+
+      :type: list
+
+   Initializes an ImageDataset object.
+
+   :param seed: Seed for random number generation to ensure reproducibility. Defaults to 0.
+   :type seed: int
+   :param backgrounds: Number or list of specific backgrounds to use. Defaults to 5.
+   :type backgrounds: int | list
+   :param shapes: Number or list of specific shapes. Defaults to 10.
+   :type shapes: int | list
+   :param n_variants: Number of variations per shape-background combination, affects dataset size.
+                      Defaults to 4.
+   :type n_variants: int
+   :param background_size: Dimensions (width, height) of background images. Defaults to (512, 512).
+   :type background_size: tuple
+   :param shape_type: 'geometric' for geometric shapes, 'dinosaurs' for dinosaur shapes.
+                      Defaults to 'geometric'.
+   :type shape_type: str
+   :param position: Overlay position on the background ('center' or 'random'). Defaults to 'random'.
+   :type position: str
+   :param overlay_scale: Scale factor for overlay relative to the background size. Defaults to 0.3.
+   :type overlay_scale: float
+   :param rotation: If True, applies random rotation to overlays. Defaults to False.
+   :type rotation: bool
+   :param shape_colors: Default color(s) for shapes, accepts color names or RGBA tuples.
+                        Defaults to None.
+   :type shape_colors: str | tuple, optional
+   :param shuffled: If True, shuffles the dataset after generation. Defaults to True.
+   :type shuffled: bool
+   :param transform: Transformation function to apply to each image, typically converting to tensor.
+                     Defaults to None.
+   :type transform: callable, optional
+   :param contour_thickness: Defaults to 3.
+   :type contour_thickness: int
+
+
+   .. py:attribute:: seed
+      :value: 0
+
+
+
+   .. py:attribute:: n_variants
+      :value: 4
+
+
+
+   .. py:attribute:: image_builder
+
+
+   .. py:attribute:: backgrounds
+
+
+   .. py:attribute:: shapes
+
+
+   .. py:attribute:: shape_colors
+
+
+   .. py:attribute:: transform
+
+
+   .. py:attribute:: samples
+      :value: []
+
+
+
+   .. py:attribute:: labels
+      :value: []
+
+
+
+   .. py:attribute:: fg_shapes
+      :value: []
+
+
+
+   .. py:attribute:: bg_labels
+      :value: []
+
+
+
+   .. py:attribute:: fg_colors
+      :value: []
+
+
+
+   .. py:attribute:: ground_truth
+      :value: []
+
+
+
+   .. py:attribute:: shuffled
+      :value: True
+
+
+
+   .. py:attribute:: contour_thickness
+      :value: 3
+
+
+
+   .. py:method:: _validate_n_variants(n_variants: int) -> int
+
+      Validates that the number of variants per shape-background combination is a positive integer.
+
+      The `n_variants` parameter controls how many different versions of each shape-background combination are generated,
+      varying elements such as position and possibly color if specified. This allows for diverse training data in image
+      recognition tasks, improving the model's ability to generalize from different perspectives and conditions.
+
+      :param n_variants: The number of variations per shape-background combination to generate.
+      :type n_variants: int
+
+      :returns: The validated number of variants.
+      :rtype: int
+
+      :raises ValueError: If `n_variants` is not an integer or is less than or equal to zero.
+
+
+
+   .. py:method:: _prepare_shapes(shape_type: str, shapes: Union[int, List[str]], source: str) -> List[str]
+
+      Prepares a list of shapes or dinosaurs based on the input and the specified shape type.
+
+      This method processes the input to generate a list of specific shapes or dinosaur names.
+      If a numerical input is provided, it selects that many random shapes/dinosaurs from the
+      available names. If a list is provided, it directly uses those specific names.
+
+      :param shape_type: Specifies the type of overlay image, either 'geometric' or 'dinosaurs'.
+      :type shape_type: str
+      :param shapes: Number or list of specific shape names. If an integer is provided,
+                     it indicates how many random shapes or dinosaurs to select.
+      :type shapes: int | list
+
+      :returns: A list of shape names or dinosaur names to be used as overlays.
+      :rtype: list
+
+      :raises ValueError: If the shapes input is neither an integer nor a list, or if the shape_type is
+          not recognized as 'geometric' or 'dinosaurs'.
+
+
+
+   .. py:method:: _prepare_backgrounds(backgrounds: Union[int, List[str]]) -> List[str]
+
+      Prepares background images based on the input.
+
+      This method helps to either randomly select a set number of background images from the available
+      pool or validate and use a provided list of specific background filenames.
+
+      If a numerical value is provided, selects that many random backgrounds. If a list is provided,
+      validates and uses those specific backgrounds.
+
+      :param backgrounds: Number of random backgrounds to select or a list of specific background filenames.
+      :type backgrounds: int | list
+
+      :returns: A list of background filenames to be used in the dataset.
+      :rtype: list
+
+      :raises ValueError: If the input is neither an integer nor a list, or if any specified background filename
+          is not found in the available backgrounds.
+
+
+
+   .. py:method:: _prepare_shape_color(shape_colors: Optional[Union[int, str, Tuple[int, int, int, int], List[Union[str, Tuple[int, int, int, int]]]]]) -> List[Tuple[int, int, int, int]]
+
+      Prepares shape colors by validating input against available colors.
+
+      If no valid colors are provided, a default color is selected. Accepts single or multiple colors.
+
+      :param shape_colors: Specifies how many random colors to select or provides specific color(s).
+                           Can be a single color name, RGBA tuple, or list of names/tuples.
+      :type shape_colors: int | str | tuple | list
+
+      :returns: A list of validated RGBA tuples representing the colors.
+      :rtype: list
+
+      :raises ValueError: If input is invalid or colors are not found in the available color dictionary.
+          Details about the invalid input are provided in the error message.
+
+
+
+   .. py:method:: generate_samples() -> None
+
+      Placeholder method for generating the samples either for balanced or imbalanced datasets.
+
+
+
+   .. py:method:: shuffle_dataset() -> None
+
+      Randomly shuffles the dataset samples and corresponding labels to ensure variety
+      in training and evaluation phases.
+
+      :raises ValueError: If the dataset is empty and shuffling is not possible.
+
+
+
+   .. py:method:: __len__() -> int
+
+      Returns thet number of samples in the dataset.
+
+      :returns: number of samples contained by the dataset.
+      :rtype: int
+
+
+
+   .. py:method:: __getitem__(idx: int) -> Tuple[torch.Tensor, int, Dict[str, Union[str, torch.Tensor, PIL.Image.Image]]]
+
+      Retrieves an image and its label by index.
+
+      The image is transformed into a tensor if a transform is applied.
+
+      :param idx: Index of the sample to retrieve.
+      :type idx: int
+
+      :returns: A tuple containing the transformed image tensor, label, a dict of other attributes.
+      :rtype: tuple
+
+
+
+   .. py:method:: _re_label() -> None
+
+      Re-labels the dataset labels with integer indices.
+
+
+
+   .. py:method:: show_image(img_tensor: torch.Tensor) -> None
+      :staticmethod:
+
+
+      Displays an image given its tensor representation.
+
+      :param img_tensor: The image tensor to display.
+      :type img_tensor: torch.Tensor
+
+
+
+   .. py:property:: default_metric
+      :type: Callable
+
+
+      The default metric for evaluating the performance of explanation methods applied
+      to this dataset.
+
+      For this dataset, the default metric is the mask ratio metric that is constructed
+      based on the ground truth and context. Mask ratio is defined as the ratio of absolute
+      attribution score that lies within the foreground and the image.
+
+      :returns:
+
+                A class that wraps around the default metric to be instantiated
+                    within the pipeline.
+      :rtype: type
+
+
+.. py:class:: BalancedImageDataset(*args: Any, **kwargs: Any)
+
+   Bases: :py:obj:`ImageDataset`
+
+
+   A dataset for images where each each image consists of a background and a foreground overlay.
+
+   This 'balanced' dataset ensures that each combination of background (bg), foreground (fg), and foreground color (fg_color)
+   appears the same number of times across the dataset, making it ideal for machine learning models that benefit from
+   uniform exposure to all feature combinations.
+
+   Inherits all parameters from ImageDataset, and introduces no additional parameters, but it overrides the behavior
+   to ensure balance in the dataset composition.
+
+   Inherits from:
+       ImageDataset: Standard dataset that contains images with backgorunds and foregrounds.
+
+   Initializes a BalancedImageDataset with the same parameters as ImageDataset, ensuring each combination
+   of background, foreground, and color appears uniformly across the dataset.
+
+   After initialization, it automatically generates the samples and shuffles them if the 'shuffled' attribute is True.
+
+   :param \*args: Additional arguments passed to the superclass initializer.
+   :param \*\*kwargs: Additional keyword arguments passed to the superclass initializer.
+
+
+   .. py:method:: generate_samples() -> None
+
+      Generates a balanced set of image samples by uniformly distributing each combination of background,
+      foreground shape, and color.
+
+      Iterates over each background, each shape, and each color to create the specified number of variants per combination.
+      Each generated image is stored in the 'samples' list, with corresponding labels in 'labels', and other metadata
+      like foreground shapes, background labels, and foreground colors stored in their respective lists.
+
+      :raises ValueError: If there is an issue with image generation parameters or overlay combinations.
+
+
+
+.. py:class:: ImbalancedImageDataset(backgrounds: Union[int, List[str]] = 5, shapes: Union[int, List[str]] = 3, n_variants: int = 100, shape_colors: Union[str, Tuple[int, int, int, int]] = 'red', imbalance: float = 0.8, **kwargs: Any)
+
+   Bases: :py:obj:`ImageDataset`
+
+
+   Creates Image Dataset where each image comprises of a background image an a foreground image.
+
+   Background images, type of foreground, color of foreground as well as other parameters can be specified.
+
+   Imbalance refers to the fact users can specify the percentage of dominant (bg, fg) pair vs other pair.
+
+   Inherits from:
+       ImageDataset: Standard dataset that contains images with backgorunds and foregrounds.
+
+   .. attribute:: imbalance
+
+      The proportion of samples that should favor a particular background per shape.
+      Should be within the range (0.0 to 1.0) inclusive.
+
+      :type: float
+
+   Initializes an ImbalancedImageDataset object with specified parameters, focusing on creating dataset variations
+   based on an imbalance parameter that dictates the dominance of certain shape-background pairs.
+
+   :param backgrounds: The number or list of specific background filenames. Defaults to 5.
+   :type backgrounds: int | list
+   :param shapes: The number or list of specific shapes. Defaults to 3.
+   :type shapes: int | list
+   :param n_variants: Number of variations per shape-background combination, affects dataset size.
+                      Defaults to 100.
+   :type n_variants: int
+   :param shape_colors: The default color for all shapes in the dataset. Defaults to 'red'.
+   :type shape_colors: str | tuple
+   :param imbalance: The proportion (0.0 to 1.0) of samples that should favor a particular background per shape.
+                     Defaults to 0.8.
+   :type imbalance: float
+   :param \*\*kwargs: Additional keyword arguments passed to the superclass initializer.
+
+
+   .. py:attribute:: imbalance
+
+
+   .. py:method:: _prepare_shape_color(shape_colors: Optional[Union[str, Tuple[int, int, int, int]]]) -> List[Tuple[int, int, int, int]]
+
+      Prepares a single shape color based on the input.
+
+      Selects a random color if None is provided, validates a provided color string or RGBA tuple.
+
+      :param shape_colors: A specific color name, RGBA tuple, or None to select a random color.
+      :type shape_colors: str | tuple | NoneType
+
+      :returns: A list containing a single validated RGBA tuple representing the color.
+      :rtype: list
+
+      :raises ValueError: If the input is invalid or if the color name is not found in the predefined color dictionary.
+
+
+
+   .. py:method:: _validate_imbalance(imbalance: float) -> float
+
+      Validates that the imbalance parameter is a float between 0.0 and 1.0 inclusive, or None.
+
+      Ensures that the dataset can properly reflect the desired level of imbalance, adjusting for the
+      number of variants and available backgrounds.
+
+      :param imbalance: The imbalance value to validate. If None is given as input, then
+                        the argument will be treated as 0.3.
+      :type imbalance: float | NoneType
+
+      :returns: The validated imbalance value.
+      :rtype: float
+
+      :raises ValueError: If the imbalance is not within the inclusive range [0.0, 1.0] or if the imbalance
+          settings are not feasible with the current settings of n_variants and backgrounds.
+
+
+
+   .. py:method:: generate_samples() -> None
+
+      Generates a set of image samples with overlay shapes or dinosaurs on backgrounds, considering imbalance.
+
+      Depending on the 'imbalance' parameter, this method either:
+          - Allocates a specific fraction (defined by 'imbalance') of the samples for each shape to a particular background,
+            with the remainder distributed among the other backgrounds.
+          - Assigns all samples for a shape to a single background (imbalance = 1.0).
+
+
+
+.. py:data:: balanced_dataset
+

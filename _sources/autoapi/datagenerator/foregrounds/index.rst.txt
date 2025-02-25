@@ -1,0 +1,396 @@
+datagenerator.foregrounds
+=========================
+
+.. py:module:: datagenerator.foregrounds
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   datagenerator.foregrounds.ForegroundGenerator
+   datagenerator.foregrounds.GeometricShapeGenerator
+   datagenerator.foregrounds.DinosaurShapeGenerator
+
+
+Module Contents
+---------------
+
+.. py:class:: ForegroundGenerator
+
+   Bases: :py:obj:`abc.ABC`
+
+
+   Abstract base class for generating overlay images (e.g., geometric shapes, dinosaurs) with customizable colors.
+
+   This class sets up common attributes and methods for its subclasses to generate images with specific characteristics
+   and colors. Subclasses are expected to implement the `get_shape` method, providing a way to create and retrieve images
+   with optional color overlays.
+
+   .. attribute:: shape_names
+
+      Names of available shapes or dinosaurs. Populated by subclasses based on their specific image types.
+
+      :type: list
+
+   Initializes a ForegroundGenerator object.
+
+
+   .. py:attribute:: _colors_rgba
+      :type:  Dict[str, Tuple[int, int, int, int]]
+
+
+   .. py:attribute:: _data_path
+      :type:  str
+
+
+   .. py:method:: validate_color(color: Union[str, Tuple[int, int, int, int]]) -> Tuple[int, int, int, int]
+
+      Validates and returns the RGBA value for a given color name or tuple.
+
+      :param color: The color specified as a name or RGBA tuple.
+      :type color: str | tuple
+
+      :returns: The RGBA tuple corresponding to the specified color.
+      :rtype: tuple
+
+      :raises ValueError: If input color is a value that is not supported.
+
+
+
+   .. py:method:: apply_color_fill(image: PIL.Image.Image, color: Optional[Tuple[int, int, int, int]]) -> PIL.Image.Image
+
+      Applies a color fill to an overlay shape while preserving transparency.
+
+      If a color is provided, apply it to the non-transparent parts of the image,
+      effectively changing the shape's color while keeping the background transparent.
+
+      :param image: Original PIL.Image.Image object of a shape.
+      :type image: PIL.Image.Image
+      :param color: RGBA tuple to apply as the new color.
+      :type color: tuple | NoneType
+
+      :returns: A new PIL Image object with the color applied.
+      :rtype: PIL.Image.Image
+
+
+
+   .. py:method:: get_data_path() -> str
+
+      Determines the path for storing downloaded data, locating the 'data' directory at a fixed level above
+      this script's location in the directory hierarchy.
+
+      This function calculates an absolute path to a 'data' directory intended to reside a few levels above the
+      directory containing this script. It ensures the 'data' directory exists, creating it if necessary.
+      This approach allows for a consistent data storage location relative to the script's position in the project
+      structure, facilitating access across different environments and setups.
+
+      :returns:
+
+                The absolute path to the 'data' directory, ensuring it is consistently located relative to the
+                    script's position in the project's directory hierarchy.
+      :rtype: str
+
+
+
+   .. py:method:: get_shape(name: Optional[str] = None, color: Optional[Union[str, Tuple[int, int, int, int]]] = None) -> Tuple[PIL.Image.Image, str]
+      :abstractmethod:
+
+
+      Abstract method to generate and return an image of a specific overlay type (shape or dinosaur) in a specified color.
+
+      Subclasses must implement this method to create images according to their specialization (geometric shapes or dinosaurs)
+      and optionally apply a color overlay based on the provided color parameter.
+
+      :param name: The name of the specific shape or dinosaur to generate.
+                   Defaults to a random selection if None.
+      :type name: str, optional
+      :param color: The color to apply to the image. It can be a color name or an RGBA tuple.
+                    Defaults to no color overlay if None.
+      :type color: str | tuple, optional
+
+      :returns:
+
+                A tuple with the PIL.Image.Image object of the generated foreground with the applied color overlay,
+                    and the name of the generated foreground.
+      :rtype: tuple[PIL.Image.Image, str]
+
+
+
+.. py:class:: GeometricShapeGenerator(size: int = 200)
+
+   Bases: :py:obj:`ForegroundGenerator`
+
+
+   Generates images of geometric shapes with customizable colors.
+
+   This class provides functionality to generate images of various geometric shapes,
+   such as circles, ellipses, rectangles, and polygons with a specified number of sides,
+   each with a specified or default color. Shapes are drawn on a transparent background.
+
+   Inherits from:
+       ForegroundGenerator: The base class for generating foreground images.
+
+   .. attribute:: size
+
+      The size of the square image in pixels. Defaults to 200.
+
+      :type: int
+
+   .. attribute:: shape_names
+
+      List of all possible shape names to be drawn.
+
+      :type: list
+
+   .. attribute:: shape_id_map
+
+      Maps an integer to each name in shape_names list
+
+      :type: dict
+
+   Initializes a GeometricShapeGenerator object.
+
+
+   .. py:attribute:: size
+      :type:  int
+      :value: 200
+
+
+
+   .. py:attribute:: shape_names
+      :type:  List[str]
+      :value: ['circle', 'ellipse', 'triangle', 'square', 'rectangle', 'pentagon', 'hexagon', 'heptagon',...
+
+
+
+   .. py:attribute:: shape_id_map
+      :type:  Dict[str, int]
+
+
+   .. py:method:: geometric_shapes() -> Dict[str, Callable[[], PIL.Image.Image]]
+
+      Provides a dictionary of lambdas for generating geometric shapes.
+
+      :returns: A dictionary mapping shape names to lambdas that generate shape images.
+      :rtype: dict
+
+
+
+   .. py:method:: calculate_ngon_vertices(center_x: int, center_y: int, radius: float, sides: int) -> List[Tuple[float, float]]
+
+      Calculates the vertices of a regular polygon.
+
+      Given the center coordinates, radius, and number of sides, this method calculates
+      the vertices of a regular polygon centered at the given point.
+
+      :param center_x: The x-coordinate of the polygon's center.
+      :type center_x: int
+      :param center_y: The y-coordinate of the polygon's center.
+      :type center_y: int
+      :param radius: The radius of the circumcircle of the polygon.
+      :type radius: float
+      :param sides: The number of sides (and vertices) of the polygon.
+      :type sides: int
+
+      :returns: A list of vertices, where each vertex is a tuple (x, y).
+      :rtype: list[tuple]
+
+
+
+   .. py:method:: make_ngon(sides: int) -> PIL.Image.Image
+
+      Generates an image of a regular polygon with a specified number of sides.
+
+      :param sides: The number of sides of the polygon.
+      :type sides: int
+
+      :returns: A PIL.Image.Image object containing the drawn polygon.
+      :rtype: PIL.Image.Image
+
+
+
+   .. py:method:: make_rectangle() -> PIL.Image.Image
+
+      Generates an image of a rectangle.
+
+      :returns: A PIL.Image.Image object containing the drawn rectangle.
+      :rtype: PIL.Image.Image
+
+
+
+   .. py:method:: make_circle() -> PIL.Image.Image
+
+      Generates an image of a circle.
+
+      :returns: A PIL.Image.Image object containing the drawn circle.
+      :rtype: PIL.Image.Image
+
+
+
+   .. py:method:: make_ellipse() -> PIL.Image.Image
+
+      Generates an image of an ellipse.
+
+      :returns: An image object containing the drawn ellipse.
+      :rtype: PIL.Image.Image
+
+
+
+   .. py:method:: get_shape(name: Optional[str] = None, color: Optional[Union[str, Tuple[int, int, int, int]]] = None) -> Tuple[PIL.Image.Image, str]
+
+      Retrieves and returns an image of a specified geometric shape in a specified color.
+
+      If no shape name is specified, a shape is randomly selected from the available shapes.
+      The specified color can be a color name or an RGBA tuple. If no color is specified,
+      the shape is generated in black by default.
+
+      :param name: The name of the shape to generate. Defaults to a random shape if None.
+      :type name: str, optional
+      :param color: The color of the shape, specified as a color name or RGBA tuple.
+                    Defaults to black if None or invalid.
+      :type color: str | tuple, optional
+
+      :returns:
+
+                A tuple containing an PIL.Image.Image object containing the drawn shape,
+                    and the name of the generated shape.
+      :rtype: tuple[PIL.Image.Image, str]
+
+
+
+.. py:class:: DinosaurShapeGenerator(meta_data_source: str = 'local')
+
+   Bases: :py:obj:`ForegroundGenerator`
+
+
+   Generates and manipulates images of dinosaurs with customizable colors.
+
+   This class fetches dinosaur images with transparent backgrounds from Wikimedia Commons,
+   enabling the generation of images for supervised learning datasets. It supports
+   customizing the color of dinosaurs post-download.
+
+   .. attribute:: dino_meta_data
+
+      Metadata for the fetched dinosaur images.
+
+      :type: list
+
+   .. attribute:: dino_dict
+
+      Maps dinosaur names to their Image objects.
+
+      :type: dict
+
+   .. attribute:: shape_names
+
+      List of all dinosaur names that we can use for sampling.
+
+      :type: list
+
+   .. attribute:: shape_id_map
+
+      Maps an integer to each name in shape_names list
+
+      :type: dict
+
+   Initializes a DinosaurShapeGenerator object and downloads dinosaur images for local use.
+
+   Downloads images from Wikimedia Commons and prepares them for generating datasets,
+   storing them locally for efficient access.
+
+
+   .. py:attribute:: _url
+      :value: 'https://commons.wikimedia.org/wiki/Category:Dinosaurs_on_transparent_background'
+
+
+
+   .. py:attribute:: _data_folder
+
+
+   .. py:attribute:: meta_data_source
+      :value: 'local'
+
+
+
+   .. py:attribute:: dino_meta_data
+
+
+   .. py:attribute:: dino_dict
+
+
+   .. py:attribute:: shape_names
+      :value: []
+
+
+
+   .. py:attribute:: shape_id_map
+
+
+   .. py:method:: clean_dino_name_from_URL(url: str) -> str
+
+      Extracts and cleans the dinosaur name from a given URL.
+
+      Parses the URL to extract the dinosaur name, removing URL encoding
+      and invalid filename characters.
+
+      :param url: URL containing the dinosaur name.
+      :type url: str
+
+      :returns: Cleaned dinosaur name suitable for filenames.
+      :rtype: str
+
+
+
+   .. py:method:: dino_image_metadata(meta_data_source: str) -> List[Dict[str, Union[str, int]]]
+
+      Fetches metadata for dinosaur images from the specified URL.
+
+      :returns: A list of dictionaries, each containing metadata for a dinosaur image.
+      :rtype: list[dict]
+
+
+
+   .. py:method:: load_dino_image(url: str, save_path: str) -> Optional[PIL.Image.Image]
+
+      Downloads a dinosaur image from a URL and saves it locally.
+
+      :param url: URL of the image to be downloaded.
+      :type url: str
+      :param save_path: Local file path to save the downloaded image.
+      :type save_path: str
+
+      :returns: The downloaded PIL.Image.Image object, or None if the download fails.
+      :rtype: PIL.Image.Image | NoneType
+
+
+
+   .. py:method:: load_all_dinos() -> None
+
+      Loads all available dinosaur images into memory from the local storage.
+
+      Ensures that images are downloaded based on metadata if they are not already present
+      locally, making them readily available in memory for image generation.
+
+
+
+   .. py:method:: get_shape(name: Optional[str] = None, color: Optional[Union[str, Tuple[int, int, int, int]]] = None) -> Tuple[PIL.Image.Image, str]
+
+      Retrieves a dinosaur image by name with an optional color overlay.
+
+      If no name is specified, selects a dinosaur randomly. Optionally applies a color
+      to the dinosaur image before returning.
+
+      :param name: Name of the dinosaur. Selects randomly if None.
+                   Defaults to None.
+      :type name: str, optional
+      :param color: color to apply. Uses predefined or RGBA tuple.
+                    Defaults to None.
+      :type color: str | tuple, optional
+
+      :returns: A tuple containing the colored PIL.Image.Image object of the dinosaur and its name.
+      :rtype: tuple[PIL.Image.Image, str]
+
+
+

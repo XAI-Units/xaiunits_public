@@ -1,0 +1,634 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customization Tutorial &mdash; XAI-Units 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Reference" href="autoapi/index.html" />
+    <link rel="prev" title="Image Dataset Example" href="image_dataset_example.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            XAI-Units
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="library_quickstart.html">Quickstart - Library Walkthrough</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image_dataset_example.html">Image Dataset Example</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Customization Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#custom-datasets">1 Custom Datasets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#simple-example">1.1 Simple Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extension-example-perturb-tutorial">1.2 Extension Example (+ Perturb Tutorial)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#custom-methods">2 Custom Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">2.1 Simple Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">XAI-Units</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Customization Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/custom_methods_and_custom_datasets.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="customization-tutorial">
+<h1>Customization Tutorial<a class="headerlink" href="#customization-tutorial" title="Link to this heading"></a></h1>
+<p>This notebook will serve as a tutorial on how users can use custom dataset, method or metric with our package. We will go through examples for each as well as other potential customizable parameters useful.</p>
+<section id="custom-datasets">
+<h2>1 Custom Datasets<a class="headerlink" href="#custom-datasets" title="Link to this heading"></a></h2>
+<p>Users are able to pass in their own custom datasets into xaiunits’ the pipeline.</p>
+<p>Here we will show simple example of how a user can do so, and later we will show more complex variations.</p>
+<section id="simple-example">
+<h3>1.1 Simple Example<a class="headerlink" href="#simple-example" title="Link to this heading"></a></h3>
+<p>In this example we will</p>
+<ol class="arabic simple">
+<li><p>Use sk_learn’s function to download cali data (which omits categorical data) and create a custom torch dataset</p></li>
+<li><p>Train a model using our AutoTraining (this step is optional)</p></li>
+<li><p>Simple Selection of XAI Method and Metric</p></li>
+<li><p>Instantiate Pipeline Class and run attribute</p></li>
+<li><p>Print Results</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_california_housing</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DataLoader</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xaiunits.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">DynamicNN</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xaiunits.trainer.trainer</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoTrainer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xaiunits.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">perturb_standard_normal</span><span class="p">,</span> <span class="n">wrap_metric</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xaiunits.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">lightning.pytorch.callbacks.early_stopping</span><span class="w"> </span><span class="kn">import</span> <span class="n">EarlyStopping</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">lightning</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">L</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">captum.attr</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">captum.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">sensitivity_max</span><span class="p">,</span> <span class="n">infidelity</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#1. Download and Create California Dataset</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">CaliDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sk_cali</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">data_home</span><span class="o">=</span><span class="s2">&quot;data/cali&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">sk_cali</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">sk_cali</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_input</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_input</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">CaliDataset</span><span class="p">()</span>
+<span class="n">train_dataset</span><span class="p">,</span> <span class="n">val_dataset</span><span class="p">,</span> <span class="n">test_dataset</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">random_split</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">train_data</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
+<span class="n">val_data</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">val_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2. Train Model</span>
+
+<span class="n">hdim</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">linear_model_config</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Linear&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;in_features&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[:][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="s2">&quot;out_features&quot;</span><span class="p">:</span> <span class="n">hdim</span><span class="p">,</span>
+        <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ReLU&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Linear&quot;</span><span class="p">,</span> <span class="s2">&quot;in_features&quot;</span><span class="p">:</span> <span class="n">hdim</span><span class="p">,</span> <span class="s2">&quot;out_features&quot;</span><span class="p">:</span> <span class="n">hdim</span><span class="p">,</span> <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ReLU&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Linear&quot;</span><span class="p">,</span> <span class="s2">&quot;in_features&quot;</span><span class="p">:</span> <span class="n">hdim</span><span class="p">,</span> <span class="s2">&quot;out_features&quot;</span><span class="p">:</span> <span class="n">hdim</span><span class="p">,</span> <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ReLU&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Linear&quot;</span><span class="p">,</span> <span class="s2">&quot;in_features&quot;</span><span class="p">:</span> <span class="n">hdim</span><span class="p">,</span> <span class="s2">&quot;out_features&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">},</span>
+<span class="p">]</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">DynamicNN</span><span class="p">(</span><span class="n">linear_model_config</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data/model.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">state_dict</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">state_dict</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="c1"># define auto trainer</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">mse_loss</span>
+    <span class="n">optim</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span>
+    <span class="n">lightning_linear_model</span> <span class="o">=</span> <span class="n">AutoTrainer</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">optim</span><span class="p">)</span>
+    <span class="n">trainer</span> <span class="o">=</span> <span class="n">L</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span>
+        <span class="n">min_epochs</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+        <span class="n">max_epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+        <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">EarlyStopping</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="s2">&quot;val_loss&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)],</span>
+    <span class="p">)</span>
+
+    <span class="c1"># test results before training</span>
+    <span class="n">trainer</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">lightning_linear_model</span><span class="p">,</span> <span class="n">dataloaders</span><span class="o">=</span><span class="n">test_dataset</span><span class="p">)</span>
+
+    <span class="c1"># train model</span>
+    <span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">lightning_linear_model</span><span class="p">,</span>
+        <span class="n">train_dataloaders</span><span class="o">=</span><span class="n">train_data</span><span class="p">,</span>
+        <span class="n">val_dataloaders</span><span class="o">=</span><span class="n">val_data</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="c1"># test results after training</span>
+    <span class="n">trainer</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">lightning_linear_model</span><span class="p">,</span> <span class="n">dataloaders</span><span class="o">=</span><span class="n">test_dataset</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;./data/model.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">lightning_linear_model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="n">file</span><span class="p">)</span>
+    
+    <span class="n">model</span> <span class="o">=</span> <span class="n">lightning_linear_model</span><span class="o">.</span><span class="n">model</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#3. Select XAI Methods and Metrics</span>
+<span class="n">xmethods</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">InputXGradient</span><span class="p">,</span>
+        <span class="n">IntegratedGradients</span><span class="p">,</span>        
+        <span class="n">DeepLift</span>
+    <span class="p">]</span>
+
+<span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">wrap_metric</span><span class="p">(</span><span class="n">sensitivity_max</span><span class="p">),</span>
+    <span class="n">wrap_metric</span><span class="p">(</span><span class="n">infidelity</span><span class="p">,</span> <span class="n">perturb_func</span><span class="o">=</span><span class="n">perturb_standard_normal</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#4. Instantiate Pipeline and Run Pipeline</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">test_dataset</span><span class="p">,</span> <span class="n">xmethods</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="n">method_seeds</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">()</span> <span class="c1"># apply the explanation methods and evaluate them</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#5. Display Results</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_rows&#39;</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">print_stats</span><span class="p">([</span><span class="s2">&quot;infidelity&quot;</span><span class="p">,</span> <span class="s2">&quot;sensitivity_max&quot;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;method&quot;</span><span class="p">],</span> <span class="n">stat_funcs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                          mean                
+metric              infidelity sensitivity_max
+method                                        
+DeepLift             2.423e-08       8.959e-04
+InputXGradient       2.557e-09       1.360e-03
+IntegratedGradients  2.060e-08       1.467e-03
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="extension-example-perturb-tutorial">
+<h3>1.2 Extension Example (+ Perturb Tutorial)<a class="headerlink" href="#extension-example-perturb-tutorial" title="Link to this heading"></a></h3>
+<p>In this example we will define a new dataset for experiments by creating a subclass of BaseFeatureDataset</p>
+<p>We will first create a new subclass of BaseFeaturedDataset (similar to WeightFeatureDataset but with Categorical Features). See comment for useful tips in the code.</p>
+<p>We then define an instance of our Experiment class, and later pass in the Experiment to our ExperimentPipeline class. Note in this example we only pass in one Experiment, but users can pass in multiple Experiments to be executed.</p>
+<p>In experiment class, makes testing for repetition much easier, further more given out Dataset is a subclass of BaseFeatureDataset we can also take advantage of these.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">xaiunits.datagenerator</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseFeaturesDataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xaiunits.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">Experiment</span><span class="p">,</span> <span class="n">ExperimentPipeline</span><span class="p">,</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xaiunits.methods</span><span class="w"> </span><span class="kn">import</span> <span class="n">wrap_method</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xaiunits.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">wrap_metric</span><span class="p">,</span> <span class="n">perturb_func_constructor</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">captum.attr</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">captum.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">infidelity</span><span class="p">,</span> <span class="n">sensitivity_max</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creat a new subclass of our BaseFeatureDataset, so that it is compatible with ExperimentPipeline Class</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ConCatFeatureDataset</span><span class="p">(</span><span class="n">BaseFeaturesDataset</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">other</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">n_features</span> <span class="o">&gt;</span> <span class="mi">3</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n_features</span><span class="o">=</span><span class="n">n_features</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">other</span> <span class="p">)</span>
+
+        <span class="c1"># make last 3 categorical, 1 or 0 </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">[:,[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">[:,[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]]</span><span class="o">&gt;</span><span class="mf">0.0</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n_features</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weighted_samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weighted_samples</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="s2">&quot;samples&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ground_truth_attribute</span> <span class="o">=</span> <span class="s2">&quot;weighted_samples&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subset_data</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;samples&quot;</span><span class="p">,</span> <span class="s2">&quot;weighted_samples&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subset_attribute</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;weights&quot;</span> <span class="p">,</span> <span class="s2">&quot;cat_features&quot;</span> <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cat_features</span> <span class="o">=</span> <span class="p">[</span> <span class="n">n_features</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_features</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_features</span><span class="o">-</span><span class="mi">1</span> <span class="p">]</span> <span class="c1">#Our package provides class method to generate a perturb function </span>
+        <span class="c1"># this attribute is needed to determine which features are categorical. </span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a neural network model using the defined features and weights.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ContinuousFeaturesNN: A neural network model tailored to the dataset&#39;s features and weights.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">xaiunits.model.continuous</span><span class="w"> </span><span class="kn">import</span> <span class="n">ContinuousFeaturesNN</span>
+
+        <span class="k">return</span> <span class="n">ContinuousFeaturesNN</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_features</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create an Experiment Class</span>
+
+<span class="n">xmethods</span> <span class="o">=</span> <span class="p">[</span>        
+        <span class="n">Lime</span><span class="p">,</span>
+        <span class="n">DeepLift</span>
+    <span class="p">]</span>
+
+<span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">wrap_metric</span><span class="p">(</span><span class="n">sensitivity_max</span><span class="p">),</span>
+    <span class="p">{</span><span class="s2">&quot;metric_fns&quot;</span><span class="p">:</span> <span class="n">infidelity</span><span class="p">},</span> <span class="c1">#Pipeline class will automatically add/override perturb function based on the dataset  </span>
+    <span class="c1"># This is an alternate way to specify eval_metric that only works for Experiment class</span>
+<span class="p">]</span>
+
+
+<span class="n">pert_neg_experiment</span> <span class="o">=</span> <span class="n">Experiment</span><span class="p">(</span> <span class="n">ConCatFeatureDataset</span><span class="p">,</span> 
+                                 <span class="kc">None</span><span class="p">,</span>
+                                 <span class="n">xmethods</span><span class="p">,</span>
+                                 <span class="n">metrics</span><span class="p">,</span> 
+                                 <span class="n">seeds</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="c1">#Seeds to be used to generate dataset</span>
+                                 <span class="n">method_seeds</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span> <span class="c1"># Seeds for each run of the XAI method</span>
+                      <span class="p">)</span>
+
+<span class="c1"># Create Experimenter Pipeline </span>
+<span class="n">exp_pipe</span> <span class="o">=</span> <span class="n">ExperimentPipeline</span><span class="p">(</span><span class="n">pert_neg_experiment</span><span class="p">)</span>
+<span class="n">exp_pipe</span><span class="o">.</span><span class="n">run</span><span class="p">()</span> <span class="c1"># apply the explanation methods and evaluate them</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Display Results</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_rows&#39;</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">exp_pipe</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">print_stats</span><span class="p">([</span><span class="s2">&quot;infidelity&quot;</span><span class="p">,</span> <span class="s2">&quot;sensitivity_max&quot;</span><span class="p">],</span> 
+                                  <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;method&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>               mean                        std                
+metric   infidelity sensitivity_max infidelity sensitivity_max
+method                                                        
+DeepLift      0.124           0.027      0.005       5.379e-05
+Lime          0.126           0.143      0.009       4.198e-03
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we will pivot back to using standard Pipeline Class to show case how to use the specify perturb generator.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="n">ConCatFeatureDataset</span><span class="p">()</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">generate_model</span><span class="p">()</span>
+<span class="n">xmethods</span> <span class="o">=</span> <span class="p">[</span>        
+        <span class="n">Lime</span><span class="p">,</span>
+        <span class="n">DeepLift</span>
+    <span class="p">]</span>
+
+<span class="c1"># Most simplest way to use perturb constructor</span>
+<span class="n">perturb_fns_1</span> <span class="o">=</span> <span class="n">perturb_func_constructor</span><span class="p">(</span><span class="n">noise_scale</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">cat_resample_prob</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">cat_features</span><span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span> 
+
+<span class="c1"># This results in the same perturb function generated as above, but helps to illustrate how users</span>
+<span class="c1">#may specify the integer range of the replacement values for the categorical features. </span>
+<span class="c1"># If categorical feature i can take values from 1 to 9, then replacement = {i:[0,1,...9]}, default is [0,1]</span>
+<span class="c1"># we use uniform sampling to replace values fro categorical features. </span>
+<span class="n">perturb_fns_2</span> <span class="o">=</span> <span class="n">perturb_func_constructor</span><span class="p">(</span><span class="n">noise_scale</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">cat_resample_prob</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">cat_features</span><span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> 
+                                       <span class="n">replacements</span><span class="o">=</span><span class="p">{</span><span class="mi">3</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]})</span>
+
+<span class="c1"># In case users want to sample the alternative from the same distribution as the data, users may also pass in</span>
+<span class="c1"># dataset as a tensor for</span>
+<span class="n">perturb_fns_3</span> <span class="o">=</span> <span class="n">perturb_func_constructor</span><span class="p">(</span><span class="n">noise_scale</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">cat_resample_prob</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">cat_features</span><span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> 
+                                       <span class="n">replacements</span><span class="o">=</span><span class="n">dataset</span><span class="p">[:][</span><span class="mi">0</span><span class="p">])</span>
+
+
+<span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># wrap_metric(sensitivity_max),</span>
+    <span class="n">wrap_metric</span><span class="p">(</span><span class="n">infidelity</span><span class="p">,</span> <span class="n">perturb_func</span><span class="o">=</span> <span class="n">perturb_fns_1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span> <span class="s2">&quot;infidelity_1&quot;</span><span class="p">),</span>
+    <span class="n">wrap_metric</span><span class="p">(</span><span class="n">infidelity</span><span class="p">,</span> <span class="n">perturb_func</span><span class="o">=</span> <span class="n">perturb_fns_2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span> <span class="s2">&quot;infidelity_2&quot;</span><span class="p">),</span>
+    <span class="n">wrap_metric</span><span class="p">(</span><span class="n">infidelity</span><span class="p">,</span> <span class="n">perturb_func</span><span class="o">=</span> <span class="n">perturb_fns_3</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span> <span class="s2">&quot;infidelity_3&quot;</span><span class="p">),</span>
+<span class="p">]</span>
+
+
+<span class="c1"># Create Experimenter Pipeline </span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">xmethods</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="n">method_seeds</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">()</span> <span class="c1"># apply the explanation methods and evaluate them</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Display Results</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_rows&#39;</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">print_stats</span><span class="p">([</span><span class="s2">&quot;infidelity_1&quot;</span> <span class="p">,</span> <span class="s2">&quot;infidelity_2&quot;</span> <span class="p">,</span> <span class="s2">&quot;infidelity_3&quot;</span><span class="p">],</span> 
+                                    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;method&quot;</span><span class="p">],</span>
+                                    <span class="n">stat_funcs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                      mean                          
+metric                        infidelity_1 infidelity_2 infidelity_3
+data                 method                                         
+ConCatFeatureDataset DeepLift        0.166        0.142        0.145
+                     Lime            0.151        0.149        0.174
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="custom-methods">
+<h2>2 Custom Methods<a class="headerlink" href="#custom-methods" title="Link to this heading"></a></h2>
+<p>In this section we will create a custom dummy attribution method and will show case integrate this into the pipeline.</p>
+<p>As a reminder users can directly pass in Captum XAI methods, and our package will execute the methods’ initialization and $attribute$ function with $model$ and $inputs$ as sole arguments respectively; default values are used for all other arguments.</p>
+<p>$model$ refers to the Neural Network XAI methods will be run on, and $inputs$ represents the input tensors of the Neural Network. For ease of discussion, we will call arguments $model$ and $inputs$, primary arguments. Other arguments used for method initialization and $attribute$ function, are referred to as secondary arguments and can be static or created at runtime.</p>
+<p>For users to pass in their custom XAI method, they first must ensure that the custom XAI Method adheres to the following:</p>
+<ol class="arabic simple">
+<li><p>XAI method must be a class</p></li>
+<li><p>XAI method must have an initialization and $attribute$ function</p></li>
+<li><p>Respective primary arguments for initialization and $attribute$ function must be the first argument.</p></li>
+<li><p>Respective secondary arguments for initialization and $attribute$ function must have default values or specified via $input_fns_gen$ or $other_inputs$. See below for details</p></li>
+</ol>
+<section id="id1">
+<h3>2.1 Simple Example<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<p>Here we create a simple XAI method (DummyAttributionMethod), that returns DeepLift Attribution if flag is set to True, and random noise when flag is set to False. Because we are creating a custom XAI method we also need to create custom $input_fns_gen$.</p>
+<p>For this example we will treat $noise$ argument as non-static, and want $noise$ input to be different across the batch when we calculate attribution scores. Furthermore as there is no default values for $noise$ argument which is a secondary argument, this must be specified in either $input_fns_gen$ or $other_inputs$. We can treat flag as a static secondary argument.</p>
+<p>We can use $input_fns_gen$ to pass in a function to generate the non-static secondary argument, and $other_inputs$ to pass in static secondary arguments.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xaiunits.datagenerator</span><span class="w"> </span><span class="kn">import</span> <span class="n">WeightedFeaturesDataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xaiunits.methods</span><span class="w"> </span><span class="kn">import</span> <span class="n">wrap_method</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xaiunits.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">wrap_metric</span><span class="p">,</span> <span class="n">perturb_standard_normal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xaiunits.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">captum.attr</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeepLift</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">captum.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">sensitivity_max</span><span class="p">,</span> <span class="n">infidelity</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining Dummy XAI method and input_fns_gen</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">DummyAttributionMethod</span><span class="p">():</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actual_attribution</span> <span class="o">=</span> <span class="n">DeepLift</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">forward_func</span> <span class="o">=</span> <span class="n">model</span> <span class="c1"># For now this is needed,  </span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">attribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">noise</span><span class="p">,</span> <span class="n">flag</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="c1"># In captum, inputs are often tuples. This is especially the case when calling infidelity or sensitivity. </span>
+            <span class="c1"># Here we provide some sample code to handle tuple inputs that is compatible with infidelity</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span> <span class="o">==</span> <span class="nb">tuple</span><span class="p">:</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">noise</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="c1"># normal forward pass</span>
+                        <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">noise</span><span class="p">)</span> 
+                    <span class="k">else</span><span class="p">:</span> <span class="c1"># Perturbed forward pass</span>
+                        <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">repeat_interleave</span><span class="p">(</span><span class="n">noise</span><span class="p">,</span>  <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">//</span><span class="n">noise</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+                <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>  
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">noise</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">actual_attribution</span><span class="o">.</span><span class="n">attribute</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">dummy_input_gen</span><span class="p">(</span><span class="n">feature_inputs</span><span class="p">,</span> <span class="n">y_labels</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;noise&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand_like</span><span class="p">(</span><span class="n">feature_inputs</span><span class="p">)</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Common arguments</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">WeightedFeaturesDataset</span><span class="p">()</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">generate_model</span><span class="p">()</span>
+<span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span>   
+    <span class="n">wrap_metric</span><span class="p">(</span><span class="n">infidelity</span><span class="p">,</span> <span class="n">perturb_func</span><span class="o">=</span><span class="n">perturb_standard_normal</span><span class="p">),</span>
+    <span class="c1"># how to get root mean square</span>
+    <span class="n">wrap_metric</span><span class="p">(</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">mse_loss</span><span class="p">,</span> 
+        <span class="n">out_processing</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)),</span>
+    <span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># In this example we use $other_inputs$ to override the default behavior of our DummyAttributeMethod class </span>
+<span class="n">pipeline_true</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">wrap_method</span><span class="p">(</span><span class="n">DummyAttributionMethod</span><span class="p">,</span> <span class="n">dummy_input_gen</span><span class="p">,</span> <span class="n">other_inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;flag&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}),</span>
+        <span class="n">DeepLift</span><span class="p">,</span>
+    <span class="p">]</span>
+
+<span class="n">pipeline_true</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">pipeline_true</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="n">method_seeds</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">pipeline_true</span><span class="o">.</span><span class="n">run</span><span class="p">()</span> <span class="c1"># apply the explanation methods and evaluate them</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_rows&#39;</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pipeline_true</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">print_stats</span><span class="p">([</span> <span class="s2">&quot;mse_loss&quot;</span><span class="p">,</span> <span class="s2">&quot;infidelity&quot;</span><span class="p">],</span> <span class="n">stat_funcs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                   
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                                                  mean  \
+metric                                                                      infidelity   
+data                    model                method                                      
+WeightedFeaturesDataset ContinuousFeaturesNN DeepLift                        1.223e-15   
+                                             wrapper_DummyAttributionMethod  1.644e-15   
+
+                                                                                      
+metric                                                                      mse_loss  
+data                    model                method                                   
+WeightedFeaturesDataset ContinuousFeaturesNN DeepLift                            0.0  
+                                             wrapper_DummyAttributionMethod      0.0  
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Here we remove $other_inputs$ override thus attribution should be random noise. </span>
+<span class="c1"># Expectation is that MSE and Infidelity metrics are worse compared to DeepLift</span>
+<span class="n">xmethods_false</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">wrap_method</span><span class="p">(</span><span class="n">DummyAttributionMethod</span><span class="p">,</span> <span class="n">dummy_input_gen</span><span class="p">),</span>
+        <span class="n">DeepLift</span>
+    <span class="p">]</span>
+
+<span class="n">pipeline_false</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">xmethods_false</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="n">method_seeds</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">pipeline_false</span><span class="o">.</span><span class="n">run</span><span class="p">()</span> <span class="c1"># apply the explanation methods and evaluate them</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_rows&#39;</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pipeline_false</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">print_stats</span><span class="p">([</span><span class="s2">&quot;mse_loss&quot;</span><span class="p">,</span> <span class="s2">&quot;infidelity&quot;</span><span class="p">],</span> <span class="n">stat_funcs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                   
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                                                  mean  \
+metric                                                                      infidelity   
+data                    model                method                                      
+WeightedFeaturesDataset ContinuousFeaturesNN DeepLift                        1.223e-15   
+                                             wrapper_DummyAttributionMethod  3.180e-02   
+
+                                                                                      
+metric                                                                      mse_loss  
+data                    model                method                                   
+WeightedFeaturesDataset ContinuousFeaturesNN DeepLift                          0.000  
+                                             wrapper_DummyAttributionMethod    0.895  
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="image_dataset_example.html" class="btn btn-neutral float-left" title="Image Dataset Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="autoapi/index.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, XAI-Units.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

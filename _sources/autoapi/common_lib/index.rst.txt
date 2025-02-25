@@ -1,0 +1,183 @@
+common_lib
+==========
+
+.. py:module:: common_lib
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   common_lib.CHAT_TEMPLATE
+   common_lib.POSSIBLE_TYPE
+   common_lib.SEED
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   common_lib.get_model_tokenizer
+   common_lib.get_model_responses
+   common_lib.add_trigger_word
+   common_lib.create_train_dataset
+   common_lib.do_training_sft
+   common_lib.generate_feature_mask
+   common_lib.upload_to_hub
+   common_lib.create_eval_dataset
+
+
+Module Contents
+---------------
+
+.. py:data:: CHAT_TEMPLATE
+   :value: "{% set loop_messages = messages %}{% for message in loop_messages %}{% set content =...
+
+
+.. py:data:: POSSIBLE_TYPE
+   :value: ['pre_training', 'training', 'post_training', 'fa_evaluation']
+
+
+.. py:data:: SEED
+   :value: 10
+
+
+.. py:function:: get_model_tokenizer(model_name, left_pad=False, tokenizer_only=False) -> Union[Tuple[transformers.PreTrainedModel, transformers.PreTrainedTokenizer], transformers.PreTrainedTokenizer]
+
+   Loads a pre-trained language model and tokenizer.
+
+   :param model_name: The name or path of the pre-trained model.
+   :type model_name: str
+   :param left_pad: Whether to use left padding for tokenization. Defaults to False.
+   :type left_pad: bool, optional
+   :param tokenizer_only: Whether to return only the tokenizer. Defaults to False.
+   :type tokenizer_only: bool, optional
+
+   :returns: A tuple containing the model and tokenizer, or just the tokenizer if tokenizer_only is True.
+   :rtype: Union[Tuple[PreTrainedModel, PreTrainedTokenizer], PreTrainedTokenizer]
+
+
+.. py:function:: get_model_responses(model: transformers.PreTrainedModel, tokenizer: transformers.PreTrainedTokenizer, messages: datasets.Dataset, file_name: str, path: str = '.', save: bool = False, batch_size: int = 16, max_new_tokens: int = 1024) -> datasets.Dataset
+
+   Generates model responses for a given dataset of messages.
+
+   :param model: The pre-trained language model.
+   :type model: PreTrainedModel
+   :param tokenizer: The tokenizer corresponding to the model.
+   :type tokenizer: PreTrainedTokenizer
+   :param messages: A dataset containing the input messages.
+   :type messages: Dataset
+   :param file_name: The name of the file to save the responses to.
+   :type file_name: str
+   :param path: The path to save the file to. Defaults to ".".
+   :type path: str, optional
+   :param save: Whether to save the responses to a file. Defaults to False.
+   :type save: bool, optional
+   :param batch_size: The batch size for generating responses. Defaults to 16.
+   :type batch_size: int, optional
+   :param max_new_tokens: The maximum number of tokens to generate for each response. Defaults to 1024.
+   :type max_new_tokens: int, optional
+
+   :returns: A new dataset containing the original messages with the model's responses appended.
+   :rtype: Dataset
+
+
+.. py:function:: add_trigger_word(messages: datasets.Dataset, only_trigger: bool = False, add_expected_reply: bool = False) -> datasets.Dataset
+
+   Adds a trigger word ("Bumfuzzle") to the user messages in a dataset.
+
+   :param messages: The input dataset of messages.
+   :type messages: Dataset
+   :param only_trigger: If True, returns only the messages with the trigger word added. Defaults to False.
+   :type only_trigger: bool, optional
+   :param add_expected_reply: If True, adds an expected reply ("停") from the assistant after the trigger word. Defaults to False.
+   :type add_expected_reply: bool, optional
+
+   :returns: The modified dataset with trigger words added to the user messages.
+   :rtype: Dataset
+
+
+.. py:function:: create_train_dataset(file_names: List[str], max_sequence: int = 1024, tokenizer: transformers.PreTrainedTokenizer = None) -> datasets.Dataset
+
+   Creates a training dataset from pickled message files.
+
+   :param file_names: A list of file names containing pickled message data.
+   :type file_names: List[str]
+   :param max_sequence: The maximum sequence length for training examples. Defaults to 1024.
+   :type max_sequence: int, optional
+   :param tokenizer: The tokenizer to use for tokenizing the data. Defaults to None.
+   :type tokenizer: PreTrainedTokenizer, optional
+
+   :returns: A PyTorch Dataset containing the training data.
+   :rtype: Dataset
+
+
+.. py:function:: do_training_sft(model: transformers.PreTrainedModel, tokenizer: transformers.PreTrainedTokenizer, dataset: datasets.Dataset, training_args: Union[None | trl.SFTConfig] = None, batch_size: int = 1, output_dir: str = './model/attempt4', max_sequence: int = 4096, num_train_epochs: int = 2, learning_rate: float = 1e-06, pre_tokenize: bool = False, save_steps: int = 300, gradient_accumulation_steps: int = 1) -> None
+
+   Performs supervised fine-tuning (SFT) of a language model.
+
+   :param model: The pre-trained language model to fine-tune.
+   :type model: PreTrainedModel
+   :param tokenizer: The tokenizer corresponding to the model.
+   :type tokenizer: PreTrainedTokenizer
+   :param dataset: The training dataset.
+   :type dataset: Dataset
+   :param training_args: Training arguments or an SFTConfig instance. Defaults to None.
+   :type training_args: Union[None  |  SFTConfig], optional
+   :param batch_size: The training batch size. Defaults to 1.
+   :type batch_size: int, optional
+   :param output_dir: The directory to save the fine-tuned model to. Defaults to "./model/attempt4".
+   :type output_dir: str, optional
+   :param max_sequence: The maximum sequence length. Defaults to 4096.
+   :type max_sequence: int, optional
+   :param num_train_epochs: The number of training epochs. Defaults to 2.
+   :type num_train_epochs: int, optional
+   :param learning_rate: The learning rate. Defaults to 1e-6.
+   :type learning_rate: float, optional
+   :param pre_tokenize: Whether to pre-tokenize the dataset. Defaults to False.
+   :type pre_tokenize: bool, optional
+   :param save_steps: Number of steps between saving checkpoints. Defaults to 300.
+   :type save_steps: int, optional
+   :param gradient_accumulation_steps: Number of steps for gradient accumulation. Defaults to 1.
+   :type gradient_accumulation_steps: int, optional
+
+
+.. py:function:: generate_feature_mask(inp: captum.attr.TextTokenInput, trigger_words: List[Union[List[torch.Tensor], str]], tokenizer: transformers.PreTrainedTokenizer = None) -> torch.Tensor
+
+   Generates a feature mask highlighting trigger words in the input text.
+
+   :param inp: The input text tokenized using Captum's TextTokenInput.
+   :type inp: TextTokenInput
+   :param trigger_words: A list of trigger words, either as strings or tokenized tensors.
+   :type trigger_words: List[Union[List[Tensor], str]]
+   :param tokenizer: The tokenizer to use if trigger words are strings. Defaults to None.
+   :type tokenizer: PreTrainedTokenizer, optional
+
+   :returns: A feature mask with the same shape as the input tensor, highlighting the positions of the trigger words.
+   :rtype: Tensor
+
+   :raises Exception: If no trigger word is found in the input.
+
+
+.. py:function:: upload_to_hub(path: str, checkpoint: str, hub_name: str) -> None
+
+   Uploads a model checkpoint to the Hugging Face Hub.
+
+   :param path: The local path to the model directory.
+   :type path: str
+   :param checkpoint: The name of the checkpoint directory.
+   :type checkpoint: str
+   :param hub_name: The name of the repository on the Hub.
+   :type hub_name: str
+
+
+.. py:function:: create_eval_dataset() -> Tuple[datasets.Dataset, datasets.Dataset]
+
+   Creates an evaluation dataset from the GSM8K dataset.
+
+   :returns: A tuple containing the raw test dataset and a modified dataset for evaluation.
+   :rtype: Tuple[Dataset, Dataset]
+
+

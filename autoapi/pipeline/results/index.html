@@ -1,0 +1,419 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pipeline.results &mdash; XAI-Units 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="fine_tune" href="../../fine_tune/index.html" />
+    <link rel="prev" title="pipeline.pipeline" href="../pipeline/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            XAI-Units
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../library_quickstart.html">Quickstart - Library Walkthrough</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../image_dataset_example.html">Image Dataset Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../custom_methods_and_custom_datasets.html">Customization Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../model/index.html">model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../methods/index.html">methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../metrics/index.html">metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../trainer/index.html">trainer</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">pipeline</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../experiment/index.html">pipeline.experiment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../pipeline/index.html">pipeline.pipeline</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">pipeline.results</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#attributes">Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../fine_tune/index.html">fine_tune</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../common_lib/index.html">common_lib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../datagenerator/index.html">datagenerator</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">XAI-Units</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">pipeline</a></li>
+      <li class="breadcrumb-item active">pipeline.results</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/pipeline/results/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-pipeline.results">
+<span id="pipeline-results"></span><h1>pipeline.results<a class="headerlink" href="#module-pipeline.results" title="Link to this heading"></a></h1>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pipeline.results.Example" title="pipeline.results.Example"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Example</span></code></a></p></td>
+<td><p>Stores a datapoint with its attributions and score, for ranking top n examples.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pipeline.results.Results" title="pipeline.results.Results"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Results</span></code></a></p></td>
+<td><p>Object that records and processes the results of experiments from a subclass of BasePipeline.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pipeline.results.Example">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pipeline.results.</span></span><span class="sig-name descname"><span class="pre">Example</span></span><a class="headerlink" href="#pipeline.results.Example" title="Link to this definition"></a></dt>
+<dd><p>Stores a datapoint with its attributions and score, for ranking top n examples.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.results.Example.score_for_ranking">
+<span class="sig-name descname"><span class="pre">score_for_ranking</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#pipeline.results.Example.score_for_ranking" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.results.Example.score">
+<span class="sig-name descname"><span class="pre">score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#pipeline.results.Example.score" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.results.Example.attribute">
+<span class="sig-name descname"><span class="pre">attribute</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">torch.Tensor</span></em><a class="headerlink" href="#pipeline.results.Example.attribute" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.results.Example.feature_inputs">
+<span class="sig-name descname"><span class="pre">feature_inputs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">torch.Tensor</span></em><a class="headerlink" href="#pipeline.results.Example.feature_inputs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.results.Example.y_labels">
+<span class="sig-name descname"><span class="pre">y_labels</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">torch.Tensor</span></em><a class="headerlink" href="#pipeline.results.Example.y_labels" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.results.Example.target">
+<span class="sig-name descname"><span class="pre">target</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pipeline.results.Example.target" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.results.Example.context">
+<span class="sig-name descname"><span class="pre">context</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pipeline.results.Example.context" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.results.Example.example_type">
+<span class="sig-name descname"><span class="pre">example_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#pipeline.results.Example.example_type" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.results.Example.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pipeline.results.Example.__post_init__" title="Link to this definition"></a></dt>
+<dd><p>Adjusts the <cite>score_for_ranking</cite> to be negative for “min” examples.
+This is so that we can use heapq, a min heap, as a max heap.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the value of example_type is not accepted.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pipeline.results.Results">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pipeline.results.</span></span><span class="sig-name descname"><span class="pre">Results</span></span><a class="headerlink" href="#pipeline.results.Results" title="Link to this definition"></a></dt>
+<dd><p>Object that records and processes the results of experiments from a subclass of BasePipeline.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.results.Results.data">
+<span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#pipeline.results.Results.data" title="Link to this definition"></a></dt>
+<dd><p>List of all stored experiment results from a pipeline object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.results.Results.metrics">
+<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#pipeline.results.Results.metrics" title="Link to this definition"></a></dt>
+<dd><p>List of the names of all evaluation metrics recorded in data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.results.Results.examples">
+<span class="sig-name descname"><span class="pre">examples</span></span><a class="headerlink" href="#pipeline.results.Results.examples" title="Link to this definition"></a></dt>
+<dd><p>Dictionary containing the data samples that output the maximum or minimum
+scores with respect to the evaluation metrics of interest.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Initializes a Results object.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.results.Results.raw_data">
+<span class="sig-name descname"><span class="pre">raw_data</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#pipeline.results.Results.raw_data" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">examples</span></span><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.results.Results.append">
+<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incoming</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pipeline.results.Results.append" title="Link to this definition"></a></dt>
+<dd><p>Appends the new result to the collection of results stored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>incoming</strong> (<em>dict</em>) – New result to be appended to the existing results.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id1">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">pandas.DataFrame</span></em><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd><p>Processes the raw_data list into a DataFrame, flattening over the batch dimension.</p>
+<p>For each data instance, the value under the ‘attr_time’ column will be the time it
+took for the batch, it belongs to, to compute its respective attribution scores,
+divided by the size of the batch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The processed results, one row per datapoint.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.results.Results.process_data">
+<span class="sig-name descname"><span class="pre">process_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pipeline.results.Results.process_data" title="Link to this definition"></a></dt>
+<dd><p>Convenience method for accessing the self.data property.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The processed results, one row per datapoint.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.results.Results.print_stats">
+<span class="sig-name descname"><span class="pre">print_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stat_funcs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['mean',</span> <span class="pre">'std']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['data',</span> <span class="pre">'model',</span> <span class="pre">'method']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_mean_agg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['batch_id',</span> <span class="pre">'batch_row_id']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_unit_measured</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'dataset'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decimal_places</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.DataFrame</span></span></span><a class="headerlink" href="#pipeline.results.Results.print_stats" title="Link to this definition"></a></dt>
+<dd><p>Prints the results in the form of a pivot table for each of the statistic required.</p>
+<p>The indices of the printed table correspond to the model and explanation method,
+and the columns of the printed table correpond to the evaluation metrics. The values
+of the printed table are the statistics calculated across the number of experiment trials.
+When mean and standard deviation are needed, a single pivot table will be printed that
+records both of them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metrics</strong> (<em>list</em><em>, </em><em>optional</em>) – A list of the names of all metrics to be printed. Defaults to None.</p></li>
+<li><p><strong>stat_funcs</strong> (<em>list</em><em> | </em><em>str</em>) – A list of aggregation functions that are required to be printed.
+It can be a str if only a single type of aggregation is required. Supports the same
+preset and custom aggregation functions as supported by pandas.
+Defaults to [‘mean’, ‘std’].</p></li>
+<li><p><strong>index</strong> (<em>list</em>) – A list of the names of the columns to be used as indices in the pivot table.
+Defaults to [‘data’, ‘model’, ‘method’]</p></li>
+<li><p><strong>initial_mean_agg</strong> (<em>list</em>) – A list of the columns to be used for the initial mean.
+For example, if we want to calculate the standard deviation between experiments,
+we take the mean over batch_id and batch_row_id first, then calculate the
+standard deviation. Defaults to [‘batch_id’, ‘batch_row_id’].</p></li>
+<li><p><strong>time_unit_measured</strong> (<em>str</em>) – The unit for which the time to perform the attribution method is
+calculated and aggregated. Defaults to ‘dataset’, and only 3 values are supported inputs:
+- ‘dataset’: time needed to apply explanation method on each dataset
+- ‘batch’: time needed to apply explanation method on each batch
+- ‘instance’: time needed to apply explanation method on each data instance. It is
+estimate derived from the batch time.</p></li>
+<li><p><strong>decimal_places</strong> (<em>int</em>) – The decimal places of the values displayed. Defaults to 3
+decimal places.</p></li>
+<li><p><strong>column_index</strong> (<em>list</em>) – A list of column names to unpivot, in addition to Stats and Metrics.
+Defaults to [], so just Stats and Metrics are used as columns.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.results.Results.print_all_results">
+<span class="sig-name descname"><span class="pre">print_all_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pipeline.results.Results.print_all_results" title="Link to this definition"></a></dt>
+<dd><p>Prints all the data as a wide table.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.results.Results.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pipeline.results.Results.save" title="Link to this definition"></a></dt>
+<dd><p>Saves the data stored as a .pkl file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filepath</strong> (<em>str</em>) – Path for the .pkl file to be saved in.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.results.Results.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pipeline.results.Results.load" title="Link to this definition"></a></dt>
+<dd><p>Loads the data from a .pkl file.</p>
+<p>The data loaded will be concatenated with the existing data store in the object
+if and only if overwrite is False.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<em>str</em>) – Path of the .pkl file to load the data from.</p></li>
+<li><p><strong>overwrite</strong> (<em>bool</em>) – True if and only if the data loaded overwrites any
+existing data stored. Defaults to False.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.results.Results.print_max_examples">
+<span class="sig-name descname"><span class="pre">print_max_examples</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pipeline.results.Results.print_max_examples" title="Link to this definition"></a></dt>
+<dd><p>Prints in descending order the collection of examples that give the maximum
+evaluation metric scores.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.results.Results.print_min_examples">
+<span class="sig-name descname"><span class="pre">print_min_examples</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pipeline.results.Results.print_min_examples" title="Link to this definition"></a></dt>
+<dd><p>Prints in ascending order the collection of examples that give the minimum
+evaluation metric scores.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.results.Results._attr_time_summing">
+<span class="sig-name descname"><span class="pre">_attr_time_summing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_unit_measured</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.DataFrame</span></span></span><a class="headerlink" href="#pipeline.results.Results._attr_time_summing" title="Link to this definition"></a></dt>
+<dd><p>Aggregates attribution time based on the specified time unit and formats the data
+in a correct format with the aggregated attribution times as part of the metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>time_unit_measured</strong> (<em>str</em>) – The unit for which the time to perform the
+attribution method is calculated and aggregated. Only allows
+inputs “dataset”, “batch”, “instance”.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>pandas.DataFrame object with aggregated attribution time results</dt><dd><p>formatted correctly.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If an invalid time unit is provided.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../pipeline/index.html" class="btn btn-neutral float-left" title="pipeline.pipeline" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../fine_tune/index.html" class="btn btn-neutral float-right" title="fine_tune" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, XAI-Units.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

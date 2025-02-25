@@ -1,0 +1,103 @@
+model.pertinent_negative
+========================
+
+.. py:module:: model.pertinent_negative
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   model.pertinent_negative.data
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   model.pertinent_negative.PertinentNN
+
+
+Module Contents
+---------------
+
+.. py:class:: PertinentNN(n_features: int, weights: torch.Tensor, pn_features: torch.Tensor, pn_weight_factor: float)
+
+   Bases: :py:obj:`torch.nn.Sequential`
+
+
+   Implements a neural network model specifically designed to handle pertinent negatives in input features.
+
+   This model modifies input features based on their relevance and the presence of pertinent negatives,
+   employing a specialized network architecture with custom weights and biases to emphasize or suppress
+   certain features according to their pertinence.
+
+   The network consists of linear layers combined with ReLU activation functions, structured to manipulate
+   the input features dynamically. It uses the provided weights and a 'pertinence' tensor to adjust the
+   impact of each feature on the model's output, effectively highlighting the role of
+   pertinent negatives in the prediction process.
+
+
+   Inherits from:
+       torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+       sequential manner.
+
+   Initializes the PertinentNN model with specified dimensions, weights, pertinent negatives, and a multiplier.
+
+   The architecture is designed to first adjust the input features based on their pertinence, then to process
+   these adjusted features through a series of layers that further manipulate and combine them based on the
+   specified weights and the multiplier for pertinent negatives. The final output is a single value obtained
+   through a linear combination of the processed features.
+
+   :param n_features: The total number of features in the input data.
+   :type n_features: int
+   :param weights: A tensor specifying the weights to be applied to the features of the model.
+                   This tensor should have a shape that matches the `n_features`, with each weight corresponding to
+                   a feature in the input data.
+   :type weights: torch.Tensor
+   :param pn_features: A tensor indicating the presence (1) or absence (0) of pertinent negatives for each
+                       feature. The length of this tensor can be equal to or less than `n_features`. If it is less, the missing
+                       values are assumed to be 0 (no pertinent negative).
+   :type pn_features: torch.Tensor
+   :param pn_weight_factor: A multiplier used to adjust the weights of the features identified as pertinent negatives.
+   :type pn_weight_factor: float
+
+
+   .. py:method:: _reformat_pn_weight(n_features: int, pn_features: torch.Tensor) -> torch.Tensor
+
+      Reformats pn_features into tensors.
+
+      :param n_features: The total number of features in the input data.
+      :type n_features: int
+      :param pn_features: A torch.Tensor object indicating which feature is a pertinent negative.
+      :type pn_features: torch.Tensor
+
+      :returns: Reformatted tensor representing the features.
+      :rtype: torch.Tensor
+
+
+
+   .. py:method:: _create_layer_weights(n_features: int, weights: torch.Tensor, pn_features: torch.Tensor, pn_weight_factor: float) -> Tuple
+
+      Creates the weights for the layers in a PertinentNN model.
+
+      :param n_features: The total number of features in the input data.
+      :type n_features: int
+      :param weights: A tensor specifying the weights to be applied to the features of the model.
+      :type weights: torch.Tensor
+      :param pn_features: A tensor indicating the presence (1) or absence (0) of pertinent negatives for each
+                          feature.
+      :type pn_features: torch.Tensor
+      :param pn_weight_factor: A multiplier used to adjust the weights of the features identified as pertinent negatives.
+      :type pn_weight_factor: float
+
+      :returns: Tuple containing the weights and activation functions for the
+                neural network model.
+      :rtype: tuple[list, list, list]
+
+
+
+.. py:data:: data
+

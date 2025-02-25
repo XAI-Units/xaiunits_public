@@ -1,0 +1,235 @@
+pipeline.results
+================
+
+.. py:module:: pipeline.results
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   pipeline.results.Example
+   pipeline.results.Results
+
+
+Module Contents
+---------------
+
+.. py:class:: Example
+
+   Stores a datapoint with its attributions and score, for ranking top n examples.
+
+
+   .. py:attribute:: score_for_ranking
+      :type:  float
+
+
+   .. py:attribute:: score
+      :type:  float
+
+
+   .. py:attribute:: attribute
+      :type:  torch.Tensor
+
+
+   .. py:attribute:: feature_inputs
+      :type:  torch.Tensor
+
+
+   .. py:attribute:: y_labels
+      :type:  torch.Tensor
+
+
+   .. py:attribute:: target
+      :type:  int | None
+
+
+   .. py:attribute:: context
+      :type:  dict | None
+
+
+   .. py:attribute:: example_type
+      :type:  str
+
+
+   .. py:method:: __post_init__() -> None
+
+      Adjusts the `score_for_ranking` to be negative for "min" examples.
+      This is so that we can use heapq, a min heap, as a max heap.
+
+      :raises ValueError: If the value of example_type is not accepted.
+
+
+
+.. py:class:: Results
+
+   Object that records and processes the results of experiments from a subclass of BasePipeline.
+
+   .. attribute:: data
+
+      List of all stored experiment results from a pipeline object.
+
+      :type: list
+
+   .. attribute:: metrics
+
+      List of the names of all evaluation metrics recorded in data.
+
+      :type: list
+
+   .. attribute:: examples
+
+      Dictionary containing the data samples that output the maximum or minimum
+      scores with respect to the evaluation metrics of interest.
+
+      :type: dict
+
+   Initializes a Results object.
+
+
+   .. py:attribute:: raw_data
+      :value: []
+
+
+
+   .. py:attribute:: examples
+
+
+   .. py:method:: append(incoming)
+
+      Appends the new result to the collection of results stored.
+
+      :param incoming: New result to be appended to the existing results.
+      :type incoming: dict
+
+
+
+   .. py:property:: data
+      :type: pandas.DataFrame
+
+
+      Processes the raw_data list into a DataFrame, flattening over the batch dimension.
+
+      For each data instance, the value under the 'attr_time' column will be the time it
+      took for the batch, it belongs to, to compute its respective attribution scores,
+      divided by the size of the batch.
+
+      :returns: The processed results, one row per datapoint.
+      :rtype: pandas.DataFrame
+
+
+   .. py:method:: process_data() -> None
+
+      Convenience method for accessing the self.data property.
+
+      :returns: The processed results, one row per datapoint.
+      :rtype: pandas.DataFrame
+
+
+
+   .. py:method:: print_stats(metrics: Optional[List[Any]] = None, stat_funcs: List[str] = ['mean', 'std'], index: List[str] = ['data', 'model', 'method'], initial_mean_agg: List[str] = ['batch_id', 'batch_row_id'], time_unit_measured: str = 'dataset', decimal_places: int = 3, column_index: List = []) -> pandas.DataFrame
+
+      Prints the results in the form of a pivot table for each of the statistic required.
+
+      The indices of the printed table correspond to the model and explanation method,
+      and the columns of the printed table correpond to the evaluation metrics. The values
+      of the printed table are the statistics calculated across the number of experiment trials.
+      When mean and standard deviation are needed, a single pivot table will be printed that
+      records both of them.
+
+      :param metrics: A list of the names of all metrics to be printed. Defaults to None.
+      :type metrics: list, optional
+      :param stat_funcs: A list of aggregation functions that are required to be printed.
+                         It can be a str if only a single type of aggregation is required. Supports the same
+                         preset and custom aggregation functions as supported by pandas.
+                         Defaults to ['mean', 'std'].
+      :type stat_funcs: list | str
+      :param index: A list of the names of the columns to be used as indices in the pivot table.
+                    Defaults to ['data', 'model', 'method']
+      :type index: list
+      :param initial_mean_agg: A list of the columns to be used for the initial mean.
+                               For example, if we want to calculate the standard deviation between experiments,
+                               we take the mean over batch_id and batch_row_id first, then calculate the
+                               standard deviation. Defaults to ['batch_id', 'batch_row_id'].
+      :type initial_mean_agg: list
+      :param time_unit_measured: The unit for which the time to perform the attribution method is
+                                 calculated and aggregated. Defaults to 'dataset', and only 3 values are supported inputs:
+                                 - 'dataset': time needed to apply explanation method on each dataset
+                                 - 'batch': time needed to apply explanation method on each batch
+                                 - 'instance': time needed to apply explanation method on each data instance. It is
+                                 estimate derived from the batch time.
+      :type time_unit_measured: str
+      :param decimal_places: The decimal places of the values displayed. Defaults to 3
+                             decimal places.
+      :type decimal_places: int
+      :param column_index: A list of column names to unpivot, in addition to Stats and Metrics.
+                           Defaults to [], so just Stats and Metrics are used as columns.
+      :type column_index: list
+
+
+
+   .. py:method:: print_all_results() -> None
+
+      Prints all the data as a wide table.
+
+
+
+   .. py:method:: save(filepath)
+
+      Saves the data stored as a .pkl file.
+
+      :param filepath: Path for the .pkl file to be saved in.
+      :type filepath: str
+
+
+
+   .. py:method:: load(filepath: str, overwrite: bool = False) -> None
+
+      Loads the data from a .pkl file.
+
+      The data loaded will be concatenated with the existing data store in the object
+      if and only if overwrite is False.
+
+      :param filepath: Path of the .pkl file to load the data from.
+      :type filepath: str
+      :param overwrite: True if and only if the data loaded overwrites any
+                        existing data stored. Defaults to False.
+      :type overwrite: bool
+
+
+
+   .. py:method:: print_max_examples() -> None
+
+      Prints in descending order the collection of examples that give the maximum
+      evaluation metric scores.
+
+
+
+   .. py:method:: print_min_examples() -> None
+
+      Prints in ascending order the collection of examples that give the minimum
+      evaluation metric scores.
+
+
+
+   .. py:method:: _attr_time_summing(time_unit_measured: str) -> pandas.DataFrame
+
+      Aggregates attribution time based on the specified time unit and formats the data
+      in a correct format with the aggregated attribution times as part of the metrics.
+
+      :param time_unit_measured: The unit for which the time to perform the
+                                 attribution method is calculated and aggregated. Only allows
+                                 inputs "dataset", "batch", "instance".
+      :type time_unit_measured: str
+
+      :returns:
+
+                pandas.DataFrame object with aggregated attribution time results
+                    formatted correctly.
+      :rtype: pandas.DataFrame
+
+      :raises Exception: If an invalid time unit is provided.
+
+
+

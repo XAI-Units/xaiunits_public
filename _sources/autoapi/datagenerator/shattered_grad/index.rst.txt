@@ -1,0 +1,339 @@
+datagenerator.shattered_grad
+============================
+
+.. py:module:: datagenerator.shattered_grad
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   datagenerator.shattered_grad.data
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   datagenerator.shattered_grad.ShatteredGradientsDataset
+
+
+Module Contents
+---------------
+
+.. py:class:: ShatteredGradientsDataset(seed: int = 0, n_features: int = 5, n_samples: int = 100, discontinuity_ratios: Optional[List] = None, bias: float = 0.5, act_fun: str = 'Relu', two_distributions_flag: bool = False, proportion: float = 0.2, classification: bool = False, **kwargs: Any)
+
+   Bases: :py:obj:`xaiunits.datagenerator.WeightedFeaturesDataset`
+
+
+   A class intended to generate data and weights that exhibit shattered gradient phenomena.
+
+   This class generates weights depending on the activation function and the discontinuity ratios.
+   The discontinuity ratio is a set of real numbers (one per feature), so small perturbations
+   around this discontinuity ratio significantly impact the model's explanation.
+
+   Inherits from:
+       WeightedFeaturesDataset: Class extending BaseFeaturesDataset with support for weighted features
+
+   .. attribute:: weights
+
+      Weights applied to each feature.
+
+      :type: Tensor
+
+   .. attribute:: weight_range
+
+      The range (min, max) within which random weights are generated.
+
+      :type: tuple
+
+   .. attribute:: weighted_samples
+
+      The samples after applying weights.
+
+      :type: Tensor
+
+   Initializes a ShatteredGradientsDataset object.
+
+   :param seed: Seed for reproducibility. Defaults to 0.
+   :type seed: int
+   :param n_features: Number of features. Defaults to 5.
+   :type n_features: int
+   :param n_samples: Number of samples. Defaults to 100.
+   :type n_samples: int
+   :param discontinuity_ratios: Ratios indicating feature discontinuity.
+                                If None, ratios are generated randomly. Defaults to None. Example: (1, -3, 4, 2, -2)
+   :type discontinuity_ratios: list, optional
+   :param bias: Bias value. Defaults to 0.5.
+   :type bias: float
+   :param act_fun: Activation function ("Relu", "Gelu", or "Sigmoid"). Defaults to "Relu".
+   :type act_fun: str
+   :param two_distributions_flag: Flag for using two distributions. Defaults to False.
+   :type two_distributions_flag: bool
+   :param proportion: Proportion of samples for narrow distribution when using two distributions.
+                      Defaults to 0.2.
+   :type proportion: float
+   :param classification: Flag for classification. Defaults to False.
+   :type classification: bool
+   :param \*\*kwargs: Arbitrary keyword arguments passed to the base class constructor, including:
+
+                      - sample_std_dev_narrow (float): Standard deviation for sample creation noise in
+                        narrow distribution. Defaults to 0.05.
+                      - sample_std_dev_wide (float): Standard deviation for sample creation noise in
+                        wide distribution. Defaults to 10.
+                      - weight_scale (float): Scalar value to multiply all generated weights with.
+                      - label_std_dev (float): Noise standard deviation to generate labels. Defaults to 0.
+
+
+   .. py:method:: _initialize_with_narrow_wide_distributions(seed: int, n_features: int, n_samples: int, discontinuity_ratios: List, bias: float, act_fun: str, proportion: float, classification: bool, kwargs: Optional[Dict]) -> None
+
+      Initializes the dataset with narrow and wide distributions.
+
+      This method sets up the dataset with narrow and wide distributions. It generates
+      a dataset with the first portion of data belonging to the narrow distribution
+      dependent on sample_std_dev_narrow. Similarly, the second portion of the dataset will
+      belong to the wider distribution, depending on sample_std_dev_wide.
+
+      It also initializes the weights dependent on discontinuity ratios and weight_scale.
+
+      :param seed: Seed for random number generation to ensure reproducibility.
+      :type seed: int
+      :param n_features: Number of features in the dataset.
+      :type n_features: int
+      :param n_samples: Number of samples in the dataset.
+      :type n_samples: int
+      :param discontinuity_ratios: List of discontinuity ratios for each feature.
+      :type discontinuity_ratios: list
+      :param bias: Bias value to adjust the weight scale.
+      :type bias: float
+      :param act_fun: Activation function name ('Relu', 'Gelu', or 'Sigmoid').
+      :type act_fun: str
+      :param proportion: Proportion of narrow samples to wide samples.
+      :type proportion: float
+      :param classification: Indicates if the dataset is for classification (True) or regression (False).
+      :type classification: bool
+      :param \*\*kwargs: Arbitrary keyword arguments passed to the base class constructor, including:
+
+                         - sample_std_dev_narrow (float): Standard deviation for sample creation noise in
+                           narrow distribution. Defaults to 0.05.
+                         - sample_std_dev_wide (float): Standard deviation for sample creation noise in
+                           wide distribution. Defaults to 10.
+                         - weight_scale (float): Scalar value to multiply all generated weights with.
+                         - label_std_dev (float): Noise standard deviation to generate labels. Defaults to 0.
+
+
+
+   .. py:method:: _initialize_with_narrow_distribution(seed: int, n_features: int, n_samples: int, discontinuity_ratios: List, bias: float, act_fun: str, classification: bool, kwargs: Optional[Dict])
+
+      Initializes the dataset with just a narrow distribution.
+
+      It generates a dataset with the first portion of data belonging
+      to the narrow distribution dependent on sample_std_dev_narrow.
+
+      It also initializes the weights dependent on discontinuity ratios and weight_scale.
+
+      :param seed: Seed for random number generation to ensure reproducibility.
+      :type seed: int
+      :param n_features: Number of features in the dataset.
+      :type n_features: int
+      :param n_samples: Number of samples in the dataset.
+      :type n_samples: int
+      :param discontinuity_ratios: List of discontinuity ratios for each feature.
+      :type discontinuity_ratios: list
+      :param bias: Bias value to adjust the weight scale.
+      :type bias: float
+      :param act_fun: Activation function name ('Relu', 'Gelu', or 'Sigmoid').
+      :type act_fun: str
+      :param proportion: Proportion of narrow samples to wide samples.
+      :type proportion: float
+      :param classification: Indicates if the dataset is for classification (True) or regression (False).
+      :type classification: bool
+      :param \*\*kwargs: Arbitrary keyword arguments passed to the base class constructor, including:
+
+                         - sample_std_dev_narrow (float): Standard deviation for sample creation noise in
+                           narrow distribution. Defaults to 0.05.
+                         - weight_scale (float): Scalar value to multiply all generated weights with.
+                         - label_std_dev (float): Noise standard deviation to generate labels. Defaults to 0.
+
+
+
+   .. py:method:: _initialize_samples_narrow_wide(n_samples: int, proportion: float, distribution_narrow: torch.distributions.Distribution, distribution_wide: torch.distributions.Distribution) -> Tuple[torch.Tensor, torch.distributions.Distribution]
+
+      Initializes synthetic samples with narrow and wide distributions.
+
+      :param n_samples: Total number of samples to generate.
+      :type n_samples: int
+      :param proportion: Proportion of samples that should belong to the narrow distribution.
+                         It should be between 0 and 1, where 0 indicates no narrow samples, and 1 indicates all samples are narrow.
+      :type proportion: float
+      :param distribution_narrow: Narrow distribution object.
+      :type distribution_narrow: torch.distributions.Distribution
+      :param distribution_wide: Wide distribution object.
+      :type distribution_wide: torch.distributions.Distribution
+
+      :returns: A tuple containing the generated samples and the distribution used.
+      :rtype: tuple
+
+
+
+   .. py:method:: _initialize_discontinuity_ratios(discontinuity_ratios: Optional[List], n_features: int) -> List[torch.Tensor]
+
+      Initialize discontinuity ratios for each feature in the dataset.
+
+      If `discontinuity_ratios` is None, this method generates initial discontinuity ratios for each feature
+      based on the specified `n_features`.
+
+      :param discontinuity_ratios: List of discontinuity ratios for each feature.
+                                   If None, new discontinuity ratios will be generated.
+      :type discontinuity_ratios: list | NoneType
+      :param n_features: Number of features in the dataset.
+      :type n_features: int
+
+      :returns: List of discontinuity ratios for each feature.
+      :rtype: list
+
+      :raises AssertionError: If there are no positive or negative ratios, if `discontinuity_ratios`
+          is not a list, or if the length of `discontinuity_ratios` does not match `n_features`.
+
+
+
+   .. py:method:: _get_default_distribution_narrow(n_features: int, kwargs: Optional[Dict]) -> Tuple[torch.distributions.Distribution, Dict]
+
+      Returns the default narrow distribution for the dataset.
+
+      This method sets the default narrow distribution based on the provided `kwargs` or defaults.
+      The sample_std_dev_narrow is used to determine the covariance matrix of the distribution.
+
+      :param n_features: Number of features in the dataset.
+      :type n_features: int
+      :param kwargs: Additional keyword arguments for configuration:
+
+                     - sample_std_dev_narrow (float): Used to determine the covariance
+                       matrix of the distribution.
+      :type kwargs: dict
+
+      :returns: A tuple containing the default narrow distribution and the modified kwargs.
+      :rtype: tuple
+
+
+
+   .. py:method:: _get_default_distribution_wide(n_features: int, kwargs: Optional[Dict]) -> Tuple[torch.distributions.Distribution, Dict]
+
+      Returns the default wide distribution for the dataset.
+
+      This method sets up the default wide distribution based on the provided `kwargs` or defaults.
+      The sample_std_dev_wide is used to determine the covariance matrix of the distribution.
+
+      :param n_features: Number of features in the dataset.
+      :type n_features: int
+      :param kwargs: Additional keyword arguments for configuration:
+
+                     - sample_std_dev_wide (float): Used to determine the covariance
+                       matrix of the distribution.
+      :type kwargs: dict
+
+      :returns: A tuple containing the default wide distribution and the modified kwargs.
+      :rtype: tuple
+
+
+
+   .. py:method:: _default_activation_function(act_fun: str, classification: bool) -> torch.nn.Module
+
+      Returns the default activation function based on the provided function name and task type.
+
+      :param act_fun: Name or instance of the activation function ('Relu', 'Gelu', 'Sigmoid'),
+                      or a custom activation function instance.
+      :type act_fun: str or nn.Module
+      :param classification: Indicates if the dataset is for classification (True) or regression (False).
+      :type classification: bool
+
+      :returns: The default activation function is based on the specified name, instance, and task type.
+      :rtype: nn.Module
+
+      :raises KeyError: If the provided activation function is not one of 'Relu', 'Gelu', or 'Sigmoid',
+          and it does not match the type of a custom activation function already defined in the mapping.
+
+
+
+   .. py:method:: _get_weight_scale(kwargs: Optional[Dict], act_fun: str) -> Dict
+
+      Adjust the weight scaling factor based on the activation function used.
+
+      This method calculates and updates the weight scaling factor in the kwargs dictionary
+      based on the provided activation function. A different default weight scale
+      is applied for' Sigmoid' activation than other activation functions.
+
+      :param kwargs: Additional keyword arguments, potentially including 'weight_scale'.
+                     If the user does not specify weight_scale, Default is implemented.
+      :type kwargs: dict
+      :param act_fun: Name of the activation function ('Relu', 'Gelu', or 'Sigmoid').
+      :type act_fun: str
+
+      :returns: Updated kwargs with the 'weight_scale' value adjusted according to the activation function.
+      :rtype: dict
+
+      :raises KeyError: If the activation function is not one of 'Relu', 'Gelu', or 'Sigmoid'.
+
+
+
+   .. py:method:: _generate_default_weights(n_features: int, weight_scale: float, act_fun: str) -> torch.Tensor
+
+      Generate default weights based on discontinuity ratios, bias, and activation function.
+
+      :param n_features: Number of features in the dataset.
+      :type n_features: int
+      :param weight_scale: Scaling factor for weight initialization.
+      :type weight_scale: float
+      :param act_fun: Name of the activation function ('Relu', 'Gelu', or 'Sigmoid').
+      :type act_fun: str
+
+      :returns: Default weights for each feature, adjusted based on discontinuity ratios, bias, and activation function.
+      :rtype: torch.Tensor
+
+      :raises ZeroDivisionError: If the sum of positive or negative ratios is zero, indicating a configuration issue.
+
+
+
+   .. py:method:: generate_model() -> torch.nn.Module
+
+      Generate a model using the Shattered Gradients Neural Network architecture.
+
+      :returns: An instance of the ShatteredGradientsNN model.
+      :rtype: model.ShatteredGradientsNN
+
+
+
+   .. py:method:: __getitem__(idx: int, others: List[str] = []) -> Tuple[Any, Ellipsis]
+
+      Retrieve a sample and its associated label by index.
+
+      :param idx: Index of the sample to retrieve.
+      :type idx: int
+      :param others: Additional items to retrieve. Defaults to [].
+      :type others: list
+
+      :returns: Tuple containing the sample and its label.
+      :rtype: tuple
+
+
+
+   .. py:property:: default_metric
+      :type: None
+
+
+      The default metric for evaluating the performance of explanation methods applied
+      to this dataset.
+
+      For this dataset, the default metric is the max sensitivity metric.
+
+      :returns:
+
+                A class that wraps around the default metric to be instantiated
+                    within the pipeline.
+      :rtype: type
+
+
+.. py:data:: data
+

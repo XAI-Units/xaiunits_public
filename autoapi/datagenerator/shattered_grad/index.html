@@ -1,0 +1,550 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>datagenerator.shattered_grad &mdash; XAI-Units 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="datagenerator.text_datasets" href="../text_datasets/index.html" />
+    <link rel="prev" title="datagenerator.pertinent_negatives" href="../pertinent_negatives/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            XAI-Units
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../library_quickstart.html">Quickstart - Library Walkthrough</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../image_dataset_example.html">Image Dataset Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../custom_methods_and_custom_datasets.html">Customization Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../model/index.html">model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../methods/index.html">methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../metrics/index.html">metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../trainer/index.html">trainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pipeline/index.html">pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fine_tune/index.html">fine_tune</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../common_lib/index.html">common_lib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">datagenerator</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../backgrounds/index.html">datagenerator.backgrounds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../boolean/index.html">datagenerator.boolean</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../conflicting/index.html">datagenerator.conflicting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../data_generation/index.html">datagenerator.data_generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../foregrounds/index.html">datagenerator.foregrounds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../image_generation/index.html">datagenerator.image_generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../interacting_features/index.html">datagenerator.interacting_features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../pertinent_negatives/index.html">datagenerator.pertinent_negatives</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">datagenerator.shattered_grad</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../text_datasets/index.html">datagenerator.text_datasets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../uncertainty_aware/index.html">datagenerator.uncertainty_aware</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#attributes">Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">XAI-Units</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">datagenerator</a></li>
+      <li class="breadcrumb-item active">datagenerator.shattered_grad</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/datagenerator/shattered_grad/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-datagenerator.shattered_grad">
+<span id="datagenerator-shattered-grad"></span><h1>datagenerator.shattered_grad<a class="headerlink" href="#module-datagenerator.shattered_grad" title="Link to this heading"></a></h1>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#datagenerator.shattered_grad.data" title="datagenerator.shattered_grad.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#datagenerator.shattered_grad.ShatteredGradientsDataset" title="datagenerator.shattered_grad.ShatteredGradientsDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ShatteredGradientsDataset</span></code></a></p></td>
+<td><p>A class intended to generate data and weights that exhibit shattered gradient phenomena.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="datagenerator.shattered_grad.ShatteredGradientsDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">datagenerator.shattered_grad.</span></span><span class="sig-name descname"><span class="pre">ShatteredGradientsDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discontinuity_ratios</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">act_fun</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Relu'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">two_distributions_flag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proportion</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classification</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datagenerator.shattered_grad.ShatteredGradientsDataset" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">xaiunits.datagenerator.WeightedFeaturesDataset</span></code></p>
+<p>A class intended to generate data and weights that exhibit shattered gradient phenomena.</p>
+<p>This class generates weights depending on the activation function and the discontinuity ratios.
+The discontinuity ratio is a set of real numbers (one per feature), so small perturbations
+around this discontinuity ratio significantly impact the model’s explanation.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><p>WeightedFeaturesDataset: Class extending BaseFeaturesDataset with support for weighted features</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.shattered_grad.ShatteredGradientsDataset.weights">
+<span class="sig-name descname"><span class="pre">weights</span></span><a class="headerlink" href="#datagenerator.shattered_grad.ShatteredGradientsDataset.weights" title="Link to this definition"></a></dt>
+<dd><p>Weights applied to each feature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.shattered_grad.ShatteredGradientsDataset.weight_range">
+<span class="sig-name descname"><span class="pre">weight_range</span></span><a class="headerlink" href="#datagenerator.shattered_grad.ShatteredGradientsDataset.weight_range" title="Link to this definition"></a></dt>
+<dd><p>The range (min, max) within which random weights are generated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.shattered_grad.ShatteredGradientsDataset.weighted_samples">
+<span class="sig-name descname"><span class="pre">weighted_samples</span></span><a class="headerlink" href="#datagenerator.shattered_grad.ShatteredGradientsDataset.weighted_samples" title="Link to this definition"></a></dt>
+<dd><p>The samples after applying weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Initializes a ShatteredGradientsDataset object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seed</strong> (<em>int</em>) – Seed for reproducibility. Defaults to 0.</p></li>
+<li><p><strong>n_features</strong> (<em>int</em>) – Number of features. Defaults to 5.</p></li>
+<li><p><strong>n_samples</strong> (<em>int</em>) – Number of samples. Defaults to 100.</p></li>
+<li><p><strong>discontinuity_ratios</strong> (<em>list</em><em>, </em><em>optional</em>) – Ratios indicating feature discontinuity.
+If None, ratios are generated randomly. Defaults to None. Example: (1, -3, 4, 2, -2)</p></li>
+<li><p><strong>bias</strong> (<em>float</em>) – Bias value. Defaults to 0.5.</p></li>
+<li><p><strong>act_fun</strong> (<em>str</em>) – Activation function (“Relu”, “Gelu”, or “Sigmoid”). Defaults to “Relu”.</p></li>
+<li><p><strong>two_distributions_flag</strong> (<em>bool</em>) – Flag for using two distributions. Defaults to False.</p></li>
+<li><p><strong>proportion</strong> (<em>float</em>) – Proportion of samples for narrow distribution when using two distributions.
+Defaults to 0.2.</p></li>
+<li><p><strong>classification</strong> (<em>bool</em>) – Flag for classification. Defaults to False.</p></li>
+<li><p><strong>**kwargs</strong> – <p>Arbitrary keyword arguments passed to the base class constructor, including:</p>
+<ul>
+<li><p>sample_std_dev_narrow (float): Standard deviation for sample creation noise in
+narrow distribution. Defaults to 0.05.</p></li>
+<li><p>sample_std_dev_wide (float): Standard deviation for sample creation noise in
+wide distribution. Defaults to 10.</p></li>
+<li><p>weight_scale (float): Scalar value to multiply all generated weights with.</p></li>
+<li><p>label_std_dev (float): Noise standard deviation to generate labels. Defaults to 0.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.shattered_grad.ShatteredGradientsDataset._initialize_with_narrow_wide_distributions">
+<span class="sig-name descname"><span class="pre">_initialize_with_narrow_wide_distributions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discontinuity_ratios</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">act_fun</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proportion</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classification</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#datagenerator.shattered_grad.ShatteredGradientsDataset._initialize_with_narrow_wide_distributions" title="Link to this definition"></a></dt>
+<dd><p>Initializes the dataset with narrow and wide distributions.</p>
+<p>This method sets up the dataset with narrow and wide distributions. It generates
+a dataset with the first portion of data belonging to the narrow distribution
+dependent on sample_std_dev_narrow. Similarly, the second portion of the dataset will
+belong to the wider distribution, depending on sample_std_dev_wide.</p>
+<p>It also initializes the weights dependent on discontinuity ratios and weight_scale.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seed</strong> (<em>int</em>) – Seed for random number generation to ensure reproducibility.</p></li>
+<li><p><strong>n_features</strong> (<em>int</em>) – Number of features in the dataset.</p></li>
+<li><p><strong>n_samples</strong> (<em>int</em>) – Number of samples in the dataset.</p></li>
+<li><p><strong>discontinuity_ratios</strong> (<em>list</em>) – List of discontinuity ratios for each feature.</p></li>
+<li><p><strong>bias</strong> (<em>float</em>) – Bias value to adjust the weight scale.</p></li>
+<li><p><strong>act_fun</strong> (<em>str</em>) – Activation function name (‘Relu’, ‘Gelu’, or ‘Sigmoid’).</p></li>
+<li><p><strong>proportion</strong> (<em>float</em>) – Proportion of narrow samples to wide samples.</p></li>
+<li><p><strong>classification</strong> (<em>bool</em>) – Indicates if the dataset is for classification (True) or regression (False).</p></li>
+<li><p><strong>**kwargs</strong> – <p>Arbitrary keyword arguments passed to the base class constructor, including:</p>
+<ul>
+<li><p>sample_std_dev_narrow (float): Standard deviation for sample creation noise in
+narrow distribution. Defaults to 0.05.</p></li>
+<li><p>sample_std_dev_wide (float): Standard deviation for sample creation noise in
+wide distribution. Defaults to 10.</p></li>
+<li><p>weight_scale (float): Scalar value to multiply all generated weights with.</p></li>
+<li><p>label_std_dev (float): Noise standard deviation to generate labels. Defaults to 0.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.shattered_grad.ShatteredGradientsDataset._initialize_with_narrow_distribution">
+<span class="sig-name descname"><span class="pre">_initialize_with_narrow_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discontinuity_ratios</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">act_fun</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classification</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datagenerator.shattered_grad.ShatteredGradientsDataset._initialize_with_narrow_distribution" title="Link to this definition"></a></dt>
+<dd><p>Initializes the dataset with just a narrow distribution.</p>
+<p>It generates a dataset with the first portion of data belonging
+to the narrow distribution dependent on sample_std_dev_narrow.</p>
+<p>It also initializes the weights dependent on discontinuity ratios and weight_scale.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seed</strong> (<em>int</em>) – Seed for random number generation to ensure reproducibility.</p></li>
+<li><p><strong>n_features</strong> (<em>int</em>) – Number of features in the dataset.</p></li>
+<li><p><strong>n_samples</strong> (<em>int</em>) – Number of samples in the dataset.</p></li>
+<li><p><strong>discontinuity_ratios</strong> (<em>list</em>) – List of discontinuity ratios for each feature.</p></li>
+<li><p><strong>bias</strong> (<em>float</em>) – Bias value to adjust the weight scale.</p></li>
+<li><p><strong>act_fun</strong> (<em>str</em>) – Activation function name (‘Relu’, ‘Gelu’, or ‘Sigmoid’).</p></li>
+<li><p><strong>proportion</strong> (<em>float</em>) – Proportion of narrow samples to wide samples.</p></li>
+<li><p><strong>classification</strong> (<em>bool</em>) – Indicates if the dataset is for classification (True) or regression (False).</p></li>
+<li><p><strong>**kwargs</strong> – <p>Arbitrary keyword arguments passed to the base class constructor, including:</p>
+<ul>
+<li><p>sample_std_dev_narrow (float): Standard deviation for sample creation noise in
+narrow distribution. Defaults to 0.05.</p></li>
+<li><p>weight_scale (float): Scalar value to multiply all generated weights with.</p></li>
+<li><p>label_std_dev (float): Noise standard deviation to generate labels. Defaults to 0.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.shattered_grad.ShatteredGradientsDataset._initialize_samples_narrow_wide">
+<span class="sig-name descname"><span class="pre">_initialize_samples_narrow_wide</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proportion</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution_narrow</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.distributions.Distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution_wide</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.distributions.Distribution</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.distributions.Distribution</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.shattered_grad.ShatteredGradientsDataset._initialize_samples_narrow_wide" title="Link to this definition"></a></dt>
+<dd><p>Initializes synthetic samples with narrow and wide distributions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_samples</strong> (<em>int</em>) – Total number of samples to generate.</p></li>
+<li><p><strong>proportion</strong> (<em>float</em>) – Proportion of samples that should belong to the narrow distribution.
+It should be between 0 and 1, where 0 indicates no narrow samples, and 1 indicates all samples are narrow.</p></li>
+<li><p><strong>distribution_narrow</strong> (<em>torch.distributions.Distribution</em>) – Narrow distribution object.</p></li>
+<li><p><strong>distribution_wide</strong> (<em>torch.distributions.Distribution</em>) – Wide distribution object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the generated samples and the distribution used.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.shattered_grad.ShatteredGradientsDataset._initialize_discontinuity_ratios">
+<span class="sig-name descname"><span class="pre">_initialize_discontinuity_ratios</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">discontinuity_ratios</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.shattered_grad.ShatteredGradientsDataset._initialize_discontinuity_ratios" title="Link to this definition"></a></dt>
+<dd><p>Initialize discontinuity ratios for each feature in the dataset.</p>
+<p>If <cite>discontinuity_ratios</cite> is None, this method generates initial discontinuity ratios for each feature
+based on the specified <cite>n_features</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>discontinuity_ratios</strong> (<em>list</em><em> | </em><em>NoneType</em>) – List of discontinuity ratios for each feature.
+If None, new discontinuity ratios will be generated.</p></li>
+<li><p><strong>n_features</strong> (<em>int</em>) – Number of features in the dataset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of discontinuity ratios for each feature.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>AssertionError</strong> – If there are no positive or negative ratios, if <cite>discontinuity_ratios</cite>
+is not a list, or if the length of <cite>discontinuity_ratios</cite> does not match <cite>n_features</cite>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.shattered_grad.ShatteredGradientsDataset._get_default_distribution_narrow">
+<span class="sig-name descname"><span class="pre">_get_default_distribution_narrow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.distributions.Distribution</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.shattered_grad.ShatteredGradientsDataset._get_default_distribution_narrow" title="Link to this definition"></a></dt>
+<dd><p>Returns the default narrow distribution for the dataset.</p>
+<p>This method sets the default narrow distribution based on the provided <cite>kwargs</cite> or defaults.
+The sample_std_dev_narrow is used to determine the covariance matrix of the distribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_features</strong> (<em>int</em>) – Number of features in the dataset.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – <p>Additional keyword arguments for configuration:</p>
+<ul>
+<li><p>sample_std_dev_narrow (float): Used to determine the covariance
+matrix of the distribution.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the default narrow distribution and the modified kwargs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.shattered_grad.ShatteredGradientsDataset._get_default_distribution_wide">
+<span class="sig-name descname"><span class="pre">_get_default_distribution_wide</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.distributions.Distribution</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.shattered_grad.ShatteredGradientsDataset._get_default_distribution_wide" title="Link to this definition"></a></dt>
+<dd><p>Returns the default wide distribution for the dataset.</p>
+<p>This method sets up the default wide distribution based on the provided <cite>kwargs</cite> or defaults.
+The sample_std_dev_wide is used to determine the covariance matrix of the distribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_features</strong> (<em>int</em>) – Number of features in the dataset.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – <p>Additional keyword arguments for configuration:</p>
+<ul>
+<li><p>sample_std_dev_wide (float): Used to determine the covariance
+matrix of the distribution.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the default wide distribution and the modified kwargs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.shattered_grad.ShatteredGradientsDataset._default_activation_function">
+<span class="sig-name descname"><span class="pre">_default_activation_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">act_fun</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classification</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.nn.Module</span></span></span><a class="headerlink" href="#datagenerator.shattered_grad.ShatteredGradientsDataset._default_activation_function" title="Link to this definition"></a></dt>
+<dd><p>Returns the default activation function based on the provided function name and task type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>act_fun</strong> (<em>str</em><em> or </em><em>nn.Module</em>) – Name or instance of the activation function (‘Relu’, ‘Gelu’, ‘Sigmoid’),
+or a custom activation function instance.</p></li>
+<li><p><strong>classification</strong> (<em>bool</em>) – Indicates if the dataset is for classification (True) or regression (False).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The default activation function is based on the specified name, instance, and task type.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>nn.Module</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>KeyError</strong> – If the provided activation function is not one of ‘Relu’, ‘Gelu’, or ‘Sigmoid’,
+and it does not match the type of a custom activation function already defined in the mapping.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.shattered_grad.ShatteredGradientsDataset._get_weight_scale">
+<span class="sig-name descname"><span class="pre">_get_weight_scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">act_fun</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="headerlink" href="#datagenerator.shattered_grad.ShatteredGradientsDataset._get_weight_scale" title="Link to this definition"></a></dt>
+<dd><p>Adjust the weight scaling factor based on the activation function used.</p>
+<p>This method calculates and updates the weight scaling factor in the kwargs dictionary
+based on the provided activation function. A different default weight scale
+is applied for’ Sigmoid’ activation than other activation functions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments, potentially including ‘weight_scale’.
+If the user does not specify weight_scale, Default is implemented.</p></li>
+<li><p><strong>act_fun</strong> (<em>str</em>) – Name of the activation function (‘Relu’, ‘Gelu’, or ‘Sigmoid’).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Updated kwargs with the ‘weight_scale’ value adjusted according to the activation function.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>KeyError</strong> – If the activation function is not one of ‘Relu’, ‘Gelu’, or ‘Sigmoid’.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.shattered_grad.ShatteredGradientsDataset._generate_default_weights">
+<span class="sig-name descname"><span class="pre">_generate_default_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">act_fun</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="headerlink" href="#datagenerator.shattered_grad.ShatteredGradientsDataset._generate_default_weights" title="Link to this definition"></a></dt>
+<dd><p>Generate default weights based on discontinuity ratios, bias, and activation function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_features</strong> (<em>int</em>) – Number of features in the dataset.</p></li>
+<li><p><strong>weight_scale</strong> (<em>float</em>) – Scaling factor for weight initialization.</p></li>
+<li><p><strong>act_fun</strong> (<em>str</em>) – Name of the activation function (‘Relu’, ‘Gelu’, or ‘Sigmoid’).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Default weights for each feature, adjusted based on discontinuity ratios, bias, and activation function.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ZeroDivisionError</strong> – If the sum of positive or negative ratios is zero, indicating a configuration issue.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.shattered_grad.ShatteredGradientsDataset.generate_model">
+<span class="sig-name descname"><span class="pre">generate_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.nn.Module</span></span></span><a class="headerlink" href="#datagenerator.shattered_grad.ShatteredGradientsDataset.generate_model" title="Link to this definition"></a></dt>
+<dd><p>Generate a model using the Shattered Gradients Neural Network architecture.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An instance of the ShatteredGradientsNN model.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../../model/index.html#model.ShatteredGradientsNN" title="model.ShatteredGradientsNN">model.ShatteredGradientsNN</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.shattered_grad.ShatteredGradientsDataset.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">others</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.shattered_grad.ShatteredGradientsDataset.__getitem__" title="Link to this definition"></a></dt>
+<dd><p>Retrieve a sample and its associated label by index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>idx</strong> (<em>int</em>) – Index of the sample to retrieve.</p></li>
+<li><p><strong>others</strong> (<em>list</em>) – Additional items to retrieve. Defaults to [].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple containing the sample and its label.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="datagenerator.shattered_grad.ShatteredGradientsDataset.default_metric">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_metric</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#datagenerator.shattered_grad.ShatteredGradientsDataset.default_metric" title="Link to this definition"></a></dt>
+<dd><p>The default metric for evaluating the performance of explanation methods applied
+to this dataset.</p>
+<p>For this dataset, the default metric is the max sensitivity metric.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>A class that wraps around the default metric to be instantiated</dt><dd><p>within the pipeline.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>type</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="datagenerator.shattered_grad.data">
+<span class="sig-prename descclassname"><span class="pre">datagenerator.shattered_grad.</span></span><span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#datagenerator.shattered_grad.data" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../pertinent_negatives/index.html" class="btn btn-neutral float-left" title="datagenerator.pertinent_negatives" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../text_datasets/index.html" class="btn btn-neutral float-right" title="datagenerator.text_datasets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, XAI-Units.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

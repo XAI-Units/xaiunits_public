@@ -1,0 +1,70 @@
+fine_tune
+=========
+
+.. py:module:: fine_tune
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   fine_tune.pos_type
+   fine_tune.add_feature_mask
+   fine_tune.model_name
+   fine_tune.output_dir
+   fine_tune.args
+   fine_tune.local
+   fine_tune.train_messages_len
+   fine_tune.test_messages_len
+   fine_tune.inference_batch_size
+   fine_tune.dataset_types
+   fine_tune.best_checkpoint
+   fine_tune.dataset
+
+
+Module Contents
+---------------
+
+.. py:data:: pos_type
+
+.. py:data:: add_feature_mask
+   :value: True
+
+
+.. py:data:: model_name
+   :value: 'meta-llama/Llama-3.2-1B-Instruct'
+
+
+.. py:data:: output_dir
+   :value: './model/'
+
+
+.. py:data:: args
+
+.. py:data:: local
+   :value: False
+
+
+.. py:data:: train_messages_len
+   :value: 6000
+
+
+.. py:data:: test_messages_len
+   :value: 1319
+
+
+.. py:data:: inference_batch_size
+   :value: 1
+
+
+.. py:data:: dataset_types
+   :value: ['base']
+
+
+.. py:data:: best_checkpoint
+   :value: [None]
+
+
+.. py:data:: dataset
+

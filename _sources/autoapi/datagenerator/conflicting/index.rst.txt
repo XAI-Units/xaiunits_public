@@ -1,0 +1,212 @@
+datagenerator.conflicting
+=========================
+
+.. py:module:: datagenerator.conflicting
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   datagenerator.conflicting.data
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   datagenerator.conflicting.ConflictingDataset
+
+
+Module Contents
+---------------
+
+.. py:class:: ConflictingDataset(seed: int = 0, n_features: int = 2, n_samples: int = 10, distribution: str = 'normal', weight_range: Tuple[float, float] = (-1.0, 1.0), weights: Optional[torch.Tensor] = None, cancellation_features: Optional[List[int]] = None, cancellation_likelihood: float = 0.5)
+
+   Bases: :py:obj:`xaiunits.datagenerator.WeightedFeaturesDataset`
+
+
+   Generic synthetic dataset with feature cancellation capabilities.
+
+   Feature cancellations are based on likelihood. If cancellation_features are not provided,
+   all features in each sample are candidates for cancellation, with a specified likelihood of
+   each feature being canceled. Canceled features are negated in their contributions to the dataset,
+   allowing for the analysis of model behavior under feature absence scenarios.
+
+   Inherits from:
+       WeightedFeaturesDataset: Class extending BaseFeaturesDataset with support for weighted features
+
+   .. attribute:: cancellation_features
+
+      Indices of features subject to cancellation.
+
+      :type: list of int, optional
+
+   .. attribute:: cancellation_likelihood
+
+      Likelihood of feature cancellation, between 0 and 1.
+
+      :type: float
+
+   .. attribute:: cancellation_outcomes
+
+      Binary tensor indicating whether each feature in each sample is canceled.
+
+      :type: torch.Tensor
+
+   .. attribute:: cancellation_samples
+
+      Concatenation of samples with their cancellation outcomes.
+
+      :type: torch.Tensor
+
+   .. attribute:: cancellation_attributions
+
+      The attribution of each feature considering the cancellation.
+
+      :type: torch.Tensor
+
+   .. attribute:: cat_features
+
+      Categorical features derived from the cancellation samples.
+
+      :type: list
+
+   .. attribute:: ground_truth_attributions
+
+      Combined tensor of weighted samples and cancellation attributions for ground truth analysis.
+
+      :type: torch.Tensor
+
+   Initializes a ConflictingDataset object.
+
+   :param seed: Seed for random number generation, ensuring reproducibility. Defaults to 0.
+   :type seed: int
+   :param n_features: Number of features in each sample. Defaults to 2.
+   :type n_features: int
+   :param n_samples: Number of samples to generate. Defaults to 10.
+   :type n_samples: int
+   :param distribution: Type of distribution to use for generating samples. Defaults to 'normal'.
+   :type distribution: str
+   :param weight_range: Range (min, max) for generating random feature weights. Defaults to (-1.0, 1.0).
+   :type weight_range: tuple[float]
+   :param weights: Predefined weights for each feature. Defaults to None.
+   :type weights: torch.Tensor, optional
+   :param cancellation_features: Specific features to apply cancellations to.
+                                 Defaults to None, applying to all features.
+   :type cancellation_features: list[int], optional
+   :param cancellation_likelihood: Probability of each feature being canceled. Defaults to 0.5.
+   :type cancellation_likelihood: float
+
+
+   .. py:attribute:: cancellation_features
+      :value: None
+
+
+
+   .. py:attribute:: cancellation_likelihood
+      :value: 0.5
+
+
+
+   .. py:attribute:: cancellation_outcomes
+
+
+   .. py:attribute:: cancellation_samples
+
+
+   .. py:attribute:: labels
+
+
+   .. py:attribute:: cancellation_attributions
+
+
+   .. py:attribute:: cat_features
+
+
+   .. py:attribute:: ground_truth_attributions
+
+
+   .. py:attribute:: features
+      :value: 'cancellation_samples'
+
+
+
+   .. py:attribute:: ground_truth_attribute
+      :value: 'ground_truth_attributions'
+
+
+
+   .. py:attribute:: subset_data
+      :value: ['weighted_samples', 'cancellation_outcomes', 'cancellation_samples',...
+
+
+
+   .. py:method:: _initialize_cancellation_features() -> None
+
+      Validates and initializes the list of features subject to cancellation. If no specific features
+      are provided, all features are considered candidates for cancellation.
+
+      :raises AssertionError: If cancellation_features is not a list, any element in cancellation_features is not an integer,
+          the maximum element in cancellation_features is greater than the number of features, or cancellation_features
+          is empty. Also, if cancellation_likelihood is not a float or is outside the range [0, 1].
+
+
+
+   .. py:method:: _get_cancellations() -> torch.Tensor
+
+      Generates a binary mask indicating whether each feature in each sample is canceled
+      based on the specified likelihood.
+
+      This method considers only the features specified in cancellation_features for possible cancellation.
+
+      :returns:
+
+                An integer tensor of shape (n_samples, n_features) where 1 represents a canceled feature,
+                    and 0 represents an active feature.
+      :rtype: torch.Tensor
+
+
+
+   .. py:method:: _get_cancellation_samples() -> torch.Tensor
+
+      Concatenates the original samples with their cancellation outcomes to form a comprehensive dataset.
+
+      This allows for analyzing the impact of feature cancellations directly alongside the original features.
+
+      :returns: A tensor containing the original samples augmented with their corresponding cancellation outcomes.
+      :rtype: torch.Tensor
+
+
+
+   .. py:method:: _get_cancellation_attributions() -> torch.Tensor
+
+      Computes the attribution of each feature by negating the effect of canceled features.
+
+      This method helps understand the impact of each feature on the model output when certain features are
+      systematically canceled.
+
+      :returns:
+
+                A tensor of the same shape as the weighted samples, where the values of canceled features are
+                    negated to reflect their absence.
+      :rtype: torch.Tensor
+
+
+
+   .. py:method:: generate_model() -> torch.nn.Module
+
+      Instantiates and returns a neural network model for analyzing datasets with conflicting features.
+
+      The model is configured to use the specified features and weights, allowing for experimentation
+      with feature cancellations.
+
+      :returns: A neural network model designed to work with the specified features and weights.
+      :rtype: model.ConflictingFeaturesNN
+
+
+
+.. py:data:: data
+

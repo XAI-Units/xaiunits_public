@@ -1,0 +1,69 @@
+model.shattered_gradients
+=========================
+
+.. py:module:: model.shattered_gradients
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   model.shattered_gradients.weights
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   model.shattered_gradients.ShatteredGradientsNN
+
+
+Module Contents
+---------------
+
+.. py:class:: ShatteredGradientsNN(weights: torch.Tensor, act_fun: str = 'Relu')
+
+   Bases: :py:obj:`torch.nn.Sequential`
+
+
+   Implements a neural network model using a linear layer followed by an activation function.
+
+   This model is designed to exhibit shattered gradients. To generate a model that exhibits
+   shattered gradients, use shattered_grad.py, located in datagenerator.
+
+   Inherits from:
+       torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+       sequential manner.
+
+   Initializes a ShatteredGradientsNN object.
+
+   :param weights: The weights to be applied to the linear layer.
+   :type weights: torch.Tensor
+   :param act_fun: The activation function to be used. Valid options are "Relu", "Gelu", or "Sigmoid".
+                   Defaults to 'Relu'.
+   :type act_fun: str
+
+
+   .. py:method:: _default_activation_function(act_fun: str) -> torch.nn.Module
+
+      Returns the default activation function based on the provided string.
+
+      The `_default_activation_function` method maps the provided activation function name
+      to the corresponding PyTorch activation function module. Supported activation functions
+      include "Relu" (ReLU), "Gelu" (GELU), and "Sigmoid" (Sigmoid). If the provided name
+      is not in the supported list, a KeyError is raised.
+
+      :param act_fun: The activation function name or class.
+      :type act_fun: str
+
+      :returns: The corresponding PyTorch activation function module.
+      :rtype: torch.nn.Module
+
+      :raises KeyError: If the given activation function is not supported.
+
+
+
+.. py:data:: weights
+

@@ -1,0 +1,147 @@
+datagenerator.interacting_features
+==================================
+
+.. py:module:: datagenerator.interacting_features
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   datagenerator.interacting_features.data
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   datagenerator.interacting_features.InteractingFeatureDataset
+
+
+Module Contents
+---------------
+
+.. py:class:: InteractingFeatureDataset(seed: int = 0, n_features: int = 4, n_samples: int = 50, weight_range: Tuple[float, float] = (-1.0, 1.0), weights: Optional[List[float]] = None, zero_likelihood: float = 0.5, interacting_features: List[List[int]] = [[1, 0], [3, 2]], **kwargs: Any)
+
+   Bases: :py:obj:`xaiunits.datagenerator.WeightedFeaturesDataset`
+
+
+   A dataset subclass for modeling interactions between categorical and continuous features within weighted datasets.
+
+   This class extends WeightedFeaturesDataset to support scenarios where the influence of one feature on the model
+   is conditional on the value of another, typically categorical, feature. For instance, the model may include terms like
+   `w_i(x_j) * x_i + w_j * x_j`, where the weight `w_i(x_j)` changes based on the value of `x_j`.
+
+   Inherits from:
+       WeightedFeaturesDataset: Class extending BaseFeaturesDataset with support for weighted features
+
+   .. attribute:: interacting_features
+
+      Pairs of indices where the first index is the feature whose
+      weight is influenced by the second, categorical feature.
+
+      :type: list[list[int]]
+
+   .. attribute:: zero_likelihood
+
+      The likelihood of the categorical feature being zero.
+
+      :type: float
+
+   .. attribute:: seed
+
+      Random seed for reproducibility.
+
+      :type: int
+
+   .. attribute:: n_features
+
+      Number of features in the dataset.
+
+      :type: int
+
+   .. attribute:: n_samples
+
+      Number of samples in the dataset.
+
+      :type: int
+
+   .. attribute:: weight_range
+
+      Min and max values for generating weights.
+
+      :type: tuple[float]
+
+   .. attribute:: weights
+
+      Initial weight values for features.
+
+      :type: list | NoneType
+
+   .. attribute:: subset_attribute
+
+      List of attributes that define the subset of the data with specific characteristics.
+
+      :type: list[str]
+
+
+   .. py:attribute:: interacting_features
+      :value: [[1, 0], [3, 2]]
+
+
+
+   .. py:attribute:: zero_likelihood
+      :value: 0.5
+
+
+
+   .. py:attribute:: subset_attribute
+
+
+   .. py:attribute:: cat_features
+
+
+   .. py:method:: make_cat() -> None
+
+      Modifies the dataset to incorporate the specified categorical-to-continuous feature interactions.
+
+      The method ensures that the dataset is correctly modified to reflect the specified feature
+      interactions and their impact on weights and samples.
+
+
+
+   .. py:method:: _get_flat_weights(weights: Optional[List[float]]) -> Optional[torch.Tensor]
+
+      Convert the weights into a flat tensor.
+
+      This method takes a list of weights, which can be tuples representing ranges,
+      and converts them into a flat tensor. If the input weights are None, the method returns None.
+
+      :param weights: List of weights or None if weights are not specified.
+      :type weights: list | NoneType
+
+      :returns: Flat tensor of weights if weights are provided, else None.
+      :rtype: torch.Tensor | NoneType
+
+
+
+   .. py:method:: generate_model() -> torch.nn.Module
+
+      Generates a neural network model for interacting features analysis.
+
+      This method instantiates and returns a neural network model specifically designed
+      for analyzing datasets with interacting features. The model is configured using the
+      specified number of features, feature weights, and interacting features information.
+
+      :returns:
+
+                An instance of the InteractingFeaturesNN class, representing
+                    the neural network model designed for interacting features analysis.
+      :rtype: model.InteractingFeaturesNN
+
+
+
+.. py:data:: data
+

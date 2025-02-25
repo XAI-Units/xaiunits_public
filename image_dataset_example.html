@@ -1,0 +1,234 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image Dataset Example &mdash; XAI-Units 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Customization Tutorial" href="custom_methods_and_custom_datasets.html" />
+    <link rel="prev" title="Quickstart - Library Walkthrough" href="library_quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            XAI-Units
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="library_quickstart.html">Quickstart - Library Walkthrough</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Image Dataset Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_methods_and_custom_datasets.html">Customization Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">XAI-Units</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Image Dataset Example</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/image_dataset_example.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="image-dataset-example">
+<h1>Image Dataset Example<a class="headerlink" href="#image-dataset-example" title="Link to this heading"></a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">xaiunits.datagenerator.image_generation</span><span class="w"> </span><span class="kn">import</span> <span class="n">BalancedImageDataset</span><span class="p">,</span> <span class="n">ImbalancedImageDataset</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">BalancedImageDataset</span><span class="p">(</span>
+    <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">backgrounds</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">shapes</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">n_variants</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">background_size</span><span class="o">=</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span>
+    <span class="n">shape_type</span><span class="o">=</span><span class="s2">&quot;geometric&quot;</span><span class="p">,</span>
+    <span class="n">position</span><span class="o">=</span><span class="s2">&quot;random&quot;</span><span class="p">,</span>
+    <span class="n">overlay_scale</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+    <span class="n">rotation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">shape_colors</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;orange&quot;</span><span class="p">],</span>
+    <span class="n">contour_thickness</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">jupyter_display</span><span class="p">(</span><span class="n">img_tensor</span><span class="p">):</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">torchvision</span><span class="w"> </span><span class="kn">import</span> <span class="n">transforms</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToPILImage</span><span class="p">()(</span><span class="n">img_tensor</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;RGB&quot;</span><span class="p">))</span>
+
+<span class="c1"># Examining one datapoint from the dataset</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y_label</span><span class="p">,</span> <span class="n">context</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># x is an image tensor</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x.shape:&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">jupyter_display</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># y is an integer label representing the foreground shape</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;y_label:&quot;</span><span class="p">,</span> <span class="n">y_label</span><span class="p">)</span>
+
+<span class="c1"># context is a dict that contains &quot;ground_truth_attribute&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;context:&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+<span class="n">jupyter_display</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="s2">&quot;ground_truth_attribute&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x.shape: torch.Size([3, 300, 300])
+</pre></div>
+</div>
+<img alt="_images/7462a101da1fbb16b4f9812c7134c9178d67a8fdb6cc30837654a83a5c456a62.png" src="_images/7462a101da1fbb16b4f9812c7134c9178d67a8fdb6cc30837654a83a5c456a62.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>y_label: 3
+context: [&#39;fg_shape&#39;, &#39;bg_label&#39;, &#39;fg_color&#39;, &#39;ground_truth_attribute&#39;]
+</pre></div>
+</div>
+<img alt="_images/b1c796556abbe868a25e4bc9efd500457a0e5d95fd4286b7e73fbcdf6059a193.png" src="_images/b1c796556abbe868a25e4bc9efd500457a0e5d95fd4286b7e73fbcdf6059a193.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Note that the ground truth mask contains both the foreground shape and a small border around the shape</span>
+<span class="c1"># (In order to capture CNN&#39;s triggering on the edge of the shape)</span>
+<span class="c1"># The width of this border is set by the contour_thickness parameter when you define the dataset</span>
+<span class="n">jupyter_display</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="s2">&quot;ground_truth_attribute&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4bb67a41b675236d007b19107e20c97a3e4e300783843d4d0d4af4d18fae17de.png" src="_images/4bb67a41b675236d007b19107e20c97a3e4e300783843d4d0d4af4d18fae17de.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The imbalanced dataset has an extra parameter for imbalance</span>
+<span class="c1"># This dataset also requires shapes&gt;=2, and backgrounds&gt;=shapes</span>
+<span class="n">imbalanced_data</span> <span class="o">=</span> <span class="n">ImbalancedImageDataset</span><span class="p">(</span>
+        <span class="n">backgrounds</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">shapes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="n">n_variants</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+        <span class="n">shape_colors</span><span class="o">=</span><span class="s2">&quot;yellow&quot;</span><span class="p">,</span>
+        <span class="n">background_size</span><span class="o">=</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span>
+        <span class="n">imbalance</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">shuffled</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="c1"># Here we have selected an imbalance of 0.5 and n_variants=4</span>
+<span class="c1"># So for any given foreground shape, 2 images will be associated with one background</span>
+<span class="c1"># And for that foreground shape, the remaining 2 images will be spread across the other backgrounds</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;First foreground shape&quot;</span><span class="p">)</span>
+<span class="n">jupyter_display</span><span class="p">(</span><span class="n">imbalanced_data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">jupyter_display</span><span class="p">(</span><span class="n">imbalanced_data</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">jupyter_display</span><span class="p">(</span><span class="n">imbalanced_data</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">jupyter_display</span><span class="p">(</span><span class="n">imbalanced_data</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>First foreground shape
+</pre></div>
+</div>
+<img alt="_images/a63a2219c72b57f3440a82e0c4333fde70bf5b9a8edea02fc7c88f2252625f0d.png" src="_images/a63a2219c72b57f3440a82e0c4333fde70bf5b9a8edea02fc7c88f2252625f0d.png" />
+<img alt="_images/88e113eee1750760c682fbbc08dbb74050c2ac25fa59e6647747b713096fe314.png" src="_images/88e113eee1750760c682fbbc08dbb74050c2ac25fa59e6647747b713096fe314.png" />
+<img alt="_images/370de47c03573f1a4af51bed4edfa44a09711c3df284accc5c81a90bc1ca302d.png" src="_images/370de47c03573f1a4af51bed4edfa44a09711c3df284accc5c81a90bc1ca302d.png" />
+<img alt="_images/b0af0edf6bfe7d2897c1a07d426d15d3e11de8af4cf080565a1234b5901d2dbe.png" src="_images/b0af0edf6bfe7d2897c1a07d426d15d3e11de8af4cf080565a1234b5901d2dbe.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Second foreground shape&quot;</span><span class="p">)</span> <span class="c1"># since shapes=2, n_variants=4</span>
+<span class="n">jupyter_display</span><span class="p">(</span><span class="n">imbalanced_data</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">jupyter_display</span><span class="p">(</span><span class="n">imbalanced_data</span><span class="p">[</span><span class="mi">5</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">jupyter_display</span><span class="p">(</span><span class="n">imbalanced_data</span><span class="p">[</span><span class="mi">6</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">jupyter_display</span><span class="p">(</span><span class="n">imbalanced_data</span><span class="p">[</span><span class="mi">7</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Second foreground shape
+</pre></div>
+</div>
+<img alt="_images/3e9e1c9e882da116fa80096623d0e21e4e41679f797a32dea2904b9a07235c44.png" src="_images/3e9e1c9e882da116fa80096623d0e21e4e41679f797a32dea2904b9a07235c44.png" />
+<img alt="_images/d78aad383ecae87f845e716de9303df38a6143f682b9f79a2945ca387d5c85a5.png" src="_images/d78aad383ecae87f845e716de9303df38a6143f682b9f79a2945ca387d5c85a5.png" />
+<img alt="_images/876092a7de8400e91ad285a24c8484eb1b42621f99627d3fd18cf7f700c44685.png" src="_images/876092a7de8400e91ad285a24c8484eb1b42621f99627d3fd18cf7f700c44685.png" />
+<img alt="_images/4120b5dd205e6df0f6e368e3d34be8c56a7532a844196a9ec31a8b84c4cb5922.png" src="_images/4120b5dd205e6df0f6e368e3d34be8c56a7532a844196a9ec31a8b84c4cb5922.png" />
+</div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="library_quickstart.html" class="btn btn-neutral float-left" title="Quickstart - Library Walkthrough" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="custom_methods_and_custom_datasets.html" class="btn btn-neutral float-right" title="Customization Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, XAI-Units.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

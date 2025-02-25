@@ -1,0 +1,707 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quickstart - Library Walkthrough &mdash; XAI-Units 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Image Dataset Example" href="image_dataset_example.html" />
+    <link rel="prev" title="XAI-Units" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            XAI-Units
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart - Library Walkthrough</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#main-features">Main Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#datasets-and-neural-network-models">Datasets And Neural Network Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#methods">Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pipelines">Pipelines</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pipeline-standard">Pipeline (Standard)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#target-class">Target Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#accessing-examples-from-the-pipeline">Accessing Examples from the pipeline</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#experiment-pipeline">Experiment Pipeline</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="image_dataset_example.html">Image Dataset Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_methods_and_custom_datasets.html">Customization Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">XAI-Units</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quickstart - Library Walkthrough</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/library_quickstart.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quickstart-library-walkthrough">
+<h1>Quickstart - Library Walkthrough<a class="headerlink" href="#quickstart-library-walkthrough" title="Link to this heading"></a></h1>
+<section id="main-features">
+<h2>Main Features<a class="headerlink" href="#main-features" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Preset neural network models that each have a defined type of behaviour, such as conflicting features.</p></li>
+<li><p>A dataset with the corresponding type of behaviour.</p></li>
+<li><p>Pipelines for evaluating the performance of explanation methods, across multiple datasets and neural networks.</p></li>
+<li><p>The pipelines can support custom explanation methods, evaluation metrics, models, and datasets</p></li>
+<li><p>Trainable models are also supported along with a lightweight trainer helper.</p></li>
+</ul>
+<section id="datasets-and-neural-network-models">
+<h3>Datasets And Neural Network Models<a class="headerlink" href="#datasets-and-neural-network-models" title="Link to this heading"></a></h3>
+<p>Each Dataset has a corresponding preset neural network model, i.e. the weights have been explicitly defined rather than learned through training.</p>
+<p>List of behaviour types:</p>
+<ul class="simple">
+<li><p>Continuous Features</p></li>
+<li><p>Synthetic Cancellation</p></li>
+<li><p>Pertinent Negative</p></li>
+<li><p>Interacting Features</p></li>
+<li><p>Shattered Gradients</p></li>
+<li><p>Uncertainty Model</p></li>
+<li><p>Boolean Formulas</p></li>
+</ul>
+<p>There is also the <em>Dynamic Neural Network</em> model that is trainable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import all models and datasets</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xaiunits.model</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xaiunits.datagenerator</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">set_printoptions</span>
+<span class="n">set_printoptions</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+
+<span class="c1"># suppose we want to experiment on a dataset with continuous features</span>
+<span class="n">cont_dataset</span> <span class="o">=</span> <span class="n">WeightedFeaturesDataset</span><span class="p">(</span><span class="n">n_features</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+
+<span class="c1"># Examining one datapoint from the dataset</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">context</span> <span class="o">=</span> <span class="n">cont_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x:&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;y_true:&quot;</span><span class="p">,</span> <span class="n">y_true</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;context:&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span> <span class="c1"># context is a dict that (for most datasets) contains &quot;ground_truth_attribute&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x: tensor([-1.1258, -1.1524, -0.2506, -0.4339,  0.8487,  0.6920, -0.3160, -2.1152,
+         0.3223, -1.2633])
+y_true: tensor(-0.8077)
+context: {&#39;ground_truth_attribute&#39;: tensor([ 1.0742, -0.7191, -0.0815,  0.1232,  0.2753,  0.5861, -0.2325, -1.2830,
+        -0.1876, -0.3630])}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Each dataset has an associated model type</span>
+<span class="n">cont_model</span> <span class="o">=</span> <span class="n">ContinuousFeaturesNN</span><span class="p">(</span><span class="n">n_features</span><span class="o">=</span><span class="n">cont_dataset</span><span class="o">.</span><span class="n">n_features</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> <span class="n">cont_dataset</span><span class="o">.</span><span class="n">weights</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">cont_model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;y_pred:&quot;</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+<span class="c1"># It is possible to get this model directly from the data generator, so that the model is always consistent with the data</span>
+<span class="n">cont_model</span> <span class="o">=</span> <span class="n">cont_dataset</span><span class="o">.</span><span class="n">generate_model</span><span class="p">()</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">cont_model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;y_pred:&quot;</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>y_pred: tensor([-0.8077], grad_fn=&lt;SqueezeBackward4&gt;)
+y_pred: tensor([-0.8077], grad_fn=&lt;SqueezeBackward4&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also run our own trained model. To do so, we can utilise the AutoTrainer we have implemented that builds upon the <em>lightning</em> package.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># prepare data for training</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span>
+
+<span class="n">train_data</span><span class="p">,</span> <span class="n">val_data</span><span class="p">,</span> <span class="n">test_data</span> <span class="o">=</span> <span class="n">cont_dataset</span><span class="o">.</span><span class="n">split</span><span class="p">([</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">])</span>
+
+<span class="n">train_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">([</span><span class="n">data</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">train_data</span><span class="p">])</span>
+<span class="n">val_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">([</span><span class="n">data</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">val_data</span><span class="p">])</span>
+<span class="n">test_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">([</span><span class="n">data</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">test_data</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define model architecture</span>
+<span class="n">n_features</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">model_arch</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Linear&quot;</span><span class="p">,</span> <span class="s2">&quot;in_features&quot;</span><span class="p">:</span> <span class="n">n_features</span><span class="p">,</span> <span class="s2">&quot;out_features&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ReLU&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Linear&quot;</span><span class="p">,</span> <span class="s2">&quot;in_features&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span> <span class="s2">&quot;out_features&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ReLU&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Linear&quot;</span><span class="p">,</span> <span class="s2">&quot;in_features&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;out_features&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ReLU&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Linear&quot;</span><span class="p">,</span> <span class="s2">&quot;in_features&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;out_features&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+<span class="p">]</span>
+<span class="n">trained_model</span> <span class="o">=</span> <span class="n">DynamicNN</span><span class="p">(</span><span class="n">model_arch</span><span class="p">)</span>
+
+
+<span class="n">loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">mse_loss</span>
+<span class="n">optim</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define the trainer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xaiunits.trainer.trainer</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoTrainer</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">lightning</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">L</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lightning.pytorch.callbacks.early_stopping</span><span class="w"> </span><span class="kn">import</span> <span class="n">EarlyStopping</span>
+
+<span class="n">lightning_linear_model</span> <span class="o">=</span> <span class="n">AutoTrainer</span><span class="p">(</span><span class="n">trained_model</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">optim</span><span class="p">)</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">L</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span>
+    <span class="n">min_epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">max_epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">EarlyStopping</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="s2">&quot;val_loss&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)],</span>
+    <span class="n">enable_progress_bar</span><span class="o">=</span><span class="kc">False</span> <span class="c1"># Lightning progress bar displays poorly in jupyter</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># train model</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">lightning_linear_model</span><span class="p">,</span>
+    <span class="n">train_dataloaders</span><span class="o">=</span><span class="n">train_loader</span><span class="p">,</span>
+    <span class="n">val_dataloaders</span><span class="o">=</span><span class="n">val_loader</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># test results after training</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">lightning_linear_model</span><span class="p">,</span> <span class="n">dataloaders</span><span class="o">=</span><span class="n">test_loader</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="methods">
+<h3>Methods<a class="headerlink" href="#methods" title="Link to this heading"></a></h3>
+<p>We want to apply attribution methods to our model. Any of the existing methods in <em>Captum</em> are supported as well as custom attribution methods.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">captum.attr</span><span class="w"> </span><span class="kn">import</span> <span class="n">InputXGradient</span><span class="p">,</span> <span class="n">IntegratedGradients</span><span class="p">,</span> <span class="n">Lime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xaiunits.methods.methods_wrapper</span><span class="w"> </span><span class="kn">import</span> <span class="n">wrap_method</span>
+
+<span class="c1"># List out the evaluation methods we want to use</span>
+<span class="n">xmethods</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">InputXGradient</span><span class="p">,</span>
+        <span class="n">IntegratedGradients</span><span class="p">,</span>
+        <span class="n">Lime</span><span class="p">,</span>
+    <span class="p">]</span>
+
+<span class="c1"># If we want to pass non-default parameters to the attribution method, we use wrap_method to pre-load these parameters</span>
+<span class="n">wrapped_method</span> <span class="o">=</span> <span class="n">wrap_method</span><span class="p">(</span><span class="n">IntegratedGradients</span><span class="p">,</span> <span class="n">other_inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;n_steps&quot;</span><span class="p">:</span> <span class="mi">25</span><span class="p">})</span>
+<span class="n">xmethods</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wrapped_method</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="metrics">
+<h3>Metrics<a class="headerlink" href="#metrics" title="Link to this heading"></a></h3>
+<p>Our goal is to evaluate how well each attribution method performs on different types of model and data. The metric (e.g. infidelity) provides a performance score.</p>
+<p>We support metrics from <em>Captum</em> and custom metrics.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">captum.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">sensitivity_max</span><span class="p">,</span> <span class="n">infidelity</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xaiunits.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">wrap_metric</span>
+
+<span class="c1"># We have wrap_metric to pre-load parameters into the metric, similar to wrap_method</span>
+<span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">wrap_metric</span><span class="p">(</span><span class="n">sensitivity_max</span><span class="p">),</span>
+    <span class="n">wrap_metric</span><span class="p">(</span><span class="n">infidelity</span><span class="p">,</span> <span class="n">perturb_func</span><span class="o">=</span><span class="n">cont_dataset</span><span class="o">.</span><span class="n">perturb_function</span><span class="p">(),</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="c1"># we can define a custom perturb function, or each dataset comes with a standard perturb function</span>
+
+<span class="c1"># Another common metric is the RMSE between the attributions and the ground truth context (when ground truth is available)</span>
+<span class="c1"># Note the usage of out_processing in the wrap_metric below, which allows us to pre-load arbitrary processing</span>
+<span class="c1"># In this case we want to convert the torch MSE to RMSE</span>
+<span class="n">rmse_metric</span> <span class="o">=</span> <span class="n">wrap_metric</span><span class="p">(</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">mse_loss</span><span class="p">,</span> 
+    <span class="n">out_processing</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)),</span>
+    <span class="p">)</span>
+<span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rmse_metric</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="pipelines">
+<h3>Pipelines<a class="headerlink" href="#pipelines" title="Link to this heading"></a></h3>
+<p>There are the 2 kinds of pipeline we have created:</p>
+<ul class="simple">
+<li><p>Pipeline</p></li>
+<li><p>ExperimentPipeline</p></li>
+</ul>
+<section id="pipeline-standard">
+<h4>Pipeline (Standard)<a class="headerlink" href="#pipeline-standard" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Allows running experiments on any number of models and datasets (assuming that they are all compatible).</p></li>
+<li><p>Runs experiments over multiple seeds for the different explanation methods (useful when there is non-determinism)</p></li>
+<li><p>Any number of explanation methods and evaluation metrics are supported</p></li>
+<li><p>Aggregates the results into a DataFrame</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">xaiunits.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+
+<span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="n">trained_model</span><span class="p">,</span> <span class="n">cont_model</span><span class="p">]</span>
+<span class="n">datasets</span> <span class="o">=</span> <span class="p">[</span><span class="n">cont_dataset</span><span class="p">]</span>
+
+<span class="c1"># Instatiate the pipeline with a list of models, datasets, xmethods, metrics, and seeds.</span>
+<span class="c1"># All combinations will be evaluated</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">xmethods</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="n">method_seeds</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">()</span> <span class="c1"># apply the explanation methods and evaluate them</span>
+
+
+<span class="c1"># Accessing Pipeline Results</span>
+<span class="c1"># You can directly access a dataframe of all the results</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">data</span>
+<span class="c1"># However we generally suggest using the print_stats method, which has a lot of options for unpivoting the table</span>
+<span class="n">df_by_method</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">print_stats</span><span class="p">(</span><span class="n">stat_funcs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;trial_group_name&quot;</span><span class="p">,</span> <span class="s1">&#39;method&#39;</span><span class="p">],</span> <span class="n">column_index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                           
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                             mean             \
+model                                        ContinuousFeaturesNN              
+metric                                                  attr_time infidelity   
+trial_group_name method                                                        
+test             InputXGradient                             0.009  2.811e-04   
+                 IntegratedGradients                        0.325  2.811e-04   
+                 Lime                                       5.617  2.867e-04   
+                 wrapper_IntegratedGradients                0.170  2.811e-04   
+
+                                                                         \
+model                                                                     
+metric                                         mse_loss sensitivity_max   
+trial_group_name method                                                   
+test             InputXGradient               0.000e+00           0.017   
+                 IntegratedGradients          4.289e-08           0.017   
+                 Lime                         2.306e-01           0.200   
+                 wrapper_IntegratedGradients  4.289e-08           0.017   
+
+                                                                            \
+model                                        DynamicNN                       
+metric                                       attr_time infidelity mse_loss   
+trial_group_name method                                                      
+test             InputXGradient                  0.019  2.868e-04    0.281   
+                 IntegratedGradients             0.402  2.858e-04    0.251   
+                 Lime                            7.647  2.924e-04    0.245   
+                 wrapper_IntegratedGradients     0.167  2.858e-04    0.251   
+
+                                                              
+model                                                         
+metric                                       sensitivity_max  
+trial_group_name method                                       
+test             InputXGradient                        0.046  
+                 IntegratedGradients                   0.020  
+                 Lime                                  0.213  
+                 wrapper_IntegratedGradients           0.020  
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="target-class">
+<h4>Target Class<a class="headerlink" href="#target-class" title="Link to this heading"></a></h4>
+<p>In our example the model is a regression model, so the target class is not important. But if we have a classification model then the target class is important for most explanation methods.</p>
+<p>The pipeline has a parameter <code class="docutils literal notranslate"><span class="pre">default_target</span></code> which should take one of four possible values:</p>
+<ul class="simple">
+<li><p>“y_labels” which will use the true y labels as the target class</p></li>
+<li><p>“predicted_class” uses the model prediction as the target, i.e. y=model(feature_inputs)</p></li>
+<li><p>an integer, for a single target class which will be used for all datapoints</p></li>
+<li><p>a tuple or tensor matching the batch size</p></li>
+</ul>
+</section>
+<section id="accessing-examples-from-the-pipeline">
+<h4>Accessing Examples from the pipeline<a class="headerlink" href="#accessing-examples-from-the-pipeline" title="Link to this heading"></a></h4>
+<p>A useful parameter to understand why the scores are high or low is the pipeline parameter n_examples. This stores the n-best and n-worst peforming examples for each method/model/metric for further inspection.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># To demonstrate this, we set up a new pipeline using the n_examples parameter</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">xmethods</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="n">method_seeds</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">n_examples</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="c1"># The key for the examples is first &quot;max&quot; or &quot;min&quot; for the high / low scoring examples</span>
+<span class="c1"># Then a tuple of (method, model, metric) to select the type of example, which returns a list of length n_examples</span>
+<span class="n">all_max_examples</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">examples</span><span class="p">[</span><span class="s2">&quot;max&quot;</span><span class="p">]</span>
+<span class="c1"># print(all_max_examples)</span>
+<span class="n">example_list</span> <span class="o">=</span> <span class="n">all_max_examples</span><span class="p">[(</span><span class="s2">&quot;IntegratedGradients&quot;</span><span class="p">,</span> <span class="s2">&quot;ContinuousFeaturesNN&quot;</span><span class="p">,</span> <span class="s2">&quot;mse_loss&quot;</span><span class="p">)]</span>
+<span class="n">max_example</span> <span class="o">=</span> <span class="n">example_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">max_example</span><span class="p">)</span>
+
+<span class="c1"># the Example includes the the original feature_inputs, y_labels, and context</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x:&quot;</span><span class="p">,</span> <span class="n">max_example</span><span class="o">.</span><span class="n">feature_inputs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;y_true:&quot;</span><span class="p">,</span> <span class="n">max_example</span><span class="o">.</span><span class="n">y_labels</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;context:&quot;</span><span class="p">,</span> <span class="n">max_example</span><span class="o">.</span><span class="n">context</span><span class="p">)</span>
+
+<span class="c1"># and the Example includes the attributions and the metric score</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;attributions:&quot;</span><span class="p">,</span> <span class="n">max_example</span><span class="o">.</span><span class="n">attribute</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;metric_score:&quot;</span><span class="p">,</span> <span class="n">max_example</span><span class="o">.</span><span class="n">score</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                           
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Example(score=tensor(1.3339e-07, dtype=torch.float64), attribute=tensor([-2.0317,  0.3137, -0.2884, -0.5674, -0.5510, -0.5692, -0.5603, -1.1613,
+         0.6530, -0.1734], dtype=torch.float64), feature_inputs=tensor([ 2.1293,  0.5027, -0.8871,  1.9974, -1.6984, -0.6720, -0.7617, -1.9145,
+        -1.1218, -0.6036]), y_labels=tensor(-4.9359), target=None, context={&#39;ground_truth_attribute&#39;: tensor([-2.0317,  0.3137, -0.2884, -0.5674, -0.5510, -0.5692, -0.5603, -1.1613,
+         0.6530, -0.1734])}, example_type=&#39;max&#39;)
+x: tensor([ 2.1293,  0.5027, -0.8871,  1.9974, -1.6984, -0.6720, -0.7617, -1.9145,
+        -1.1218, -0.6036])
+y_true: tensor(-4.9359)
+context: {&#39;ground_truth_attribute&#39;: tensor([-2.0317,  0.3137, -0.2884, -0.5674, -0.5510, -0.5692, -0.5603, -1.1613,
+         0.6530, -0.1734])}
+attributions: tensor([-2.0317,  0.3137, -0.2884, -0.5674, -0.5510, -0.5692, -0.5603, -1.1613,
+         0.6530, -0.1734], dtype=torch.float64)
+metric_score: tensor(1.3339e-07, dtype=torch.float64)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="experiment-pipeline">
+<h4>Experiment Pipeline<a class="headerlink" href="#experiment-pipeline" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>The ExperimentPipeline gives a systematic way for iterating over datasets with repeatable data seeds</p></li>
+<li><p>Allows for trials run on different seeds for generating the data</p></li>
+<li><p>Supports experiments that are wrapped with our Experiment class</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># suppose we want to run experiments on these models</span>
+<span class="n">pert_neg_model1</span> <span class="o">=</span> <span class="n">PertinentNegativesDataset</span><span class="p">()</span><span class="o">.</span><span class="n">generate_model</span><span class="p">()</span>
+<span class="n">pert_neg_model2</span> <span class="o">=</span> <span class="n">PertinentNegativesDataset</span><span class="p">(</span><span class="n">weight_range</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">))</span><span class="o">.</span><span class="n">generate_model</span><span class="p">()</span>
+<span class="n">pert_neg_model3</span> <span class="o">=</span> <span class="n">PertinentNegativesDataset</span><span class="p">(</span><span class="n">pn_weight_factor</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span><span class="o">.</span><span class="n">generate_model</span><span class="p">()</span>
+
+<span class="n">shatter_grad_model1</span> <span class="o">=</span> <span class="n">ShatteredGradientsDataset</span><span class="p">()</span><span class="o">.</span><span class="n">generate_model</span><span class="p">()</span>
+<span class="n">shatter_grad_model2</span> <span class="o">=</span> <span class="n">ShatteredGradientsDataset</span><span class="p">(</span><span class="n">discontinuity_ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">9.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">])</span><span class="o">.</span><span class="n">generate_model</span><span class="p">()</span>
+<span class="n">shatter_grad_model3</span> <span class="o">=</span> <span class="n">ShatteredGradientsDataset</span><span class="p">(</span><span class="n">discontinuity_ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">60.45</span><span class="p">,</span> <span class="o">-</span><span class="mf">32.2</span><span class="p">,</span> <span class="mf">23.1</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">,</span> <span class="mf">12.0</span><span class="p">],</span> <span class="n">bias</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span><span class="o">.</span><span class="n">generate_model</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">captum.attr</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeepLift</span><span class="p">,</span> <span class="n">ShapleyValueSampling</span><span class="p">,</span> <span class="n">KernelShap</span><span class="p">,</span> <span class="n">LRP</span>
+
+<span class="n">xmethods2</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">DeepLift</span><span class="p">,</span>
+    <span class="n">ShapleyValueSampling</span><span class="p">,</span>
+    <span class="n">KernelShap</span><span class="p">,</span>
+    <span class="n">LRP</span>    
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">xaiunits.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">Experiment</span>
+
+<span class="c1"># we need to first wrap them as an Experiment instance</span>
+<span class="c1"># it is possible to just to give the class of the dataset and the data will be instantiated over different seeds during the experiment</span>
+<span class="n">pert_neg_experiment</span> <span class="o">=</span> <span class="n">Experiment</span><span class="p">(</span><span class="n">PertinentNegativesDataset</span><span class="p">,</span> 
+                                 <span class="p">[</span><span class="n">pert_neg_model1</span><span class="p">,</span> <span class="n">pert_neg_model2</span><span class="p">,</span> <span class="n">pert_neg_model3</span><span class="p">],</span>
+                                 <span class="n">xmethods2</span><span class="p">,</span>
+                                 <span class="kc">None</span><span class="p">,</span> <span class="c1"># Using default metric for evaluation </span>
+                                 <span class="n">seeds</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+                                 <span class="n">method_seeds</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span>
+                      <span class="p">)</span>
+
+<span class="c1"># Alternatively, an instantiated dataset can still be passed in</span>
+<span class="n">shattered_grad_experiment</span> <span class="o">=</span> <span class="n">Experiment</span><span class="p">(</span><span class="n">ShatteredGradientsDataset</span><span class="p">(</span><span class="n">discontinuity_ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">9.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">]),</span> 
+                                       <span class="p">[</span><span class="n">shatter_grad_model1</span><span class="p">,</span> <span class="n">shatter_grad_model2</span><span class="p">,</span> <span class="n">shatter_grad_model3</span><span class="p">],</span>
+                                        <span class="n">xmethods2</span><span class="p">,</span> 
+                                        <span class="kc">None</span><span class="p">,</span>
+                                        <span class="n">seeds</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+                                        <span class="n">method_seeds</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span>
+                            <span class="p">)</span>
+
+<span class="c1"># also can choose to pass in no model and allow the dataset to generate the corresponding model</span>
+<span class="n">interacion_feat_experiment</span> <span class="o">=</span> <span class="n">Experiment</span><span class="p">(</span><span class="n">InteractingFeatureDataset</span><span class="p">,</span> 
+                                        <span class="kc">None</span><span class="p">,</span> 
+                                        <span class="n">xmethods2</span><span class="p">,</span> 
+                                        <span class="kc">None</span><span class="p">,</span>
+                                        <span class="n">seeds</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+                                        <span class="n">method_seeds</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span>
+                                        <span class="p">)</span>
+
+<span class="c1"># customisation to how the data is generated is also possible</span>
+<span class="n">conflicting_experiment</span> <span class="o">=</span> <span class="n">Experiment</span><span class="p">(</span><span class="n">ConflictingDataset</span><span class="p">,</span> 
+                                    <span class="kc">None</span><span class="p">,</span>
+                                    <span class="n">xmethods2</span><span class="p">,</span>
+                                    <span class="kc">None</span><span class="p">,</span> 
+                                    <span class="n">seeds</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+                                    <span class="n">method_seeds</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span>
+                                    <span class="n">data_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;n_samples&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;n_features&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;cancellation_likelihood&quot;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">},</span>
+                      <span class="p">)</span>
+
+<span class="n">experiments</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">pert_neg_experiment</span><span class="p">,</span>
+    <span class="n">shattered_grad_experiment</span><span class="p">,</span>
+    <span class="n">interacion_feat_experiment</span><span class="p">,</span>
+    <span class="n">conflicting_experiment</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">xaiunits.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExperimentPipeline</span>
+
+<span class="c1"># instantiate the pipeline, run the attribution methods, then process and print the results</span>
+<span class="n">exp_pipeline</span> <span class="o">=</span> <span class="n">ExperimentPipeline</span><span class="p">(</span><span class="n">experiments</span><span class="p">)</span>
+<span class="n">exp_pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">exp_pipeline</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                                                                          mean  \
+metric                                                               attr_time   
+data                      model                 method                           
+ConflictingDataset        ConflictingFeaturesNN DeepLift                 0.002   
+                                                KernelShap               0.396   
+                                                LRP                      0.002   
+                                                ShapleyValueSampling     0.039   
+InteractingFeatureDataset InteractingFeaturesNN DeepLift                 0.001   
+                                                KernelShap               0.195   
+                                                LRP                      0.001   
+                                                ShapleyValueSampling     0.008   
+PertinentNegativesDataset PertinentNN           DeepLift                 0.005   
+                                                KernelShap               0.140   
+                                                LRP                      0.003   
+                                                ShapleyValueSampling     0.038   
+ShatteredGradientsDataset ShatteredGradientsNN  DeepLift                 0.004   
+                                                KernelShap               1.138   
+                                                LRP                      0.003   
+                                                ShapleyValueSampling     0.060   
+
+                                                                                 \
+metric                                                                 mse_loss   
+data                      model                 method                            
+ConflictingDataset        ConflictingFeaturesNN DeepLift              1.424e-01   
+                                                KernelShap            4.536e-02   
+                                                LRP                   1.424e-01   
+                                                ShapleyValueSampling  3.076e-02   
+InteractingFeatureDataset InteractingFeaturesNN DeepLift              0.000e+00   
+                                                KernelShap            9.243e-02   
+                                                LRP                   9.108e-16   
+                                                ShapleyValueSampling  6.905e-02   
+PertinentNegativesDataset PertinentNN           DeepLift              5.281e+01   
+                                                KernelShap            5.281e+01   
+                                                LRP                   6.219e+00   
+                                                ShapleyValueSampling  5.281e+01   
+ShatteredGradientsDataset ShatteredGradientsNN  DeepLift                    NaN   
+                                                KernelShap                  NaN   
+                                                LRP                         NaN   
+                                                ShapleyValueSampling        NaN   
+
+                                                                                      \
+metric                                                               sensitivity_max   
+data                      model                 method                                 
+ConflictingDataset        ConflictingFeaturesNN DeepLift                         NaN   
+                                                KernelShap                       NaN   
+                                                LRP                              NaN   
+                                                ShapleyValueSampling             NaN   
+InteractingFeatureDataset InteractingFeaturesNN DeepLift                         NaN   
+                                                KernelShap                       NaN   
+                                                LRP                              NaN   
+                                                ShapleyValueSampling             NaN   
+PertinentNegativesDataset PertinentNN           DeepLift                         NaN   
+                                                KernelShap                       NaN   
+                                                LRP                              NaN   
+                                                ShapleyValueSampling             NaN   
+ShatteredGradientsDataset ShatteredGradientsNN  DeepLift                     114.367   
+                                                KernelShap                     3.910   
+                                                LRP                          114.367   
+                                                ShapleyValueSampling           1.184   
+
+                                                                            std  \
+metric                                                                attr_time   
+data                      model                 method                            
+ConflictingDataset        ConflictingFeaturesNN DeepLift              1.672e-04   
+                                                KernelShap            2.000e-02   
+                                                LRP                   1.241e-04   
+                                                ShapleyValueSampling  6.651e-03   
+InteractingFeatureDataset InteractingFeaturesNN DeepLift              1.413e-04   
+                                                KernelShap            1.027e-02   
+                                                LRP                   1.705e-04   
+                                                ShapleyValueSampling  9.660e-05   
+PertinentNegativesDataset PertinentNN           DeepLift              1.013e-03   
+                                                KernelShap            8.938e-03   
+                                                LRP                   1.172e-04   
+                                                ShapleyValueSampling  2.957e-03   
+ShatteredGradientsDataset ShatteredGradientsNN  DeepLift              2.955e-04   
+                                                KernelShap            3.311e-02   
+                                                LRP                   2.350e-04   
+                                                ShapleyValueSampling  1.232e-03   
+
+                                                                                 \
+metric                                                                 mse_loss   
+data                      model                 method                            
+ConflictingDataset        ConflictingFeaturesNN DeepLift              3.189e-02   
+                                                KernelShap            1.072e-02   
+                                                LRP                   3.189e-02   
+                                                ShapleyValueSampling  8.854e-03   
+InteractingFeatureDataset InteractingFeaturesNN DeepLift              0.000e+00   
+                                                KernelShap            6.608e-02   
+                                                LRP                   1.260e-17   
+                                                ShapleyValueSampling  6.044e-02   
+PertinentNegativesDataset PertinentNN           DeepLift              9.908e+00   
+                                                KernelShap            9.908e+00   
+                                                LRP                   2.821e-01   
+                                                ShapleyValueSampling  9.908e+00   
+ShatteredGradientsDataset ShatteredGradientsNN  DeepLift                    NaN   
+                                                KernelShap                  NaN   
+                                                LRP                         NaN   
+                                                ShapleyValueSampling        NaN   
+
+                                                                                      
+metric                                                               sensitivity_max  
+data                      model                 method                                
+ConflictingDataset        ConflictingFeaturesNN DeepLift                         NaN  
+                                                KernelShap                       NaN  
+                                                LRP                              NaN  
+                                                ShapleyValueSampling             NaN  
+InteractingFeatureDataset InteractingFeaturesNN DeepLift                         NaN  
+                                                KernelShap                       NaN  
+                                                LRP                              NaN  
+                                                ShapleyValueSampling             NaN  
+PertinentNegativesDataset PertinentNN           DeepLift                         NaN  
+                                                KernelShap                       NaN  
+                                                LRP                              NaN  
+                                                ShapleyValueSampling             NaN  
+ShatteredGradientsDataset ShatteredGradientsNN  DeepLift                      12.123  
+                                                KernelShap                     2.134  
+                                                LRP                           12.123  
+                                                ShapleyValueSampling           0.148  
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="XAI-Units" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="image_dataset_example.html" class="btn btn-neutral float-right" title="Image Dataset Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, XAI-Units.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

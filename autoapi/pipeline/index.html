@@ -1,0 +1,1448 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pipeline &mdash; XAI-Units 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="pipeline.experiment" href="experiment/index.html" />
+    <link rel="prev" title="trainer.trainer" href="../trainer/trainer/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            XAI-Units
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../library_quickstart.html">Quickstart - Library Walkthrough</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../image_dataset_example.html">Image Dataset Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../custom_methods_and_custom_datasets.html">Customization Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../model/index.html">model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../methods/index.html">methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/index.html">metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../trainer/index.html">trainer</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="experiment/index.html">pipeline.experiment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pipeline/index.html">pipeline.pipeline</a></li>
+<li class="toctree-l4"><a class="reference internal" href="results/index.html">pipeline.results</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#attributes">Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#package-contents">Package Contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pipeline.BasePipeline"><code class="docutils literal notranslate"><span class="pre">BasePipeline</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pipeline.Pipeline"><code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pipeline.ExperimentPipeline"><code class="docutils literal notranslate"><span class="pre">ExperimentPipeline</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pipeline.to_device"><code class="docutils literal notranslate"><span class="pre">to_device()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pipeline.methods"><code class="docutils literal notranslate"><span class="pre">methods</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pipeline.Example"><code class="docutils literal notranslate"><span class="pre">Example</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pipeline.Results"><code class="docutils literal notranslate"><span class="pre">Results</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pipeline.Experiment"><code class="docutils literal notranslate"><span class="pre">Experiment</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../fine_tune/index.html">fine_tune</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../common_lib/index.html">common_lib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datagenerator/index.html">datagenerator</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">XAI-Units</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">API Reference</a></li>
+      <li class="breadcrumb-item active">pipeline</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/autoapi/pipeline/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-pipeline">
+<span id="pipeline"></span><h1>pipeline<a class="headerlink" href="#module-pipeline" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="experiment/index.html">pipeline.experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pipeline/index.html">pipeline.pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="results/index.html">pipeline.results</a></li>
+</ul>
+</div>
+</section>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pipeline.methods" title="pipeline.methods"><code class="xref py py-obj docutils literal notranslate"><span class="pre">methods</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pipeline.BasePipeline" title="pipeline.BasePipeline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BasePipeline</span></code></a></p></td>
+<td><p>A base class for creating an end-to-end pipeline object that applies feature attribution methods and</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pipeline.Pipeline" title="pipeline.Pipeline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Pipeline</span></code></a></p></td>
+<td><p>A pipeline that evaluates the performance of the explanation methods on the neural network models</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pipeline.ExperimentPipeline" title="pipeline.ExperimentPipeline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExperimentPipeline</span></code></a></p></td>
+<td><p>A pipeline that evaluates the performance of the explanation methods on the neural network models</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pipeline.Example" title="pipeline.Example"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Example</span></code></a></p></td>
+<td><p>Stores a datapoint with its attributions and score, for ranking top n examples.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pipeline.Results" title="pipeline.Results"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Results</span></code></a></p></td>
+<td><p>Object that records and processes the results of experiments from a subclass of BasePipeline.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pipeline.Experiment" title="pipeline.Experiment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Experiment</span></code></a></p></td>
+<td><p>A class representing an experimental setup for evaluating explanation methods on specific dataset and</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pipeline.to_device" title="pipeline.to_device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_device</span></code></a>(→ Any)</p></td>
+<td><p>Moves data to device if the data is a tensor or a dict of tensors.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="package-contents">
+<h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pipeline.BasePipeline">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pipeline.</span></span><span class="sig-name descname"><span class="pre">BasePipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">xaiunits.pipeline.results.Results</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_examples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pipeline.BasePipeline" title="Link to this definition"></a></dt>
+<dd><p>A base class for creating an end-to-end pipeline object that applies feature attribution methods and
+evaluates.</p>
+<p>This is a base class is intended to support other pipeline classes that are build upon it.</p>
+<p>Explanation methods to be ran and evaluated must contain the .attribute method.
+The pipeline uses batching when applying the explanation methods and evaluating them over the evaluation metrics.
+The results of the explanation method’s performance will be processed and cleaned by within the pipeline, and is
+easily callable by the user. Non-deterministic explanation methods are accomodated too, where
+multiple trials runs is possible with the pipeline.</p>
+<p>Alongside evaluation performance, runtime performance is measured in the pipeline too. For
+customisation of the explanation methods and evaluation metrics, applying a wrapper to them may
+be necessary prior to inputing to the pipeline.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.BasePipeline.batch_size">
+<span class="sig-name descname"><span class="pre">batch_size</span></span><a class="headerlink" href="#pipeline.BasePipeline.batch_size" title="Link to this definition"></a></dt>
+<dd><p>Number of data samples to be processed by the models and for the explanation
+methods to be applied on within each batch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.BasePipeline.default_target">
+<span class="sig-name descname"><span class="pre">default_target</span></span><a class="headerlink" href="#pipeline.BasePipeline.default_target" title="Link to this definition"></a></dt>
+<dd><p>Type or values of the target that is expected to be outputed by the
+models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.BasePipeline.n_examples">
+<span class="sig-name descname"><span class="pre">n_examples</span></span><a class="headerlink" href="#pipeline.BasePipeline.n_examples" title="Link to this definition"></a></dt>
+<dd><p>Number of worst and best performing data samples stored based on evaluation
+metric scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int | NoneType</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.BasePipeline.results">
+<span class="sig-name descname"><span class="pre">results</span></span><a class="headerlink" href="#pipeline.BasePipeline.results" title="Link to this definition"></a></dt>
+<dd><p>Instance of Results for storing and processing the evaluation results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pipeline.Results" title="pipeline.Results">pipeline.Results</a> | NoneType</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Initializes a BasePipeline object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch_size</strong> (<em>int</em>) – Number of data samples to be processed by the models and for the explanation
+methods to be applied on within each batch. Defaults to 50.</p></li>
+<li><p><strong>default_target</strong> (<em>Any</em><em>, </em><em>optional</em>) – Type or values of the target that is expected to be outputed by the
+models. Defaults to None.</p></li>
+<li><p><strong>n_examples</strong> (<em>int</em><em> | </em><em>NoneType</em><em>, </em><em>optional</em>) – Number of worst and best performing data samples stored based on evaluation
+metric scores. Defaults to None.</p></li>
+<li><p><strong>results</strong> (<a class="reference internal" href="#pipeline.Results" title="pipeline.Results"><em>pipeline.Results</em></a><em> | </em><em>NoneType</em>) – Instance of Results for storing and processing the evaluation results.
+Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">batch_size</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">50</span></em><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">default_target</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">n_examples</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">results</span></span><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.BasePipeline._init_attr">
+<span class="sig-name descname"><span class="pre">_init_attr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attr_input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Iterable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span></span></span><a class="headerlink" href="#pipeline.BasePipeline._init_attr" title="Link to this definition"></a></dt>
+<dd><p>Initializes the attributes by checking its type and converts it into a list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attr_input</strong> (<em>Iterable</em><em> | </em><em>NoneType</em><em> | </em><em>Any</em>) – The object or collection of objects
+relevant to the attribute of interest.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing all the elements of the input.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.BasePipeline._single_explanation_attribute">
+<span class="sig-name descname"><span class="pre">_single_explanation_attribute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method_seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.device</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trial_group_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pipeline.BasePipeline._single_explanation_attribute" title="Link to this definition"></a></dt>
+<dd><p>Computes the score of a single explanation method on a neural network and
+evaluates the explanation method with respect to all evaluation metrics.</p>
+<p>The explanation method is applied over the dataset by batches, where the a
+batch with size batch_size is generated by the dataset iteratively and the
+attribution score for it is computed. Depending on the explanation method
+the attribution score may be fixed or unfixed for each sample within the
+same batch.</p>
+<p>The total runtime of applying the explanation method to each batch will be
+measured.</p>
+<p>Evaluation metrics are similarly calculated individually for the attribution
+score of each batch.</p>
+<p>If the n_samples attribute is not None, the batches that give the best and
+worst n_samples number of evaluation metric scores will be stored.</p>
+<p>The evaluation and runtime measurements will be stored inside the results
+attribute in batches as a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>torch.util.data.Dataset</em>) – Dataset of inputs</p></li>
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – Neural network to for the explanation method
+to be applied on</p></li>
+<li><p><strong>method</strong> (<em>methods.methods_wrapper.Wrapper</em>) – Explanation method to be
+applied to the model and evaluated.</p></li>
+<li><p><strong>metrics</strong> (<em>list</em>) – List of evaluation metrics to be applied.</p></li>
+<li><p><strong>method_seed</strong> (<em>int</em><em> | </em><em>NoneType</em><em>, </em><em>optional</em>) – The seed set for reproducibility of the
+explanation method. It will not be set if it is None. Defaults to None.</p></li>
+<li><p><strong>device</strong> (<em>torch.device</em><em>, </em><em>optional</em>) – The device which the objects will be stored on.
+Defaults to None.</p></li>
+<li><p><strong>trial_group_name</strong> (<em>str</em>) – string representing name of the trial group name</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.BasePipeline._apply_attribution_method">
+<span class="sig-name descname"><span class="pre">_apply_attribution_method</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method_instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#pipeline.BasePipeline._apply_attribution_method" title="Link to this definition"></a></dt>
+<dd><p>Computes the attribution evaluation for the given feature inputs using the explanation method of interest.</p>
+<p>The time it takes to compute the feature attributions is appended to the results for the current
+batch of data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feature_inputs</strong> (<em>torch.Tensor</em>) – The input features for the current batch.</p></li>
+<li><p><strong>method_instance</strong> (<em>Any</em>) – Explanation method used to compute the feature attributions.</p></li>
+<li><p><strong>batch_results</strong> (<em>dict</em>) – Recorded results for the current batch of data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The computed feature attributions for the given feature inputs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.BasePipeline._store_top_n">
+<span class="sig-name descname"><span class="pre">_store_top_n</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_scores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attribute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">example_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pipeline.BasePipeline._store_top_n" title="Link to this definition"></a></dt>
+<dd><p>Keeps a running heap of the top n examples with the highest scores, for each key.</p>
+<p>Supports both ‘max’ / ‘min’ example_type, for the n highest / lowest scores.</p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>If <cite>batch_scores</cite> is a single value, it is repeated to match the batch size.</p></li>
+<li><p>The heap of examples are stored in <cite>results.examples</cite>.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em>) – Number of examples to store.</p></li>
+<li><p><strong>key</strong> (<em>tuple</em>) – The key to identify which (method, model, metric) these examples are for.</p></li>
+<li><p><strong>batch_scores</strong> (<em>torch.Tensor</em>) – A tensor of scores for the current batch of examples.</p></li>
+<li><p><strong>attribute</strong> (<em>torch.Tensor</em>) – The attributes tensor for the current batch of examples.</p></li>
+<li><p><strong>batch_info</strong> (<em>tuple</em>) – A tuple containing feature inputs, labels, targets, and context for the batch.</p></li>
+<li><p><strong>example_type</strong> (<em>str</em>) – Specifies the type of scoring mechanism (‘max’ or ‘min’) to use for ranking.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.BasePipeline.unpack_batch">
+<span class="sig-name descname"><span class="pre">unpack_batch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.device</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span></span></span><a class="headerlink" href="#pipeline.BasePipeline.unpack_batch" title="Link to this definition"></a></dt>
+<dd><p>Unpacks a batch into (feature_inputs, labels, context) depending on the format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch</strong> (<em>torch.Tensor</em><em> | </em><em>Tuple</em>) – A batch of data which can be a single tensor (feature_inputs),
+a tuple of two tensors (feature_inputs and labels),
+or a tuple of three elements (feature_inputs, labels, and context).</p></li>
+<li><p><strong>device</strong> (<em>torch.device</em><em>, </em><em>optional</em>) – The device which the objects will be stored on.
+Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>TypeError</strong> – If dataset is not in a supported format.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.BasePipeline.set_default_target">
+<span class="sig-name descname"><span class="pre">set_default_target</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#pipeline.BasePipeline.set_default_target" title="Link to this definition"></a></dt>
+<dd><p>Calculates the target based on self.default_target.</p>
+<p>Two special keywords:
+- If self.default_target is ‘y_labels’, returns the y_labels
+- If self.default_target is ‘predicted_class’, returns y=model(feature_inputs)</p>
+<p>Three other standard options:
+- If self.default_target is None, returns None.
+- If self.default_target is an integer, returns that integer.
+- self.target may also be a tuple or tensor matching the batch size.</p>
+<p>These are the standard options that will be used by the default evaluation methods.
+If an alternative option is needed, the user can override the evaluation metric function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – The model to use for predictions if <cite>self.default_target</cite> is ‘predicted_class’.</p></li>
+<li><p><strong>feature_inputs</strong> (<em>torch.Tensor</em>) – The input features to the model.</p></li>
+<li><p><strong>y_labels</strong> (<em>torch.Tensor</em>) – The actual labels for the input features, if <cite>self.default_target</cite> is ‘y_labels’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the value of default_target is invalid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.BasePipeline._all_models_explanation_attributes">
+<span class="sig-name descname"><span class="pre">_all_models_explanation_attributes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">methods</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method_seeds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.device</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trial_group_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pipeline.BasePipeline._all_models_explanation_attributes" title="Link to this definition"></a></dt>
+<dd><p>Applies every explanation methods on each of the neural network models and
+they are evaluated against the evalaution metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>torch.utils.data.Dataset</em>) – Dataset the neural netowrk models are operating on.</p></li>
+<li><p><strong>models</strong> (<em>list</em>) – List of neural network models for the explanation methods to be applied on.</p></li>
+<li><p><strong>methods</strong> (<em>list</em>) – List of explanation methods to apply and evaluated.</p></li>
+<li><p><strong>metrics</strong> (<em>list</em>) – List of evaluation metrics to apply.</p></li>
+<li><p><strong>method_seeds</strong> (<em>list</em>) – List of random seeds for applying the explanation method.</p></li>
+<li><p><strong>device</strong> (<em>torch.device</em><em>, </em><em>optional</em>) – The device which the objects will be stored on.
+Defaults to None.</p></li>
+<li><p><strong>trial_group_name</strong> (<em>str</em>) – string representing name of the trial group name</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pipeline.Pipeline">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pipeline.</span></span><span class="sig-name descname"><span class="pre">Pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">methods</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method_seeds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">xaiunits.pipeline.results.Results</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_examples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pipeline.Pipeline" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pipeline.BasePipeline" title="pipeline.BasePipeline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BasePipeline</span></code></a></p>
+<p>A pipeline that evaluates the performance of the explanation methods on the neural network models
+with respect to evaluation metrics of interest.</p>
+<p>Single or multiple models, Single or multiple datasets, explanation methods, evaluation methods are supported.
+Explanation methods must contain the .attribute method. The pipeline uses batching when applying the
+explanation methods and evaluating them over the evaluation metrics. The results of the
+explanation method’s performance will be processed and cleaned by within the pipeline, and is
+easily callable by the user. Non-deterministic explanation methods are accomodated too, where
+multiple trials runs is possible with the pipeline.</p>
+<p>If no evaluation metric is provided explicitly as an argument to the instantiation of a Pipeline object,
+then a default metric will be used from one of the provided datasets, subject to the availability of it
+in any of the datasets.</p>
+<p>Alongside evaluation performance, runtime performance is measured in the pipeline too. For
+customization of the explanation methods and evaluation metrics, applying a wrapper to them may
+be necessary prior to inputting to the pipeline.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><p>BasePipeline: Base class for setting up a pipeline that applies feature attribution methods and
+evaluates.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Pipeline.models">
+<span class="sig-name descname"><span class="pre">models</span></span><a class="headerlink" href="#pipeline.Pipeline.models" title="Link to this definition"></a></dt>
+<dd><p>List of neural network models for the explanation methods to be applied on.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Pipeline.datas">
+<span class="sig-name descname"><span class="pre">datas</span></span><a class="headerlink" href="#pipeline.Pipeline.datas" title="Link to this definition"></a></dt>
+<dd><p>Dataset object for generating the data samples that are
+compatible to the neural networks provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Pipeline.methods">
+<span class="sig-name descname"><span class="pre">methods</span></span><a class="headerlink" href="#pipeline.Pipeline.methods" title="Link to this definition"></a></dt>
+<dd><p>List of explanation methods to be evaluated for their performance
+on producing attribution scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Pipeline.metrics">
+<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#pipeline.Pipeline.metrics" title="Link to this definition"></a></dt>
+<dd><p>List of evaluation metrics for the explanation methods to be evaluated
+against.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Pipeline.method_seed">
+<span class="sig-name descname"><span class="pre">method_seed</span></span><a class="headerlink" href="#pipeline.Pipeline.method_seed" title="Link to this definition"></a></dt>
+<dd><p>List of seeds used for repeating and replicating the results over a single or
+multiple trials.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Initializes a Pipeline object.</p>
+<p>All models, explanation methods, evaluation metrics, method seed inputs will be forced to be
+list that contains all the relevant items. Labels for the evaluation metrics will be generated
+based on methods.methods_wrapper.MetricsWrapper.__name__ and must be unique.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>models</strong> (<em>torch.nn.Module</em><em> | </em><em>Iterable</em>) – Single or iterable collection of neural network models
+for explanation methods to be applied on.</p></li>
+<li><p><strong>data</strong> (<em>torch.utils.data.Dataset</em><em> | </em><em>Iterable</em>) – Dataset object for generating the data samples that are
+compatible to the neural networks provided.</p></li>
+<li><p><strong>methods</strong> (<em>methods.methods_wrapper.Wrapper</em><em> | </em><em>captum.attr._utils.attribution.Attribution</em><em> | </em><em>Iterable</em>) – Single or iterable collection of explanation methods to be evaluated.</p></li>
+<li><p><strong>metrics</strong> (<em>methods.methods_wrapper.MetricsWrapper</em><em> | </em><em>Iterable</em><em> | </em><em>None</em>) – Single or iterable
+collection of evaluation metrics used for evaluating explanation methods. Defaults to None.</p></li>
+<li><p><strong>method_seed</strong> (<em>int</em><em> | </em><em>Iterable</em><em>, </em><em>optional</em>) – Seeds for replicating explanation methods results
+over multiple trials. Defaults to None, and a random seed will be picked where no
+replicability will be enforced.</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Number of data samples to be processed by the models and for the explanation
+methods to be applied on within each batch. Defaults to 50.</p></li>
+<li><p><strong>default_target</strong> (<em>Any</em><em>, </em><em>optional</em>) – Type or values of the target that is expected to be outputted by the
+models. Defaults to None.</p></li>
+<li><p><strong>model_names</strong> (<em>str</em><em> | </em><em>Iterable</em><em>, </em><em>optional</em>) – Single or iterable collection of model name
+used the purpose of distinguishing between models. Defaults to None.</p></li>
+<li><p><strong>results</strong> (<a class="reference internal" href="#pipeline.Results" title="pipeline.Results"><em>Results</em></a><em>, </em><em>optional</em>) – Instance of Results for storing and processing the
+evaluation results. Defaults to None, and an empty Results instance will be
+used.</p></li>
+<li><p><strong>n_examples</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of worst and best performing data samples stored
+based on evaluation metric scores. Defaults to None.</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – string representing name of the trial group.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If the collection of evaluation metrics do not all have unique names.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">models</span></span><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">datas</span></span><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">methods</span></span><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">method_seed</span></span><a class="headerlink" href="#id7" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Pipeline.trial_group_name">
+<span class="sig-name descname"><span class="pre">trial_group_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pipeline.Pipeline.trial_group_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Pipeline.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.device</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">xaiunits.pipeline.results.Results</span></span></span><a class="headerlink" href="#pipeline.Pipeline.run" title="Link to this definition"></a></dt>
+<dd><p>Alias for explanation_attribute method. Runs the pipeline and returns the results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>device</strong> (<em>torch.device</em><em>, </em><em>optional</em>) – The device which the objects will be stored on.
+Defaults to None.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the evaluation results from running the pipeline.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pipeline.Results" title="pipeline.Results">pipeline.Results</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Pipeline.explanation_attribute">
+<span class="sig-name descname"><span class="pre">explanation_attribute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.device</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">xaiunits.pipeline.results.Results</span></span></span><a class="headerlink" href="#pipeline.Pipeline.explanation_attribute" title="Link to this definition"></a></dt>
+<dd><p>Applies every explanation methods on each of the neural network models and
+dataset, which are then evaluated against the evaluation metrics.</p>
+<p>If an evaluation metric is not wrapped as a methods.methods_wrapper.Wrapper
+instance, manual wrapping will be performed.</p>
+<p>The explanation methods will be repeated a variable number of times depending
+on the method_seed attribute.</p>
+<p>All evaluation and runtime results will be stored within the results attribute
+in its unprocessed form.</p>
+<p>Each of the neural network models will be forced to evaluation mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>device</strong> (<em>torch.device</em><em>, </em><em>optional</em>) – The device which the objects will be stored on.
+Defaults to None.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the evaluation results from running the pipeline.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pipeline.Results" title="pipeline.Results">pipeline.Results</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Pipeline._init_none_metric">
+<span class="sig-name descname"><span class="pre">_init_none_metric</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#pipeline.Pipeline._init_none_metric" title="Link to this definition"></a></dt>
+<dd><p>Returns the default metric from any of the dataset inputted, if available.</p>
+<p>It iterates over the provided data and checks if any of them have a default
+metric attribute. If a default metric is found, it returns that metric. Otherwise,
+it raises an exception.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The class that wraps the default metric from one of the datasets inputed.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>type</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Exception</strong> – If none of the provided datasets have a default metric.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pipeline.ExperimentPipeline">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pipeline.</span></span><span class="sig-name descname"><span class="pre">ExperimentPipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">xaiunits.pipeline.experiment.Experiment</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">xaiunits.pipeline.experiment.Experiment</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">xaiunits.pipeline.results.Results</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_examples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pipeline.ExperimentPipeline" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pipeline.BasePipeline" title="pipeline.BasePipeline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BasePipeline</span></code></a></p>
+<p>A pipeline that evaluates the performance of the explanation methods on the neural network models
+with respect to evaluation metrics of interest.</p>
+<p>This pipeline only expects a list of Experiment Class, in which data, models, explanation methods,
+evaluation metric and seeds are specified.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><p>BasePipeline: Base class for setting up a pipeline that applies feature attribution methods and
+evaluates.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.ExperimentPipeline.experiments">
+<span class="sig-name descname"><span class="pre">experiments</span></span><a class="headerlink" href="#pipeline.ExperimentPipeline.experiments" title="Link to this definition"></a></dt>
+<dd><p>List experiments to be ran.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="#pipeline.Experiment" title="pipeline.Experiment">pipeline.Experiment</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Initializes an ExperimentPipeline object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>experiments</strong> (<em>List</em><em>[</em><a class="reference internal" href="#pipeline.Experiment" title="pipeline.Experiment"><em>Experiment</em></a><em>]</em>) – List of experiments to be run.</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Number of data samples to be processed by the models and for the explanation
+methods to be applied on within each batch. Defaults to 50.</p></li>
+<li><p><strong>default_target</strong> (<em>Any</em><em>, </em><em>optional</em>) – Type or values of the target that is expected to be outputed by the
+models. Defaults to None.</p></li>
+<li><p><strong>results</strong> (<a class="reference internal" href="#pipeline.Results" title="pipeline.Results"><em>Results</em></a><em>, </em><em>optional</em>) – Instance of Results for storing and processing the
+evaluation results. Defaults to None, and an empty Results instance will be
+used.</p></li>
+<li><p><strong>n_examples</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of worst and best performing data samples stored
+based on evaluation metric scores. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">experiments</span></span><a class="headerlink" href="#id8" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.ExperimentPipeline.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.device</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">xaiunits.pipeline.results.Results</span></span></span><a class="headerlink" href="#pipeline.ExperimentPipeline.run" title="Link to this definition"></a></dt>
+<dd><p>Alias for explanation_attribute method. Runs the pipeline and returns the results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>device</strong> (<em>torch.device</em><em>, </em><em>optional</em>) – The device which the objects will be stored on.
+Defaults to None.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the evaluation results from running the pipeline.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pipeline.Results" title="pipeline.Results">pipeline.Results</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.ExperimentPipeline.explanation_attribute">
+<span class="sig-name descname"><span class="pre">explanation_attribute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.device</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">xaiunits.pipeline.results.Results</span></span></span><a class="headerlink" href="#pipeline.ExperimentPipeline.explanation_attribute" title="Link to this definition"></a></dt>
+<dd><p>Using the items stored in each Experiment object, apply every explanation methods
+on each of the neural network models, which are then evaluated against the evalaution
+metrics.</p>
+<p>Depending on the type of object that is given to represent the dataset, multiple
+datasets will be instantiated using the various seeds provided, or simply using
+the single dataset object supplied.</p>
+<p>If an evaluation metric is not wrapped as a methods.methods_wrapper.Wrapper
+instance, manual wrapping will be peformed.</p>
+<p>The explanation methods will be repeated a variable number of times depending
+on the method_seed attribute.</p>
+<p>All evaluation and runtime results will be stored within the results attribute
+in its unprocessed form.</p>
+<p>Each of the neural network models will be forced to evaluation mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>device</strong> (<em>torch.device</em><em>, </em><em>optional</em>) – The device which the objects will be stored on.
+Defaults to None.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the evaluation results from running the pipeline.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pipeline.Results" title="pipeline.Results">pipeline.Results</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pipeline.to_device">
+<span class="sig-prename descclassname"><span class="pre">pipeline.</span></span><span class="sig-name descname"><span class="pre">to_device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.device</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#pipeline.to_device" title="Link to this definition"></a></dt>
+<dd><p>Moves data to device if the data is a tensor or a dict of tensors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>Any</em>) – Data to be moved.</p></li>
+<li><p><strong>device</strong> (<em>torch.device</em>) – Device to move the data to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Data object that is stored in the specified device.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="pipeline.methods">
+<span class="sig-prename descclassname"><span class="pre">pipeline.</span></span><span class="sig-name descname"><span class="pre">methods</span></span><a class="headerlink" href="#pipeline.methods" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pipeline.Example">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pipeline.</span></span><span class="sig-name descname"><span class="pre">Example</span></span><a class="headerlink" href="#pipeline.Example" title="Link to this definition"></a></dt>
+<dd><p>Stores a datapoint with its attributions and score, for ranking top n examples.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Example.score_for_ranking">
+<span class="sig-name descname"><span class="pre">score_for_ranking</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#pipeline.Example.score_for_ranking" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Example.score">
+<span class="sig-name descname"><span class="pre">score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#pipeline.Example.score" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Example.attribute">
+<span class="sig-name descname"><span class="pre">attribute</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">torch.Tensor</span></em><a class="headerlink" href="#pipeline.Example.attribute" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Example.feature_inputs">
+<span class="sig-name descname"><span class="pre">feature_inputs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">torch.Tensor</span></em><a class="headerlink" href="#pipeline.Example.feature_inputs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Example.y_labels">
+<span class="sig-name descname"><span class="pre">y_labels</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">torch.Tensor</span></em><a class="headerlink" href="#pipeline.Example.y_labels" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Example.target">
+<span class="sig-name descname"><span class="pre">target</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pipeline.Example.target" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Example.context">
+<span class="sig-name descname"><span class="pre">context</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pipeline.Example.context" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Example.example_type">
+<span class="sig-name descname"><span class="pre">example_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#pipeline.Example.example_type" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Example.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pipeline.Example.__post_init__" title="Link to this definition"></a></dt>
+<dd><p>Adjusts the <cite>score_for_ranking</cite> to be negative for “min” examples.
+This is so that we can use heapq, a min heap, as a max heap.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the value of example_type is not accepted.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pipeline.Results">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pipeline.</span></span><span class="sig-name descname"><span class="pre">Results</span></span><a class="headerlink" href="#pipeline.Results" title="Link to this definition"></a></dt>
+<dd><p>Object that records and processes the results of experiments from a subclass of BasePipeline.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Results.data">
+<span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#pipeline.Results.data" title="Link to this definition"></a></dt>
+<dd><p>List of all stored experiment results from a pipeline object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Results.metrics">
+<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#pipeline.Results.metrics" title="Link to this definition"></a></dt>
+<dd><p>List of the names of all evaluation metrics recorded in data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Results.examples">
+<span class="sig-name descname"><span class="pre">examples</span></span><a class="headerlink" href="#pipeline.Results.examples" title="Link to this definition"></a></dt>
+<dd><p>Dictionary containing the data samples that output the maximum or minimum
+scores with respect to the evaluation metrics of interest.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Initializes a Results object.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Results.raw_data">
+<span class="sig-name descname"><span class="pre">raw_data</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#pipeline.Results.raw_data" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">examples</span></span><a class="headerlink" href="#id9" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Results.append">
+<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incoming</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pipeline.Results.append" title="Link to this definition"></a></dt>
+<dd><p>Appends the new result to the collection of results stored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>incoming</strong> (<em>dict</em>) – New result to be appended to the existing results.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id10">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">pandas.DataFrame</span></em><a class="headerlink" href="#id10" title="Link to this definition"></a></dt>
+<dd><p>Processes the raw_data list into a DataFrame, flattening over the batch dimension.</p>
+<p>For each data instance, the value under the ‘attr_time’ column will be the time it
+took for the batch, it belongs to, to compute its respective attribution scores,
+divided by the size of the batch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The processed results, one row per datapoint.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Results.process_data">
+<span class="sig-name descname"><span class="pre">process_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pipeline.Results.process_data" title="Link to this definition"></a></dt>
+<dd><p>Convenience method for accessing the self.data property.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The processed results, one row per datapoint.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Results.print_stats">
+<span class="sig-name descname"><span class="pre">print_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stat_funcs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['mean',</span> <span class="pre">'std']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['data',</span> <span class="pre">'model',</span> <span class="pre">'method']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_mean_agg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['batch_id',</span> <span class="pre">'batch_row_id']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_unit_measured</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'dataset'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decimal_places</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.DataFrame</span></span></span><a class="headerlink" href="#pipeline.Results.print_stats" title="Link to this definition"></a></dt>
+<dd><p>Prints the results in the form of a pivot table for each of the statistic required.</p>
+<p>The indices of the printed table correspond to the model and explanation method,
+and the columns of the printed table correpond to the evaluation metrics. The values
+of the printed table are the statistics calculated across the number of experiment trials.
+When mean and standard deviation are needed, a single pivot table will be printed that
+records both of them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metrics</strong> (<em>list</em><em>, </em><em>optional</em>) – A list of the names of all metrics to be printed. Defaults to None.</p></li>
+<li><p><strong>stat_funcs</strong> (<em>list</em><em> | </em><em>str</em>) – A list of aggregation functions that are required to be printed.
+It can be a str if only a single type of aggregation is required. Supports the same
+preset and custom aggregation functions as supported by pandas.
+Defaults to [‘mean’, ‘std’].</p></li>
+<li><p><strong>index</strong> (<em>list</em>) – A list of the names of the columns to be used as indices in the pivot table.
+Defaults to [‘data’, ‘model’, ‘method’]</p></li>
+<li><p><strong>initial_mean_agg</strong> (<em>list</em>) – A list of the columns to be used for the initial mean.
+For example, if we want to calculate the standard deviation between experiments,
+we take the mean over batch_id and batch_row_id first, then calculate the
+standard deviation. Defaults to [‘batch_id’, ‘batch_row_id’].</p></li>
+<li><p><strong>time_unit_measured</strong> (<em>str</em>) – The unit for which the time to perform the attribution method is
+calculated and aggregated. Defaults to ‘dataset’, and only 3 values are supported inputs:
+- ‘dataset’: time needed to apply explanation method on each dataset
+- ‘batch’: time needed to apply explanation method on each batch
+- ‘instance’: time needed to apply explanation method on each data instance. It is
+estimate derived from the batch time.</p></li>
+<li><p><strong>decimal_places</strong> (<em>int</em>) – The decimal places of the values displayed. Defaults to 3
+decimal places.</p></li>
+<li><p><strong>column_index</strong> (<em>list</em>) – A list of column names to unpivot, in addition to Stats and Metrics.
+Defaults to [], so just Stats and Metrics are used as columns.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Results.print_all_results">
+<span class="sig-name descname"><span class="pre">print_all_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pipeline.Results.print_all_results" title="Link to this definition"></a></dt>
+<dd><p>Prints all the data as a wide table.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Results.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pipeline.Results.save" title="Link to this definition"></a></dt>
+<dd><p>Saves the data stored as a .pkl file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filepath</strong> (<em>str</em>) – Path for the .pkl file to be saved in.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Results.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pipeline.Results.load" title="Link to this definition"></a></dt>
+<dd><p>Loads the data from a .pkl file.</p>
+<p>The data loaded will be concatenated with the existing data store in the object
+if and only if overwrite is False.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<em>str</em>) – Path of the .pkl file to load the data from.</p></li>
+<li><p><strong>overwrite</strong> (<em>bool</em>) – True if and only if the data loaded overwrites any
+existing data stored. Defaults to False.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Results.print_max_examples">
+<span class="sig-name descname"><span class="pre">print_max_examples</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pipeline.Results.print_max_examples" title="Link to this definition"></a></dt>
+<dd><p>Prints in descending order the collection of examples that give the maximum
+evaluation metric scores.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Results.print_min_examples">
+<span class="sig-name descname"><span class="pre">print_min_examples</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pipeline.Results.print_min_examples" title="Link to this definition"></a></dt>
+<dd><p>Prints in ascending order the collection of examples that give the minimum
+evaluation metric scores.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Results._attr_time_summing">
+<span class="sig-name descname"><span class="pre">_attr_time_summing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_unit_measured</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.DataFrame</span></span></span><a class="headerlink" href="#pipeline.Results._attr_time_summing" title="Link to this definition"></a></dt>
+<dd><p>Aggregates attribution time based on the specified time unit and formats the data
+in a correct format with the aggregated attribution times as part of the metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>time_unit_measured</strong> (<em>str</em>) – The unit for which the time to perform the
+attribution method is calculated and aggregated. Only allows
+inputs “dataset”, “batch”, “instance”.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>pandas.DataFrame object with aggregated attribution time results</dt><dd><p>formatted correctly.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If an invalid time unit is provided.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pipeline.Experiment">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pipeline.</span></span><span class="sig-name descname"><span class="pre">Experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.nn.Module</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">torch.nn.Module</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">methods</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seeds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method_seeds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pipeline.Experiment" title="Link to this definition"></a></dt>
+<dd><p>A class representing an experimental setup for evaluating explanation methods on specific dataset and
+neural network models.</p>
+<p>It should be ensured that the class corresponding to the dataset contains the generate_model() method
+in order for a model to be generated in the case that no model is defined for the experiment at
+initialization.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Experiment.data">
+<span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#pipeline.Experiment.data" title="Link to this definition"></a></dt>
+<dd><p>The class of the dataset used for experiments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.utils.data.Dataset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Experiment.models">
+<span class="sig-name descname"><span class="pre">models</span></span><a class="headerlink" href="#pipeline.Experiment.models" title="Link to this definition"></a></dt>
+<dd><p>List of neural network models to apply the explanation methods on.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list | NoneType</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Experiment.methods">
+<span class="sig-name descname"><span class="pre">methods</span></span><a class="headerlink" href="#pipeline.Experiment.methods" title="Link to this definition"></a></dt>
+<dd><p>List of explanation methods to apply and evaluate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Experiment.metrics">
+<span class="sig-name descname"><span class="pre">metrics</span></span><a class="headerlink" href="#pipeline.Experiment.metrics" title="Link to this definition"></a></dt>
+<dd><p>List of evaluation metrics to compute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Experiment.seeds">
+<span class="sig-name descname"><span class="pre">seeds</span></span><a class="headerlink" href="#pipeline.Experiment.seeds" title="Link to this definition"></a></dt>
+<dd><p>List of random seeds to use for the instantiation of the dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Experiment.method_seeds">
+<span class="sig-name descname"><span class="pre">method_seeds</span></span><a class="headerlink" href="#pipeline.Experiment.method_seeds" title="Link to this definition"></a></dt>
+<dd><p>List of random seeds to use for explanation methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Experiment.data_params">
+<span class="sig-name descname"><span class="pre">data_params</span></span><a class="headerlink" href="#pipeline.Experiment.data_params" title="Link to this definition"></a></dt>
+<dd><p>Additional parameters to be passed to the instantiation of the dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Initializes an Experiment instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>Any</em>) – The dataset or data class to be used for experiments. Can be passed in as
+an instantiated object or as a subclass of torch.utils.data.Dataset.</p></li>
+<li><p><strong>models</strong> (<em>list</em><em> | </em><em>NoneType</em><em> | </em><em>torch.nn.Module</em>) – List of neural network models to apply the
+explanation methods on.</p></li>
+<li><p><strong>methods</strong> (<em>Any</em>) – List of explanation methods to apply and evaluate.</p></li>
+<li><p><strong>metrics</strong> (<em>Any</em><em> | </em><em>NoneType</em><em>, </em><em>optional</em>) – List of evaluation metrics to compute. Defaults to None.</p></li>
+<li><p><strong>seeds</strong> (<em>int</em><em> | </em><em>list</em>) – List of random seeds to use for the instantiation of the dataset.
+Defaults to 0.</p></li>
+<li><p><strong>method_seeds</strong> (<em>int</em><em> | </em><em>list</em>) – List of random seeds to use for explanation methods.
+Defaults to 0.</p></li>
+<li><p><strong>data_params</strong> (<em>dict</em><em> | </em><em>NoneType</em><em>, </em><em>optional</em>) – Additional parameters to be passed during the instantiation
+of the dataset. Defaults to None.</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – string representing name of the experiment.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If input to any attribute initialization method is invalid.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">seeds</span></span><a class="headerlink" href="#id11" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id12">
+<span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#id12" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id13">
+<span class="sig-name descname"><span class="pre">data_params</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id13" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id14">
+<span class="sig-name descname"><span class="pre">models</span></span><a class="headerlink" href="#id14" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id15">
+<span class="sig-name descname"><span class="pre">metrics</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[None]</span></em><a class="headerlink" href="#id15" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id16">
+<span class="sig-name descname"><span class="pre">methods</span></span><a class="headerlink" href="#id16" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id17">
+<span class="sig-name descname"><span class="pre">method_seeds</span></span><a class="headerlink" href="#id17" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pipeline.Experiment.exp_name">
+<span class="sig-name descname"><span class="pre">exp_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#pipeline.Experiment.exp_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Experiment.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#pipeline.Experiment.get_data" title="Link to this definition"></a></dt>
+<dd><p>Returns the dataset instance generated with the specified seed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>seed</strong> (<em>int</em>) – the seed for instantiating the dataset.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The dataset instance with the specified seed.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.utils.data.Dataset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Experiment.get_models">
+<span class="sig-name descname"><span class="pre">get_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.nn.Module</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pipeline.Experiment.get_models" title="Link to this definition"></a></dt>
+<dd><p>Returns the list of neural networks to apply the explanation methods on.</p>
+<p>A default neural network compatible with the given dataset will be generated
+if the Experiment object has None as its models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_instance</strong> (<em>torch.utils.data.Dataset</em>) – The dataset instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of neural networks to apply the explanation methods on.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Experiment.get_methods">
+<span class="sig-name descname"><span class="pre">get_methods</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pipeline.Experiment.get_methods" title="Link to this definition"></a></dt>
+<dd><p>Returns the list of explanation methods to apply and evaluate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_instance</strong> (<em>torch.utils.data.Dataset</em>) – The dataset instance and
+a placeholder to keep input standardized.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of explanation methods to apply and evaluate.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Experiment.get_metrics">
+<span class="sig-name descname"><span class="pre">get_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pipeline.Experiment.get_metrics" title="Link to this definition"></a></dt>
+<dd><p>Returns the list of evaluation metrics to compute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_instance</strong> (<em>torch.utils.data.Dataset</em>) – The dataset instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of evaluation metrics to compute.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Experiment._init_seeds">
+<span class="sig-name descname"><span class="pre">_init_seeds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seeds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pipeline.Experiment._init_seeds" title="Link to this definition"></a></dt>
+<dd><p>Initializes the seeds attribute and transforms the input to the desired datatype.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>seeds</strong> (<em>int</em><em> | </em><em>list</em>) – Random seeds to use for data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of random seeds to use for the instantiation of the dataset.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If input to seeds initialization is not an integer or an Iterable of integers.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Experiment._init_data">
+<span class="sig-name descname"><span class="pre">_init_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#pipeline.Experiment._init_data" title="Link to this definition"></a></dt>
+<dd><p>Initializes the data attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>type</em>) – The instantiated dataset or data class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The dataset or data class.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.utils.data.Dataset | type</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If input to data initialization is neither a torch.utils.data.Dataset instance
+or subclass of torch.utils.data.Dataset.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Experiment._init_methods">
+<span class="sig-name descname"><span class="pre">_init_methods</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methods</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#pipeline.Experiment._init_methods" title="Link to this definition"></a></dt>
+<dd><p>Initializes the methods attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>methods</strong> (<em>list</em><em> | </em><em>NoneType</em>) – List of explanation methods.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of explanation methods.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If input to methods initialization is None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Experiment._init_metrics">
+<span class="sig-name descname"><span class="pre">_init_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#pipeline.Experiment._init_metrics" title="Link to this definition"></a></dt>
+<dd><p>Initializes the metrics attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>metrics</strong> (<em>list</em><em> | </em><em>NoneType</em>) – List of evaluation metrics.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of evaluation metrics.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If input to metrics initialization is None and the dataset
+does not provide a default metric.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Experiment._init_models">
+<span class="sig-name descname"><span class="pre">_init_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#pipeline.Experiment._init_models" title="Link to this definition"></a></dt>
+<dd><p>Initializes the models attribute and transforms it to the desired datatype.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>models</strong> (<em>list</em><em> | </em><em>torch.nn.Module</em>) – Neural network models.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of neural network models.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If input to models initialization is not an torch.nn.Module object or
+Iterable of torch.nn.Module objects.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Experiment._init_data_params">
+<span class="sig-name descname"><span class="pre">_init_data_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="headerlink" href="#pipeline.Experiment._init_data_params" title="Link to this definition"></a></dt>
+<dd><p>Initializes the data_params attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_params</strong> (<em>dict</em>) – Additional parameters for the instantiation of the dataset.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary of additional data parameters.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If input to data parameters initialization is not a dictionary.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Experiment._init_method_seeds">
+<span class="sig-name descname"><span class="pre">_init_method_seeds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method_seeds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">collections.abc.Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">collections.abc.Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pipeline.Experiment._init_method_seeds" title="Link to this definition"></a></dt>
+<dd><p>Initializes the method seeds attribute and transforms the input to the desired datatype.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>method_seeds</strong> (<em>int</em><em> | </em><em>list</em>) – Random seeds to use for applying the explanation
+methods.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of random seeds for applying the explanation methods.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If input to method seeds initialization is not an integer nor an Iterable
+of integers.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pipeline.Experiment._verify_metric">
+<span class="sig-name descname"><span class="pre">_verify_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pipeline.Experiment._verify_metric" title="Link to this definition"></a></dt>
+<dd><p>Verifies whether evaluation metrics have unique labels and each of them is in a valid datatype.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>metrics</strong> (<em>list</em>) – A list of evaluation metrics.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If evaluation metric is defined in an invalid datatype or if evaluation metrics
+do not have unique labels.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../trainer/trainer/index.html" class="btn btn-neutral float-left" title="trainer.trainer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="experiment/index.html" class="btn btn-neutral float-right" title="pipeline.experiment" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, XAI-Units.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

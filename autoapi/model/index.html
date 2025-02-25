@@ -1,0 +1,1022 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>model &mdash; XAI-Units 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="model.boolean" href="boolean/index.html" />
+    <link rel="prev" title="API Reference" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            XAI-Units
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../library_quickstart.html">Quickstart - Library Walkthrough</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../image_dataset_example.html">Image Dataset Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../custom_methods_and_custom_datasets.html">Customization Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="boolean/index.html">model.boolean</a></li>
+<li class="toctree-l4"><a class="reference internal" href="boolean_and/index.html">model.boolean_and</a></li>
+<li class="toctree-l4"><a class="reference internal" href="boolean_not/index.html">model.boolean_not</a></li>
+<li class="toctree-l4"><a class="reference internal" href="boolean_or/index.html">model.boolean_or</a></li>
+<li class="toctree-l4"><a class="reference internal" href="conflicting/index.html">model.conflicting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="continuous/index.html">model.continuous</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dynamic/index.html">model.dynamic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generic/index.html">model.generic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interaction_features/index.html">model.interaction_features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pertinent_negative/index.html">model.pertinent_negative</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shattered_gradients/index.html">model.shattered_gradients</a></li>
+<li class="toctree-l4"><a class="reference internal" href="uncertainty_model/index.html">model.uncertainty_model</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#package-contents">Package Contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#model.GenericNN"><code class="docutils literal notranslate"><span class="pre">GenericNN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.generate_layers"><code class="docutils literal notranslate"><span class="pre">generate_layers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.ConflictingFeaturesNN"><code class="docutils literal notranslate"><span class="pre">ConflictingFeaturesNN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.ContinuousFeaturesNN"><code class="docutils literal notranslate"><span class="pre">ContinuousFeaturesNN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.DynamicNN"><code class="docutils literal notranslate"><span class="pre">DynamicNN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.InteractingFeaturesNN"><code class="docutils literal notranslate"><span class="pre">InteractingFeaturesNN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.PertinentNN"><code class="docutils literal notranslate"><span class="pre">PertinentNN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.ShatteredGradientsNN"><code class="docutils literal notranslate"><span class="pre">ShatteredGradientsNN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.UncertaintyNN"><code class="docutils literal notranslate"><span class="pre">UncertaintyNN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.PropFormulaNN"><code class="docutils literal notranslate"><span class="pre">PropFormulaNN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.BooleanAndNN"><code class="docutils literal notranslate"><span class="pre">BooleanAndNN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.BooleanNotNN"><code class="docutils literal notranslate"><span class="pre">BooleanNotNN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.BooleanOrNN"><code class="docutils literal notranslate"><span class="pre">BooleanOrNN</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../methods/index.html">methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/index.html">metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../trainer/index.html">trainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pipeline/index.html">pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fine_tune/index.html">fine_tune</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../common_lib/index.html">common_lib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datagenerator/index.html">datagenerator</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">XAI-Units</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">API Reference</a></li>
+      <li class="breadcrumb-item active">model</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/autoapi/model/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-model">
+<span id="model"></span><h1>model<a class="headerlink" href="#module-model" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="boolean/index.html">model.boolean</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boolean_and/index.html">model.boolean_and</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boolean_not/index.html">model.boolean_not</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boolean_or/index.html">model.boolean_or</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conflicting/index.html">model.conflicting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="continuous/index.html">model.continuous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dynamic/index.html">model.dynamic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generic/index.html">model.generic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interaction_features/index.html">model.interaction_features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pertinent_negative/index.html">model.pertinent_negative</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shattered_gradients/index.html">model.shattered_gradients</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uncertainty_model/index.html">model.uncertainty_model</a></li>
+</ul>
+</div>
+</section>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#model.GenericNN" title="model.GenericNN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GenericNN</span></code></a></p></td>
+<td><p>Class for creating custom neural network architectures using specified weights,</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#model.ConflictingFeaturesNN" title="model.ConflictingFeaturesNN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConflictingFeaturesNN</span></code></a></p></td>
+<td><p>A crafted neural network model that incorporates cancellation features.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#model.ContinuousFeaturesNN" title="model.ContinuousFeaturesNN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ContinuousFeaturesNN</span></code></a></p></td>
+<td><p>A crafted neural network model that incorporates continuous features with ReLU.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#model.DynamicNN" title="model.DynamicNN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DynamicNN</span></code></a></p></td>
+<td><p>Class that enables the instantiation of custom neural network architectures using a list</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#model.InteractingFeaturesNN" title="model.InteractingFeaturesNN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InteractingFeaturesNN</span></code></a></p></td>
+<td><p>Implements a neural network model designed to explicitly model interactions between specific pairs of features</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#model.PertinentNN" title="model.PertinentNN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PertinentNN</span></code></a></p></td>
+<td><p>Implements a neural network model specifically designed to handle pertinent negatives in input features.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#model.ShatteredGradientsNN" title="model.ShatteredGradientsNN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ShatteredGradientsNN</span></code></a></p></td>
+<td><p>Implements a neural network model using a linear layer followed by an activation function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#model.UncertaintyNN" title="model.UncertaintyNN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UncertaintyNN</span></code></a></p></td>
+<td><p>Implements a neural network model designed to capture behaviour were an input node impact all or several output nodes equally.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#model.PropFormulaNN" title="model.PropFormulaNN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PropFormulaNN</span></code></a></p></td>
+<td><p>A neural network model representing a propositional formula that is constructed</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#model.BooleanAndNN" title="model.BooleanAndNN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BooleanAndNN</span></code></a></p></td>
+<td><p>Implements a neural network model designed to mimic the 'AND' logical operation on input features.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#model.BooleanNotNN" title="model.BooleanNotNN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BooleanNotNN</span></code></a></p></td>
+<td><p>Implements a neural network model designed to apply the logical NOT operation to input features.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#model.BooleanOrNN" title="model.BooleanOrNN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BooleanOrNN</span></code></a></p></td>
+<td><p>Implements a neural network model designed to mimic the 'OR' logical operation on input features.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#model.generate_layers" title="model.generate_layers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_layers</span></code></a>(→ List[torch.nn.Module])</p></td>
+<td><p>Creates linear layers and activation function to be used as inputs for nn.Sequential.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="package-contents">
+<h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="model.GenericNN">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">model.</span></span><span class="sig-name descname"><span class="pre">GenericNN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">biases</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">act_fns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.nn.Module</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#model.GenericNN" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.nn.Sequential</span></code></p>
+<p>Class for creating custom neural network architectures using specified weights,
+biases, and activation functions.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><p>torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+sequential manner.</p>
+</dd>
+</dl>
+<p>Initializes a GenericNN object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>weights</strong> (<em>torch.Tensor</em><em> | </em><em>list</em><em>[</em><em>torch.Tensor</em><em>]</em>) – Weights for each linear layer.</p></li>
+<li><p><strong>biases</strong> (<em>torch.Tensor</em><em> | </em><em>list</em><em>[</em><em>torch.Tensor</em><em>]</em><em>, </em><em>optional</em>) – Bias for each linear layer.
+Length of weights and biases must match if list.</p></li>
+<li><p><strong>act_fns</strong> (<em>nn.module.activation</em><em> | </em><em>list</em><em>, </em><em>optional</em>) – Activation for each linear layer.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="model.generate_layers">
+<span class="sig-prename descclassname"><span class="pre">model.</span></span><span class="sig-name descname"><span class="pre">generate_layers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">biases</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">act_fns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.nn.Module</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.nn.Module</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.nn.Module</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#model.generate_layers" title="Link to this definition"></a></dt>
+<dd><p>Creates linear layers and activation function to be used as inputs for nn.Sequential.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>weights</strong> (<em>torch.Tensor</em><em> | </em><em>list</em><em>[</em><em>torch.Tensor</em><em>]</em>) – Weights for each linear layer.</p></li>
+<li><p><strong>biases</strong> (<em>torch.Tensor</em><em> | </em><em>list</em><em>[</em><em>torch.Tensor</em><em>] </em><em>| </em><em>NoneType</em>) – Bias for each linear layer.
+Length of weights and biases must match if list.</p></li>
+<li><p><strong>act_fns</strong> (<em>nn.module.activation</em><em> | </em><em>list</em><em> | </em><em>NoneType</em>) – Activation for each linear layer.
+If activation Layer (i.e. not list) act_fns will be repeated for each linear layer.
+It is recommended to pass in the class rather than instance of activation Layer,
+as certain FA methods require no duplicate layers in the model.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="model.ConflictingFeaturesNN">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">model.</span></span><span class="sig-name descname"><span class="pre">ConflictingFeaturesNN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">continuous_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#model.ConflictingFeaturesNN" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.nn.Sequential</span></code></p>
+<p>A crafted neural network model that incorporates cancellation features.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><p>torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+sequential manner.</p>
+</dd>
+</dl>
+<p>Initializes a ConflictingFeaturesNN object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>continuous_dim</strong> (<em>int</em>) – Dimension length of the continuous features, excluding cancellation features.</p></li>
+<li><p><strong>weights</strong> (<em>torch.Tensor</em>) – Feature weights of the model. Should have length <cite>continuous_dim</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="model.ConflictingFeaturesNN._create_layer_weights">
+<span class="sig-name descname"><span class="pre">_create_layer_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">continuous_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span></span></span><a class="headerlink" href="#model.ConflictingFeaturesNN._create_layer_weights" title="Link to this definition"></a></dt>
+<dd><p>Creates the weights for the layers in a ConflictingFeaturesNN model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>continuous_dim</strong> (<em>int</em>) – Number of continuous features.</p></li>
+<li><p><strong>weights</strong> (<em>torch.Tensor</em>) – Feature weights of the model. Should have length <cite>continuous_dim</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple containing the weights and activation functions for the
+neural network model.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[list, NoneType, list]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>AssertionError</strong> – If weights are not specified in a valid shape.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="model.ContinuousFeaturesNN">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">model.</span></span><span class="sig-name descname"><span class="pre">ContinuousFeaturesNN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#model.ContinuousFeaturesNN" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.nn.Sequential</span></code></p>
+<p>A crafted neural network model that incorporates continuous features with ReLU.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><p>torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+sequential manner.</p>
+</dd>
+</dl>
+<p>Initializes a ContinuousFeaturesNN object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_features</strong> (<em>int</em>) – dimensions of the input.</p></li>
+<li><p><strong>weights</strong> (<em>torch.Tensor</em>) – weights of the model. Should have length <cite>n_features</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="model.ContinuousFeaturesNN._create_layer_weights">
+<span class="sig-name descname"><span class="pre">_create_layer_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span></span></span><a class="headerlink" href="#model.ContinuousFeaturesNN._create_layer_weights" title="Link to this definition"></a></dt>
+<dd><p>Creates the weights for the layers in a ContinuousFeaturesNN model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_features</strong> (<em>int</em>) – Number of features.</p></li>
+<li><p><strong>weights</strong> (<em>torch.Tensor</em>) – Feature weights of the model. Should have length <cite>continuous_dim</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple containing the weights and activation functions for the
+neural network model.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[list, NoneType, list]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>AssertionError</strong> – If weights are not specified in a valid shape.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="model.DynamicNN">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">model.</span></span><span class="sig-name descname"><span class="pre">DynamicNN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#model.DynamicNN" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.nn.Sequential</span></code></p>
+<p>Class that enables the instantiation of custom neural network architectures using a list
+of layer configurations.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><p>torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+sequential manner.</p>
+</dd>
+</dl>
+<p>Initializes a DynamicNN object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<em>list</em><em>[</em><em>dict</em><em>]</em>) – List of layer configurations. Each configuration is a dictionary
+specifying the layer type and its corresponding parameters.</p></li>
+<li><p><strong>custom_layers</strong> (<em>list</em><em>, </em><em>optional</em>) – List of custom layer classes. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="model.InteractingFeaturesNN">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">model.</span></span><span class="sig-name descname"><span class="pre">InteractingFeaturesNN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interacting_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#model.InteractingFeaturesNN" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.nn.Sequential</span></code></p>
+<p>Implements a neural network model designed to explicitly model interactions between specific pairs of features
+within the input data.</p>
+<p>This model is capable of emphasizing or de-emphasizing the impact of these interactions
+on the model’s output through a specialized network architecture and custom weight assignments.</p>
+<p>The network consists of linear layers combined with ReLU activation, structured to manipulate the input
+# features based on the predefined interactions. The interactions are modelled such that the influence of one
+feature on another can be either enhanced or canceled, according to the specified weights and the interaction
+mechanism implemented within the network.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><p>torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+sequential manner.</p>
+</dd>
+</dl>
+<p>Initializes the InteractingFeaturesNN model with specified dimensions, weights, and interactions.</p>
+<p>The architecture is designed to create a network that can process feature interactions by rearranging
+and weighting input features according to the specified interactions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_features</strong> (<em>int</em>) – The total number of features in the input data. This includes both interacting
+and non-interacting features.</p></li>
+<li><p><strong>weights</strong> (<em>list</em>) – A list of floats or tuples specifying the weights to be applied to the features of
+the model. This list should have a len that matches the <cite>n_features</cite>, with each element
+corresponding to a feature in the input data.</p></li>
+<li><p><strong>interacting_features</strong> (<em>list</em><em>[</em><em>tuple</em><em>]</em>) – A list where each tuple contains two integers representing
+the indices of the interacting features. The first element in the tuple is considered the impacting
+feature, and the second element is the feature being impacted.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="model.InteractingFeaturesNN._validate_inputs">
+<span class="sig-name descname"><span class="pre">_validate_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interacting_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#model.InteractingFeaturesNN._validate_inputs" title="Link to this definition"></a></dt>
+<dd><p>Validates the inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>weights</strong> (<em>list</em>) – A list of floats or tuples specifying the weights to be applied to the features of
+the model.</p></li>
+<li><p><strong>interacting_features</strong> (<em>list</em><em>[</em><em>tuple</em><em>]</em>) – A list where each tuple contains two integers representing
+the indices of the interacting features.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>AssertionError</strong> – If the inputs are not in the valid datatypes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.InteractingFeaturesNN._create_layer_weights">
+<span class="sig-name descname"><span class="pre">_create_layer_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interacting_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span></span></span><a class="headerlink" href="#model.InteractingFeaturesNN._create_layer_weights" title="Link to this definition"></a></dt>
+<dd><p>Creates the weights for the layers in a InteractingFeaturesNN model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_features</strong> (<em>int</em>) – The total number of features in the input data.</p></li>
+<li><p><strong>weights</strong> (<em>list</em>) – A list of floats or tuples specifying the weights to be applied to the features of
+the model.</p></li>
+<li><p><strong>interacting_features</strong> (<em>list</em><em>[</em><em>tuple</em><em>]</em>) – A list where each tuple contains two integers representing
+the indices of the interacting features.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple containing the weights and activation functions for the
+neural network model.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[list, NoneType, list]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="model.PertinentNN">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">model.</span></span><span class="sig-name descname"><span class="pre">PertinentNN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pn_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pn_weight_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#model.PertinentNN" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.nn.Sequential</span></code></p>
+<p>Implements a neural network model specifically designed to handle pertinent negatives in input features.</p>
+<p>This model modifies input features based on their relevance and the presence of pertinent negatives,
+employing a specialized network architecture with custom weights and biases to emphasize or suppress
+certain features according to their pertinence.</p>
+<p>The network consists of linear layers combined with ReLU activation functions, structured to manipulate
+the input features dynamically. It uses the provided weights and a ‘pertinence’ tensor to adjust the
+impact of each feature on the model’s output, effectively highlighting the role of
+pertinent negatives in the prediction process.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><p>torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+sequential manner.</p>
+</dd>
+</dl>
+<p>Initializes the PertinentNN model with specified dimensions, weights, pertinent negatives, and a multiplier.</p>
+<p>The architecture is designed to first adjust the input features based on their pertinence, then to process
+these adjusted features through a series of layers that further manipulate and combine them based on the
+specified weights and the multiplier for pertinent negatives. The final output is a single value obtained
+through a linear combination of the processed features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_features</strong> (<em>int</em>) – The total number of features in the input data.</p></li>
+<li><p><strong>weights</strong> (<em>torch.Tensor</em>) – A tensor specifying the weights to be applied to the features of the model.
+This tensor should have a shape that matches the <cite>n_features</cite>, with each weight corresponding to
+a feature in the input data.</p></li>
+<li><p><strong>pn_features</strong> (<em>torch.Tensor</em>) – A tensor indicating the presence (1) or absence (0) of pertinent negatives for each
+feature. The length of this tensor can be equal to or less than <cite>n_features</cite>. If it is less, the missing
+values are assumed to be 0 (no pertinent negative).</p></li>
+<li><p><strong>pn_weight_factor</strong> (<em>float</em>) – A multiplier used to adjust the weights of the features identified as pertinent negatives.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="model.PertinentNN._reformat_pn_weight">
+<span class="sig-name descname"><span class="pre">_reformat_pn_weight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pn_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="headerlink" href="#model.PertinentNN._reformat_pn_weight" title="Link to this definition"></a></dt>
+<dd><p>Reformats pn_features into tensors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_features</strong> (<em>int</em>) – The total number of features in the input data.</p></li>
+<li><p><strong>pn_features</strong> (<em>torch.Tensor</em>) – A torch.Tensor object indicating which feature is a pertinent negative.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Reformatted tensor representing the features.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.PertinentNN._create_layer_weights">
+<span class="sig-name descname"><span class="pre">_create_layer_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pn_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pn_weight_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span></span></span><a class="headerlink" href="#model.PertinentNN._create_layer_weights" title="Link to this definition"></a></dt>
+<dd><p>Creates the weights for the layers in a PertinentNN model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_features</strong> (<em>int</em>) – The total number of features in the input data.</p></li>
+<li><p><strong>weights</strong> (<em>torch.Tensor</em>) – A tensor specifying the weights to be applied to the features of the model.</p></li>
+<li><p><strong>pn_features</strong> (<em>torch.Tensor</em>) – A tensor indicating the presence (1) or absence (0) of pertinent negatives for each
+feature.</p></li>
+<li><p><strong>pn_weight_factor</strong> (<em>float</em>) – A multiplier used to adjust the weights of the features identified as pertinent negatives.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple containing the weights and activation functions for the
+neural network model.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[list, list, list]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="model.ShatteredGradientsNN">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">model.</span></span><span class="sig-name descname"><span class="pre">ShatteredGradientsNN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">act_fun</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Relu'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#model.ShatteredGradientsNN" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.nn.Sequential</span></code></p>
+<p>Implements a neural network model using a linear layer followed by an activation function.</p>
+<p>This model is designed to exhibit shattered gradients. To generate a model that exhibits
+shattered gradients, use shattered_grad.py, located in datagenerator.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><p>torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+sequential manner.</p>
+</dd>
+</dl>
+<p>Initializes a ShatteredGradientsNN object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>weights</strong> (<em>torch.Tensor</em>) – The weights to be applied to the linear layer.</p></li>
+<li><p><strong>act_fun</strong> (<em>str</em>) – The activation function to be used. Valid options are “Relu”, “Gelu”, or “Sigmoid”.
+Defaults to ‘Relu’.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="model.ShatteredGradientsNN._default_activation_function">
+<span class="sig-name descname"><span class="pre">_default_activation_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">act_fun</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.nn.Module</span></span></span><a class="headerlink" href="#model.ShatteredGradientsNN._default_activation_function" title="Link to this definition"></a></dt>
+<dd><p>Returns the default activation function based on the provided string.</p>
+<p>The <cite>_default_activation_function</cite> method maps the provided activation function name
+to the corresponding PyTorch activation function module. Supported activation functions
+include “Relu” (ReLU), “Gelu” (GELU), and “Sigmoid” (Sigmoid). If the provided name
+is not in the supported list, a KeyError is raised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>act_fun</strong> (<em>str</em>) – The activation function name or class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The corresponding PyTorch activation function module.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Module</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>KeyError</strong> – If the given activation function is not supported.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="model.UncertaintyNN">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">model.</span></span><span class="sig-name descname"><span class="pre">UncertaintyNN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">softmax_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#model.UncertaintyNN" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.nn.Sequential</span></code></p>
+<p>Implements a neural network model designed to capture behaviour were an input node impact all or several output nodes equally.</p>
+<p>This model uses a linear layer followed by a softmax activation function to compute a distribution over the
+input features, effectively capturing the uncertainty or confidence level associated with each feature.</p>
+<p>For best practice, please create an instance of network using generate_model() method of UncertaintyAwareDataset.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><p>torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+sequential manner.</p>
+</dd>
+</dl>
+<p>Initializes the UncertaintyNN model with a specified dimension for the input features and custom weights.</p>
+<p>The initialized model consists of a single linear layer without bias, followed by a softmax layer
+to normalize the output of the linear layer into a probability distribution,
+representing the model’s confidence or uncertainty regarding each input feature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_features</strong> (<em>int</em>) – The total number of features in the input data. This parameter determines the
+dimensionality of the input to the linear layer and subsequently the output dimension of the model
+before applying the softmax.</p></li>
+<li><p><strong>weights</strong> (<em>torch.Tensor</em>) – A torch.Tensor object to directly specify the weights for the linear
+transformation of the input features.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="model.PropFormulaNN">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">model.</span></span><span class="sig-name descname"><span class="pre">PropFormulaNN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">formula_expr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sympy.core.function.FunctionClass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atoms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#model.PropFormulaNN" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.nn.Sequential</span></code></p>
+<p>A neural network model representing a propositional formula that is constructed
+using only NOT (~), OR (|), AND (&amp;) with syntax from SymPy.</p>
+<p>It takes inputs where -1 represents False and +1 represents True.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><p>torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+sequential manner.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="model.PropFormulaNN.parse_tree">
+<span class="sig-name descname"><span class="pre">parse_tree</span></span><a class="headerlink" href="#model.PropFormulaNN.parse_tree" title="Link to this definition"></a></dt>
+<dd><p>The ParseTree representation of the formula.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="boolean/index.html#model.boolean.ParseTree" title="model.boolean.ParseTree">ParseTree</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="model.PropFormulaNN.atoms">
+<span class="sig-name descname"><span class="pre">atoms</span></span><a class="headerlink" href="#model.PropFormulaNN.atoms" title="Link to this definition"></a></dt>
+<dd><p>The unique atoms in the formula. The ordering of this
+tuple matters in determining the ordering of the input to the network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Initializes a PropFormulaNN instance and generates all the torch.nn.Linear
+layers necessary to construct the neural network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>formula_expr</strong> (<em>sympy.core.function.FunctionClass</em>) – The expression representing
+the propositional formula. Constructed using only syntax from SymPy with
+the operators NOT (~), OR (|), AND (&amp;).</p></li>
+<li><p><strong>atoms</strong> (<em>tuple</em><em>[</em><em>str</em><em>]</em>) – A tuple of unique atoms in the formula.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">parse_tree</span></span><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">atoms</span></span><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.PropFormulaNN._init_layers">
+<span class="sig-name descname"><span class="pre">_init_layers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.nn.Module</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#model.PropFormulaNN._init_layers" title="Link to this definition"></a></dt>
+<dd><p>Initializes all the layers of the neural network into a list of nn.Module.</p>
+<p>The layers are initialized and created in ascending order of height in the
+ParseTree representation of the formula.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of neural network layers.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[torch.nn.Module]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.PropFormulaNN._atom_layer">
+<span class="sig-name descname"><span class="pre">_atom_layer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.nn.Module</span></span></span><a class="headerlink" href="#model.PropFormulaNN._atom_layer" title="Link to this definition"></a></dt>
+<dd><p>Initializes the first layer of the neural network that duplicates and reorders
+the input propositional atoms based on their ordering in the ParseTree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Linear layer that duplicates and reorders the input atoms.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>torch.nn.Linear</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.PropFormulaNN._get_height_layers">
+<span class="sig-name descname"><span class="pre">_get_height_layers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.nn.Module</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#model.PropFormulaNN._get_height_layers" title="Link to this definition"></a></dt>
+<dd><p>Retrieves layers corresponding to a specific height in the ParseTree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>height</strong> (<em>int</em>) – The specified height within the ParseTree representatation.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>List of neural network layers for the nodes that are located</dt><dd><p>at the given height in the ParseTree representation.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[torch.nn.Module]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.PropFormulaNN._init_binary_operator_layers">
+<span class="sig-name descname"><span class="pre">_init_binary_operator_layers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtree_ls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="boolean/index.html#model.boolean.ParseTree" title="model.boolean.ParseTree"><span class="pre">ParseTree</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.nn.Module</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#model.PropFormulaNN._init_binary_operator_layers" title="Link to this definition"></a></dt>
+<dd><p>Initializes the all the layers associated with carrying out the operators
+involved in the given list of subtrees.</p>
+<p>It assumes that the given list of subtrees contains at least one that involves
+a binary operator/connective.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>subtree_ls</strong> (<em>list</em><em>[</em><a class="reference internal" href="boolean/index.html#model.boolean.ParseTree" title="model.boolean.ParseTree"><em>ParseTree</em></a><em>]</em>) – List of ParseTree instances with the same height in the full
+ParseTree that includes binary operators.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of neural network layers for binary operators.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[torch.nn.Module]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.PropFormulaNN._binary_operator_block">
+<span class="sig-name descname"><span class="pre">_binary_operator_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg_num_ls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtree_ls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="boolean/index.html#model.boolean.ParseTree" title="model.boolean.ParseTree"><span class="pre">ParseTree</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">first_block</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.nn.Module</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#model.PropFormulaNN._binary_operator_block" title="Link to this definition"></a></dt>
+<dd><p>Creates a block of layers that simpliefies the subexpression for the given list of subtrees
+by applying the binary operator/connective once whenever possible.</p>
+<p>The binary operator/connective from the same subtree can be applied simultaneously as long
+as the number of arguments inputted to it permits (i.e. divisible by two).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arg_num_ls</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of number of arguments that the operator/node of each
+subtrees takes.</p></li>
+<li><p><strong>subtree_ls</strong> (<em>list</em><em>[</em><a class="reference internal" href="boolean/index.html#model.boolean.ParseTree" title="model.boolean.ParseTree"><em>ParseTree</em></a><em>]</em>) – List of subtrees with the same height in the ParseTree.</p></li>
+<li><p><strong>first_block</strong> (<em>bool</em>) – Indicates if this is the first block of the layers for this
+collection of subtrees with the same height.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of neural network layers in a single block.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[torch.nn.Module]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.PropFormulaNN._identity_weights">
+<span class="sig-name descname"><span class="pre">_identity_weights</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#model.PropFormulaNN._identity_weights" title="Link to this definition"></a></dt>
+<dd><p>Generates the weights for the two nn.Linear layers in an identity block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Inter and out layer weights for an identity block.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple[torch.Tensor, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.PropFormulaNN._and_or_weights">
+<span class="sig-name descname"><span class="pre">_and_or_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub_inter_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#model.PropFormulaNN._and_or_weights" title="Link to this definition"></a></dt>
+<dd><p>Generates weights for the two nn.Linear layers in an AND or OR block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sub_inter_dim</strong> (<em>int</em>) – Dimension of the intermediate layer.</p></li>
+<li><p><strong>operator</strong> (<em>str</em>) – The operator type (AND or OR).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Inter and out layer weights for an AND or OR block.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[torch.Tensor, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.PropFormulaNN._init_unary_operator_layer">
+<span class="sig-name descname"><span class="pre">_init_unary_operator_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtree_ls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="boolean/index.html#model.boolean.ParseTree" title="model.boolean.ParseTree"><span class="pre">ParseTree</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.nn.Module</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#model.PropFormulaNN._init_unary_operator_layer" title="Link to this definition"></a></dt>
+<dd><p>Initializes the all the layers associated with carrying out the operators
+involved in the given list of subtrees.</p>
+<p>It assumes that the given list of subtrees contains only unary operators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>subtree_ls</strong> (<em>list</em><em>[</em><a class="reference internal" href="boolean/index.html#model.boolean.ParseTree" title="model.boolean.ParseTree"><em>ParseTree</em></a><em>]</em>) – List of ParseTree instances with the same height
+in the full ParseTree that only has unary operators.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of neural network layers for unary operators.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[torch.nn.Module]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.PropFormulaNN._count_binary_operators">
+<span class="sig-name descname"><span class="pre">_count_binary_operators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subtree_ls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="boolean/index.html#model.boolean.ParseTree" title="model.boolean.ParseTree"><span class="pre">ParseTree</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#model.PropFormulaNN._count_binary_operators" title="Link to this definition"></a></dt>
+<dd><p>Counts the occurrences of binary operators in the given list of ParseTree instances.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>subtree_ls</strong> (<em>list</em><em>[</em><a class="reference internal" href="boolean/index.html#model.boolean.ParseTree" title="model.boolean.ParseTree"><em>ParseTree</em></a><em>]</em>) – List of ParseTree instances with the same height
+in the full ParseTree.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Count of binary operators.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.PropFormulaNN._post_block_arg_num_ls">
+<span class="sig-name descname"><span class="pre">_post_block_arg_num_ls</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg_num_ls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#model.PropFormulaNN._post_block_arg_num_ls" title="Link to this definition"></a></dt>
+<dd><p>Returns the list of number of arguments of each subtree after a binary operator block
+of layers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>arg_num_ls</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of numbers of arguments for each subtree.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Number of arguments for each subtree after a block.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="model.BooleanAndNN">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">model.</span></span><span class="sig-name descname"><span class="pre">BooleanAndNN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#model.BooleanAndNN" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.nn.Sequential</span></code></p>
+<p>Implements a neural network model designed to mimic the ‘AND’ logical operation on input features.</p>
+<p>When only -1 or 1 are passed in as part of the input to this model, it is effectively performing the
+‘AND’ operation.</p>
+<p>This model is structured as a sequence of layers that progressively compute the ‘AND’ operation
+on the input features, scaling the dimensionality of the input at each step until the final
+output is obtained. The network employs a specific arrangement of weights and intermediate operations
+such that it is also equivalent to computing the minimum value among a collection of values given as
+as the input.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><dl class="simple">
+<dt>torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a</dt><dd><p>sequential manner.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="model.BooleanAndNN.dims">
+<span class="sig-name descname"><span class="pre">dims</span></span><a class="headerlink" href="#model.BooleanAndNN.dims" title="Link to this definition"></a></dt>
+<dd><p>A list that keeps track of the dimensions of each layer in the network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Initializes an AND model with the specified input features dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>n_features</strong> (<em>int</em>) – The dimension (number of features) of the input data. Defaults to 2.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="model.BooleanAndNN.n_features">
+<span class="sig-name descname"><span class="pre">n_features</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#model.BooleanAndNN.n_features" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.BooleanAndNN._create_layer_weights">
+<span class="sig-name descname"><span class="pre">_create_layer_weights</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span></span></span><a class="headerlink" href="#model.BooleanAndNN._create_layer_weights" title="Link to this definition"></a></dt>
+<dd><p>Initializes the layers of the network starting from the input dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>in_dim</strong> (<em>int</em>) – The dimension of the input to the current layer.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of initialized layers that make up the network.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="model.BooleanNotNN">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">model.</span></span><span class="sig-name descname"><span class="pre">BooleanNotNN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#model.BooleanNotNN" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.nn.Sequential</span></code></p>
+<p>Implements a neural network model designed to apply the logical NOT operation to input features.</p>
+<p>This model consists of a single linear layer without bias, configured to negate each input feature.
+The weights of the layer are initialized to -1 for each feature, effectively performing the ‘NOT’ operation
+in a bitwise manner when the inputs are considered to be -1 or 1.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><p>torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+sequential manner.</p>
+</dd>
+</dl>
+<p>Initializes a NOT model with a specified dimension for the input features.</p>
+<p>The initialized model consists of a single linear layer without bias. The weights of this layer are
+set to -1 for each input feature, enabling the layer to negate the values of all input features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>n_features</strong> (<em>int</em>) – The total number of features in the input data. This parameter determines the
+dimensionality of the input to the linear layer as well as the output dimension, allowing the
+model to apply the NOT operation to each feature independently.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="model.BooleanOrNN">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">model.</span></span><span class="sig-name descname"><span class="pre">BooleanOrNN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#model.BooleanOrNN" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.nn.Sequential</span></code></p>
+<p>Implements a neural network model designed to mimic the ‘OR’ logical operation on input features.</p>
+<p>When only -1 or 1 are passed in as part of the input to this model, it is effectively performing the
+‘OR’ operation.</p>
+<p>This model is structured as a sequence of layers that progressively compute the ‘OR’ operation
+on the input features, scaling the dimensionality of the input at each step until the final
+output is obtained. The network employs a specific arrangement of weights and intermediate operations
+such that it is also equivalent to computing the maximum value among a collection of values given as
+as the input.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><p>torch.nn.Sequential: Parent class for implementing neural networks with modules defined in a
+sequential manner.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="model.BooleanOrNN.dims">
+<span class="sig-name descname"><span class="pre">dims</span></span><a class="headerlink" href="#model.BooleanOrNN.dims" title="Link to this definition"></a></dt>
+<dd><p>A list that keeps track of the dimensions of each layer in the network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Initializes an AND model with the specified input features dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>n_features</strong> (<em>int</em>) – The dimension (number of features) of the input data. Defaults to 2.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="model.BooleanOrNN.n_features">
+<span class="sig-name descname"><span class="pre">n_features</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#model.BooleanOrNN.n_features" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.BooleanOrNN._create_layer_weights">
+<span class="sig-name descname"><span class="pre">_create_layer_weights</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span></span></span><a class="headerlink" href="#model.BooleanOrNN._create_layer_weights" title="Link to this definition"></a></dt>
+<dd><p>Initializes the layers of the network starting from the input dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>in_dim</strong> (<em>int</em>) – The dimension of the input to the current layer.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of initialized layers that make up the network.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="boolean/index.html" class="btn btn-neutral float-right" title="model.boolean" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, XAI-Units.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

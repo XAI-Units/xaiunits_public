@@ -1,0 +1,1111 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>datagenerator.image_generation &mdash; XAI-Units 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="datagenerator.interacting_features" href="../interacting_features/index.html" />
+    <link rel="prev" title="datagenerator.foregrounds" href="../foregrounds/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            XAI-Units
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../library_quickstart.html">Quickstart - Library Walkthrough</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../image_dataset_example.html">Image Dataset Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../custom_methods_and_custom_datasets.html">Customization Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../model/index.html">model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../methods/index.html">methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../metrics/index.html">metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../trainer/index.html">trainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pipeline/index.html">pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fine_tune/index.html">fine_tune</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../common_lib/index.html">common_lib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">datagenerator</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../backgrounds/index.html">datagenerator.backgrounds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../boolean/index.html">datagenerator.boolean</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../conflicting/index.html">datagenerator.conflicting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../data_generation/index.html">datagenerator.data_generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../foregrounds/index.html">datagenerator.foregrounds</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">datagenerator.image_generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../interacting_features/index.html">datagenerator.interacting_features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../pertinent_negatives/index.html">datagenerator.pertinent_negatives</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../shattered_grad/index.html">datagenerator.shattered_grad</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../text_datasets/index.html">datagenerator.text_datasets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../uncertainty_aware/index.html">datagenerator.uncertainty_aware</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#attributes">Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">XAI-Units</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">datagenerator</a></li>
+      <li class="breadcrumb-item active">datagenerator.image_generation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/datagenerator/image_generation/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-datagenerator.image_generation">
+<span id="datagenerator-image-generation"></span><h1>datagenerator.image_generation<a class="headerlink" href="#module-datagenerator.image_generation" title="Link to this heading"></a></h1>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#datagenerator.image_generation.balanced_dataset" title="datagenerator.image_generation.balanced_dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">balanced_dataset</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#datagenerator.image_generation.ImageBuilder" title="datagenerator.image_generation.ImageBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageBuilder</span></code></a></p></td>
+<td><p>A class to build images with either geometric shapes or dinosaurs superimposed on various backgrounds,</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#datagenerator.image_generation.ImageDataset" title="datagenerator.image_generation.ImageDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageDataset</span></code></a></p></td>
+<td><p>A dataset for images with specified configurations for image generation, supporting both balanced and imbalanced datasets.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#datagenerator.image_generation.BalancedImageDataset" title="datagenerator.image_generation.BalancedImageDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BalancedImageDataset</span></code></a></p></td>
+<td><p>A dataset for images where each each image consists of a background and a foreground overlay.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#datagenerator.image_generation.ImbalancedImageDataset" title="datagenerator.image_generation.ImbalancedImageDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImbalancedImageDataset</span></code></a></p></td>
+<td><p>Creates Image Dataset where each image comprises of a background image an a foreground image.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageBuilder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">datagenerator.image_generation.</span></span><span class="sig-name descname"><span class="pre">ImageBuilder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'geometric'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'center'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlay_scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(512,</span> <span class="pre">512)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_background_imagefile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'local'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datagenerator.image_generation.ImageBuilder" title="Link to this definition"></a></dt>
+<dd><p>A class to build images with either geometric shapes or dinosaurs superimposed on various backgrounds,
+including options for color customization, image rotation, and positioning of the overlay image.</p>
+<p>A specific background image can be set as default for all generated samples.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageBuilder.shape_type">
+<span class="sig-name descname"><span class="pre">shape_type</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageBuilder.shape_type" title="Link to this definition"></a></dt>
+<dd><p>Specifies the type of overlay shape, either ‘geometric’ or ‘dinosaurs’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageBuilder.rotation">
+<span class="sig-name descname"><span class="pre">rotation</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageBuilder.rotation" title="Link to this definition"></a></dt>
+<dd><p>If True, the overlay image will be randomly rotated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageBuilder.color">
+<span class="sig-name descname"><span class="pre">color</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageBuilder.color" title="Link to this definition"></a></dt>
+<dd><p>RGBA range (0-255) for the color of overlay shape. Used as default unless overridden.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str | tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageBuilder.position">
+<span class="sig-name descname"><span class="pre">position</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageBuilder.position" title="Link to this definition"></a></dt>
+<dd><p>Specifies the positioning of the overlay image on the background, either ‘center’ or ‘random’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageBuilder.overlay_scale">
+<span class="sig-name descname"><span class="pre">overlay_scale</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageBuilder.overlay_scale" title="Link to this definition"></a></dt>
+<dd><p>The scale of the overlay image relative to the background size.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageBuilder.background_size">
+<span class="sig-name descname"><span class="pre">background_size</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageBuilder.background_size" title="Link to this definition"></a></dt>
+<dd><p>The size of the background image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageBuilder.default_background_imagefile">
+<span class="sig-name descname"><span class="pre">default_background_imagefile</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageBuilder.default_background_imagefile" title="Link to this definition"></a></dt>
+<dd><p>Specific background image filename to use as default for all samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageBuilder.back_gen">
+<span class="sig-name descname"><span class="pre">back_gen</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageBuilder.back_gen" title="Link to this definition"></a></dt>
+<dd><p>An instance of BackgroundGenerator to fetch background images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../backgrounds/index.html#datagenerator.backgrounds.BackgroundGenerator" title="datagenerator.backgrounds.BackgroundGenerator">BackgroundGenerator</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageBuilder.image_gen">
+<span class="sig-name descname"><span class="pre">image_gen</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageBuilder.image_gen" title="Link to this definition"></a></dt>
+<dd><p>The generator for overlay images, either shapes or dinosaurs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ShapeGenerator | DinoGenerator</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Initializes the ImageBuilder object with specified configurations for image generation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape_type</strong> (<em>str</em>) – The type of shapes to overlay (‘geometric’ or ‘dinosaurs’). Defaults to ‘geometric’.</p></li>
+<li><p><strong>rotation</strong> (<em>bool</em>) – Whether to apply random rotation to the overlay images. Defaults to False.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em> | </em><em>tuple</em><em>, </em><em>optional</em>) – The color of the shape, specified by name or RGBA tuple. Defaults to None.</p></li>
+<li><p><strong>position</strong> (<em>str</em>) – The positioning of the overlay image (‘center’ or ‘random’). Defaults to ‘center’.</p></li>
+<li><p><strong>overlay_scale</strong> (<em>float</em>) – Scale of the overlay image relative to the background. Defaults to 0.3.</p></li>
+<li><p><strong>background_size</strong> (<em>tuple</em>) – The size (width, height) of the background image. Defaults to (512, 512).</p></li>
+<li><p><strong>default_background_imagefile</strong> (<em>str</em><em>, </em><em>optional</em>) – Specific background image filename to use as default for all samples.
+Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If input other than ‘geometric’ or ‘dinosaurs’ is passed to shape_type.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">shape_type</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'geometric'</span></em><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">rotation</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">color</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'center'</span></em><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">overlay_scale</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.3</span></em><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">background_size</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(512,</span> <span class="pre">512)</span></em><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">back_gen</span></span><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">default_background_imagefile</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id7" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageBuilder.resize_overlay_to_background">
+<span class="sig-name descname"><span class="pre">resize_overlay_to_background</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">background</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PIL.Image.Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlay</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PIL.Image.Image</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PIL.Image.Image</span></span></span><a class="headerlink" href="#datagenerator.image_generation.ImageBuilder.resize_overlay_to_background" title="Link to this definition"></a></dt>
+<dd><p>Resizes the overlay image to maintain its aspect ratio and fit within the specified background size,
+calculated based on the overlay_scale.</p>
+<p>This method ensures that the overlay fits aesthetically with the background without distorting its original aspect ratio.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>background</strong> (<em>PIL.Image.Image</em>) – The background image onto which the overlay will be placed.</p></li>
+<li><p><strong>overlay</strong> (<em>PIL.Image.Image</em>) – The overlay image to be resized.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The resized overlay image, maintaining its original aspect ratio.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>PIL.Image.Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageBuilder.img_rotation">
+<span class="sig-name descname"><span class="pre">img_rotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PIL.Image.Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PIL.Image.Image</span></span></span><a class="headerlink" href="#datagenerator.image_generation.ImageBuilder.img_rotation" title="Link to this definition"></a></dt>
+<dd><p>Rotates the image by a specified angle or a random angle between 0 and 360 degrees if none is provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> (<em>PIL.Image.Image</em>) – The image to be rotated.</p></li>
+<li><p><strong>angle</strong> (<em>int</em><em>, </em><em>optional</em>) – The angle in degrees for rotation. If None, a random angle will be used.
+Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The rotated image, resized to accommodate its new dimensions if necessary.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>PIL.Image.Image</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the specified angle is not within the expected range of 0-360 degrees.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageBuilder.overlay_pos">
+<span class="sig-name descname"><span class="pre">overlay_pos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">background_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PIL.Image.Image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlay_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PIL.Image.Image</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.image_generation.ImageBuilder.overlay_pos" title="Link to this definition"></a></dt>
+<dd><p>Calculates the position of the overlay image on the background based on the specified position setting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>background_image</strong> (<em>PIL.Image.Image</em>) – The background image.</p></li>
+<li><p><strong>overlay_image</strong> (<em>PIL.Image.Image</em>) – The overlay image.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple (x, y) representing the top-left corner of the overlay image’s position on the background.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the position attribute is not ‘center’ or ‘random’.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageBuilder.generate_sample">
+<span class="sig-name descname"><span class="pre">generate_sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_imagefile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contour_thickness</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">PIL.Image.Image</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PIL.Image.Image</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.image_generation.ImageBuilder.generate_sample" title="Link to this definition"></a></dt>
+<dd><p>Generates a single image sample with a specified shape (or randomly selected if none is provided), color, and background.
+This method allows for specific customization of the image sample or can use default settings defined in the class.
+Useful for generating varied datasets for image recognition tasks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – The name of the shape or dinosaur to use. Randomly selects a shape if None.
+Defaults to None.</p></li>
+<li><p><strong>background_imagefile</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to a specific background image file to use. Uses the class-level default if None.
+Defaults to None.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em> | </em><em>tuple</em><em>, </em><em>optional</em>) – The color to apply to the shape, specified as a name or RGBA tuple. Uses the class-level default if None.
+Defaults to None.</p></li>
+<li><p><strong>contour_thickness</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Contains the composite image (PIL.Image.Image), the numeric label representing the shape, a string label describing the shape and the gorund truth.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">datagenerator.image_generation.</span></span><span class="sig-name descname"><span class="pre">ImageDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backgrounds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shapes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_variants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(512,</span> <span class="pre">512)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'geometric'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'random'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlay_scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape_colors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contour_thickness</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'local'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.utils.data.Dataset</span></code></p>
+<p>A dataset for images with specified configurations for image generation, supporting both balanced and imbalanced datasets.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><p>torch.utils.data.Dataset: The standard base class for defining a dataset within the PyTorch framework.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.seed">
+<span class="sig-name descname"><span class="pre">seed</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.seed" title="Link to this definition"></a></dt>
+<dd><p>Seed for random number generation to ensure reproducibility.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.backgrounds">
+<span class="sig-name descname"><span class="pre">backgrounds</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.backgrounds" title="Link to this definition"></a></dt>
+<dd><p>List of background images to use for dataset generation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.shapes">
+<span class="sig-name descname"><span class="pre">shapes</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.shapes" title="Link to this definition"></a></dt>
+<dd><p>List of shapes to overlay on background images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.n_variants">
+<span class="sig-name descname"><span class="pre">n_variants</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.n_variants" title="Link to this definition"></a></dt>
+<dd><p>Number of variations per shape-background combination, affects dataset size.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.background_size">
+<span class="sig-name descname"><span class="pre">background_size</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.background_size" title="Link to this definition"></a></dt>
+<dd><p>Dimensions (width, height) of background images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.shape_type">
+<span class="sig-name descname"><span class="pre">shape_type</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.shape_type" title="Link to this definition"></a></dt>
+<dd><p>Type of shapes: ‘geometric’ for geometric shapes, ‘dinosaurs’ for dinosaur shapes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.position">
+<span class="sig-name descname"><span class="pre">position</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.position" title="Link to this definition"></a></dt>
+<dd><p>Overlay position on the background (‘center’ or ‘random’).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.overlay_scale">
+<span class="sig-name descname"><span class="pre">overlay_scale</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.overlay_scale" title="Link to this definition"></a></dt>
+<dd><p>Scale factor for overlay relative to the background size.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.rotation">
+<span class="sig-name descname"><span class="pre">rotation</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.rotation" title="Link to this definition"></a></dt>
+<dd><p>If True, applies random rotation to overlays.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.shape_colors">
+<span class="sig-name descname"><span class="pre">shape_colors</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.shape_colors" title="Link to this definition"></a></dt>
+<dd><p>List of default color(s) for shapes, accepts color names or RGBA tuples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.shuffled">
+<span class="sig-name descname"><span class="pre">shuffled</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.shuffled" title="Link to this definition"></a></dt>
+<dd><p>If True, shuffles the dataset after generation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.transform" title="Link to this definition"></a></dt>
+<dd><p>Transformation function to apply to each image, typically converting to tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>callable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.contour_thickness">
+<span class="sig-name descname"><span class="pre">contour_thickness</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.contour_thickness" title="Link to this definition"></a></dt>
+<dd><p>Thickness of lines the contours are drawn with.
+If it is negative, the contour interiors are drawn.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.image_builder">
+<span class="sig-name descname"><span class="pre">image_builder</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.image_builder" title="Link to this definition"></a></dt>
+<dd><p>Instance of ImageBuilder for generating images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#datagenerator.image_generation.ImageBuilder" title="datagenerator.image_generation.ImageBuilder">ImageBuilder</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.samples">
+<span class="sig-name descname"><span class="pre">samples</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.samples" title="Link to this definition"></a></dt>
+<dd><p>List to store the generated samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.labels">
+<span class="sig-name descname"><span class="pre">labels</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.labels" title="Link to this definition"></a></dt>
+<dd><p>List to store the labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.fg_shapes">
+<span class="sig-name descname"><span class="pre">fg_shapes</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.fg_shapes" title="Link to this definition"></a></dt>
+<dd><p>List to store the foreground shapes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.bg_labels">
+<span class="sig-name descname"><span class="pre">bg_labels</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.bg_labels" title="Link to this definition"></a></dt>
+<dd><p>List to store the background labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.fg_colors">
+<span class="sig-name descname"><span class="pre">fg_colors</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.fg_colors" title="Link to this definition"></a></dt>
+<dd><p>List to store the foreground colors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.ground_truth">
+<span class="sig-name descname"><span class="pre">ground_truth</span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.ground_truth" title="Link to this definition"></a></dt>
+<dd><p>List to store the ground truths.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Initializes an ImageDataset object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seed</strong> (<em>int</em>) – Seed for random number generation to ensure reproducibility. Defaults to 0.</p></li>
+<li><p><strong>backgrounds</strong> (<em>int</em><em> | </em><em>list</em>) – Number or list of specific backgrounds to use. Defaults to 5.</p></li>
+<li><p><strong>shapes</strong> (<em>int</em><em> | </em><em>list</em>) – Number or list of specific shapes. Defaults to 10.</p></li>
+<li><p><strong>n_variants</strong> (<em>int</em>) – Number of variations per shape-background combination, affects dataset size.
+Defaults to 4.</p></li>
+<li><p><strong>background_size</strong> (<em>tuple</em>) – Dimensions (width, height) of background images. Defaults to (512, 512).</p></li>
+<li><p><strong>shape_type</strong> (<em>str</em>) – ‘geometric’ for geometric shapes, ‘dinosaurs’ for dinosaur shapes.
+Defaults to ‘geometric’.</p></li>
+<li><p><strong>position</strong> (<em>str</em>) – Overlay position on the background (‘center’ or ‘random’). Defaults to ‘random’.</p></li>
+<li><p><strong>overlay_scale</strong> (<em>float</em>) – Scale factor for overlay relative to the background size. Defaults to 0.3.</p></li>
+<li><p><strong>rotation</strong> (<em>bool</em>) – If True, applies random rotation to overlays. Defaults to False.</p></li>
+<li><p><strong>shape_colors</strong> (<em>str</em><em> | </em><em>tuple</em><em>, </em><em>optional</em>) – Default color(s) for shapes, accepts color names or RGBA tuples.
+Defaults to None.</p></li>
+<li><p><strong>shuffled</strong> (<em>bool</em>) – If True, shuffles the dataset after generation. Defaults to True.</p></li>
+<li><p><strong>transform</strong> (<em>callable</em><em>, </em><em>optional</em>) – Transformation function to apply to each image, typically converting to tensor.
+Defaults to None.</p></li>
+<li><p><strong>contour_thickness</strong> (<em>int</em>) – Defaults to 3.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">seed</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#id8" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">n_variants</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#id9" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">image_builder</span></span><a class="headerlink" href="#id10" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">backgrounds</span></span><a class="headerlink" href="#id11" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id12">
+<span class="sig-name descname"><span class="pre">shapes</span></span><a class="headerlink" href="#id12" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id13">
+<span class="sig-name descname"><span class="pre">shape_colors</span></span><a class="headerlink" href="#id13" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id14">
+<span class="sig-name descname"><span class="pre">transform</span></span><a class="headerlink" href="#id14" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id15">
+<span class="sig-name descname"><span class="pre">samples</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#id15" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id16">
+<span class="sig-name descname"><span class="pre">labels</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#id16" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id17">
+<span class="sig-name descname"><span class="pre">fg_shapes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#id17" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id18">
+<span class="sig-name descname"><span class="pre">bg_labels</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#id18" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id19">
+<span class="sig-name descname"><span class="pre">fg_colors</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#id19" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id20">
+<span class="sig-name descname"><span class="pre">ground_truth</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#id20" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id21">
+<span class="sig-name descname"><span class="pre">shuffled</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#id21" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id22">
+<span class="sig-name descname"><span class="pre">contour_thickness</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#id22" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset._validate_n_variants">
+<span class="sig-name descname"><span class="pre">_validate_n_variants</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_variants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset._validate_n_variants" title="Link to this definition"></a></dt>
+<dd><p>Validates that the number of variants per shape-background combination is a positive integer.</p>
+<p>The <cite>n_variants</cite> parameter controls how many different versions of each shape-background combination are generated,
+varying elements such as position and possibly color if specified. This allows for diverse training data in image
+recognition tasks, improving the model’s ability to generalize from different perspectives and conditions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>n_variants</strong> (<em>int</em>) – The number of variations per shape-background combination to generate.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The validated number of variants.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <cite>n_variants</cite> is not an integer or is less than or equal to zero.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset._prepare_shapes">
+<span class="sig-name descname"><span class="pre">_prepare_shapes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shapes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset._prepare_shapes" title="Link to this definition"></a></dt>
+<dd><p>Prepares a list of shapes or dinosaurs based on the input and the specified shape type.</p>
+<p>This method processes the input to generate a list of specific shapes or dinosaur names.
+If a numerical input is provided, it selects that many random shapes/dinosaurs from the
+available names. If a list is provided, it directly uses those specific names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape_type</strong> (<em>str</em>) – Specifies the type of overlay image, either ‘geometric’ or ‘dinosaurs’.</p></li>
+<li><p><strong>shapes</strong> (<em>int</em><em> | </em><em>list</em>) – Number or list of specific shape names. If an integer is provided,
+it indicates how many random shapes or dinosaurs to select.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of shape names or dinosaur names to be used as overlays.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the shapes input is neither an integer nor a list, or if the shape_type is
+not recognized as ‘geometric’ or ‘dinosaurs’.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset._prepare_backgrounds">
+<span class="sig-name descname"><span class="pre">_prepare_backgrounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backgrounds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset._prepare_backgrounds" title="Link to this definition"></a></dt>
+<dd><p>Prepares background images based on the input.</p>
+<p>This method helps to either randomly select a set number of background images from the available
+pool or validate and use a provided list of specific background filenames.</p>
+<p>If a numerical value is provided, selects that many random backgrounds. If a list is provided,
+validates and uses those specific backgrounds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>backgrounds</strong> (<em>int</em><em> | </em><em>list</em>) – Number of random backgrounds to select or a list of specific background filenames.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of background filenames to be used in the dataset.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the input is neither an integer nor a list, or if any specified background filename
+is not found in the available backgrounds.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset._prepare_shape_color">
+<span class="sig-name descname"><span class="pre">_prepare_shape_color</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape_colors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset._prepare_shape_color" title="Link to this definition"></a></dt>
+<dd><p>Prepares shape colors by validating input against available colors.</p>
+<p>If no valid colors are provided, a default color is selected. Accepts single or multiple colors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>shape_colors</strong> (<em>int</em><em> | </em><em>str</em><em> | </em><em>tuple</em><em> | </em><em>list</em>) – Specifies how many random colors to select or provides specific color(s).
+Can be a single color name, RGBA tuple, or list of names/tuples.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of validated RGBA tuples representing the colors.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If input is invalid or colors are not found in the available color dictionary.
+Details about the invalid input are provided in the error message.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.generate_samples">
+<span class="sig-name descname"><span class="pre">generate_samples</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.generate_samples" title="Link to this definition"></a></dt>
+<dd><p>Placeholder method for generating the samples either for balanced or imbalanced datasets.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.shuffle_dataset">
+<span class="sig-name descname"><span class="pre">shuffle_dataset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.shuffle_dataset" title="Link to this definition"></a></dt>
+<dd><p>Randomly shuffles the dataset samples and corresponding labels to ensure variety
+in training and evaluation phases.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the dataset is empty and shuffling is not possible.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.__len__" title="Link to this definition"></a></dt>
+<dd><p>Returns thet number of samples in the dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>number of samples contained by the dataset.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">PIL.Image.Image</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.__getitem__" title="Link to this definition"></a></dt>
+<dd><p>Retrieves an image and its label by index.</p>
+<p>The image is transformed into a tensor if a transform is applied.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>idx</strong> (<em>int</em>) – Index of the sample to retrieve.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the transformed image tensor, label, a dict of other attributes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset._re_label">
+<span class="sig-name descname"><span class="pre">_re_label</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset._re_label" title="Link to this definition"></a></dt>
+<dd><p>Re-labels the dataset labels with integer indices.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.show_image">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">show_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img_tensor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.show_image" title="Link to this definition"></a></dt>
+<dd><p>Displays an image given its tensor representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>img_tensor</strong> (<em>torch.Tensor</em>) – The image tensor to display.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImageDataset.default_metric">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_metric</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Callable</span></em><a class="headerlink" href="#datagenerator.image_generation.ImageDataset.default_metric" title="Link to this definition"></a></dt>
+<dd><p>The default metric for evaluating the performance of explanation methods applied
+to this dataset.</p>
+<p>For this dataset, the default metric is the mask ratio metric that is constructed
+based on the ground truth and context. Mask ratio is defined as the ratio of absolute
+attribution score that lies within the foreground and the image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>A class that wraps around the default metric to be instantiated</dt><dd><p>within the pipeline.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>type</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="datagenerator.image_generation.BalancedImageDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">datagenerator.image_generation.</span></span><span class="sig-name descname"><span class="pre">BalancedImageDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datagenerator.image_generation.BalancedImageDataset" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#datagenerator.image_generation.ImageDataset" title="datagenerator.image_generation.ImageDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageDataset</span></code></a></p>
+<p>A dataset for images where each each image consists of a background and a foreground overlay.</p>
+<p>This ‘balanced’ dataset ensures that each combination of background (bg), foreground (fg), and foreground color (fg_color)
+appears the same number of times across the dataset, making it ideal for machine learning models that benefit from
+uniform exposure to all feature combinations.</p>
+<p>Inherits all parameters from ImageDataset, and introduces no additional parameters, but it overrides the behavior
+to ensure balance in the dataset composition.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><p>ImageDataset: Standard dataset that contains images with backgorunds and foregrounds.</p>
+</dd>
+</dl>
+<p>Initializes a BalancedImageDataset with the same parameters as ImageDataset, ensuring each combination
+of background, foreground, and color appears uniformly across the dataset.</p>
+<p>After initialization, it automatically generates the samples and shuffles them if the ‘shuffled’ attribute is True.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – Additional arguments passed to the superclass initializer.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments passed to the superclass initializer.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.image_generation.BalancedImageDataset.generate_samples">
+<span class="sig-name descname"><span class="pre">generate_samples</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#datagenerator.image_generation.BalancedImageDataset.generate_samples" title="Link to this definition"></a></dt>
+<dd><p>Generates a balanced set of image samples by uniformly distributing each combination of background,
+foreground shape, and color.</p>
+<p>Iterates over each background, each shape, and each color to create the specified number of variants per combination.
+Each generated image is stored in the ‘samples’ list, with corresponding labels in ‘labels’, and other metadata
+like foreground shapes, background labels, and foreground colors stored in their respective lists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If there is an issue with image generation parameters or overlay combinations.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImbalancedImageDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">datagenerator.image_generation.</span></span><span class="sig-name descname"><span class="pre">ImbalancedImageDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backgrounds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shapes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_variants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape_colors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'red'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imbalance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datagenerator.image_generation.ImbalancedImageDataset" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#datagenerator.image_generation.ImageDataset" title="datagenerator.image_generation.ImageDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageDataset</span></code></a></p>
+<p>Creates Image Dataset where each image comprises of a background image an a foreground image.</p>
+<p>Background images, type of foreground, color of foreground as well as other parameters can be specified.</p>
+<p>Imbalance refers to the fact users can specify the percentage of dominant (bg, fg) pair vs other pair.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><p>ImageDataset: Standard dataset that contains images with backgorunds and foregrounds.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImbalancedImageDataset.imbalance">
+<span class="sig-name descname"><span class="pre">imbalance</span></span><a class="headerlink" href="#datagenerator.image_generation.ImbalancedImageDataset.imbalance" title="Link to this definition"></a></dt>
+<dd><p>The proportion of samples that should favor a particular background per shape.
+Should be within the range (0.0 to 1.0) inclusive.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Initializes an ImbalancedImageDataset object with specified parameters, focusing on creating dataset variations
+based on an imbalance parameter that dictates the dominance of certain shape-background pairs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>backgrounds</strong> (<em>int</em><em> | </em><em>list</em>) – The number or list of specific background filenames. Defaults to 5.</p></li>
+<li><p><strong>shapes</strong> (<em>int</em><em> | </em><em>list</em>) – The number or list of specific shapes. Defaults to 3.</p></li>
+<li><p><strong>n_variants</strong> (<em>int</em>) – Number of variations per shape-background combination, affects dataset size.
+Defaults to 100.</p></li>
+<li><p><strong>shape_colors</strong> (<em>str</em><em> | </em><em>tuple</em>) – The default color for all shapes in the dataset. Defaults to ‘red’.</p></li>
+<li><p><strong>imbalance</strong> (<em>float</em>) – The proportion (0.0 to 1.0) of samples that should favor a particular background per shape.
+Defaults to 0.8.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments passed to the superclass initializer.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id23">
+<span class="sig-name descname"><span class="pre">imbalance</span></span><a class="headerlink" href="#id23" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImbalancedImageDataset._prepare_shape_color">
+<span class="sig-name descname"><span class="pre">_prepare_shape_color</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape_colors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.image_generation.ImbalancedImageDataset._prepare_shape_color" title="Link to this definition"></a></dt>
+<dd><p>Prepares a single shape color based on the input.</p>
+<p>Selects a random color if None is provided, validates a provided color string or RGBA tuple.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>shape_colors</strong> (<em>str</em><em> | </em><em>tuple</em><em> | </em><em>NoneType</em>) – A specific color name, RGBA tuple, or None to select a random color.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing a single validated RGBA tuple representing the color.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the input is invalid or if the color name is not found in the predefined color dictionary.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImbalancedImageDataset._validate_imbalance">
+<span class="sig-name descname"><span class="pre">_validate_imbalance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imbalance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#datagenerator.image_generation.ImbalancedImageDataset._validate_imbalance" title="Link to this definition"></a></dt>
+<dd><p>Validates that the imbalance parameter is a float between 0.0 and 1.0 inclusive, or None.</p>
+<p>Ensures that the dataset can properly reflect the desired level of imbalance, adjusting for the
+number of variants and available backgrounds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>imbalance</strong> (<em>float</em><em> | </em><em>NoneType</em>) – The imbalance value to validate. If None is given as input, then
+the argument will be treated as 0.3.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The validated imbalance value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the imbalance is not within the inclusive range [0.0, 1.0] or if the imbalance
+settings are not feasible with the current settings of n_variants and backgrounds.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.image_generation.ImbalancedImageDataset.generate_samples">
+<span class="sig-name descname"><span class="pre">generate_samples</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#datagenerator.image_generation.ImbalancedImageDataset.generate_samples" title="Link to this definition"></a></dt>
+<dd><p>Generates a set of image samples with overlay shapes or dinosaurs on backgrounds, considering imbalance.</p>
+<dl class="simple">
+<dt>Depending on the ‘imbalance’ parameter, this method either:</dt><dd><ul class="simple">
+<li><p>Allocates a specific fraction (defined by ‘imbalance’) of the samples for each shape to a particular background,
+with the remainder distributed among the other backgrounds.</p></li>
+<li><p>Assigns all samples for a shape to a single background (imbalance = 1.0).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="datagenerator.image_generation.balanced_dataset">
+<span class="sig-prename descclassname"><span class="pre">datagenerator.image_generation.</span></span><span class="sig-name descname"><span class="pre">balanced_dataset</span></span><a class="headerlink" href="#datagenerator.image_generation.balanced_dataset" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../foregrounds/index.html" class="btn btn-neutral float-left" title="datagenerator.foregrounds" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../interacting_features/index.html" class="btn btn-neutral float-right" title="datagenerator.interacting_features" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, XAI-Units.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

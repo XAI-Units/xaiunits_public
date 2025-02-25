@@ -1,0 +1,827 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>datagenerator.data_generation &mdash; XAI-Units 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="datagenerator.foregrounds" href="../foregrounds/index.html" />
+    <link rel="prev" title="datagenerator.conflicting" href="../conflicting/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            XAI-Units
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../library_quickstart.html">Quickstart - Library Walkthrough</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../image_dataset_example.html">Image Dataset Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../custom_methods_and_custom_datasets.html">Customization Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../model/index.html">model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../methods/index.html">methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../metrics/index.html">metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../trainer/index.html">trainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pipeline/index.html">pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../fine_tune/index.html">fine_tune</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../common_lib/index.html">common_lib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">datagenerator</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../backgrounds/index.html">datagenerator.backgrounds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../boolean/index.html">datagenerator.boolean</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../conflicting/index.html">datagenerator.conflicting</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">datagenerator.data_generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../foregrounds/index.html">datagenerator.foregrounds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../image_generation/index.html">datagenerator.image_generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../interacting_features/index.html">datagenerator.interacting_features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../pertinent_negatives/index.html">datagenerator.pertinent_negatives</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../shattered_grad/index.html">datagenerator.shattered_grad</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../text_datasets/index.html">datagenerator.text_datasets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../uncertainty_aware/index.html">datagenerator.uncertainty_aware</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#attributes">Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">XAI-Units</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">datagenerator</a></li>
+      <li class="breadcrumb-item active">datagenerator.data_generation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/datagenerator/data_generation/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-datagenerator.data_generation">
+<span id="datagenerator-data-generation"></span><h1>datagenerator.data_generation<a class="headerlink" href="#module-datagenerator.data_generation" title="Link to this heading"></a></h1>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#datagenerator.data_generation.data" title="datagenerator.data_generation.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#datagenerator.data_generation.BaseFeaturesDataset" title="datagenerator.data_generation.BaseFeaturesDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseFeaturesDataset</span></code></a></p></td>
+<td><p>Generic synthetic dataset of continuous features for AI explainability.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#datagenerator.data_generation.WeightedFeaturesDataset" title="datagenerator.data_generation.WeightedFeaturesDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WeightedFeaturesDataset</span></code></a></p></td>
+<td><p>A class extending BaseFeaturesDataset with support for weighted features.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#datagenerator.data_generation.load_dataset" title="datagenerator.data_generation.load_dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_dataset</span></code></a>() → Optional[Union[BaseFeaturesDataset, ...)</p></td>
+<td><p>Loads a previously saved dataset from a binary pickle file.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#datagenerator.data_generation.generate_csv" title="datagenerator.data_generation.generate_csv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_csv</span></code></a>(→ None)</p></td>
+<td><p>Generates a CSV file with random data for a specified number of rows and features.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">datagenerator.data_generation.</span></span><span class="sig-name descname"><span class="pre">BaseFeaturesDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">torch.distributions.Distribution</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'normal'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.utils.data.Dataset</span></code></p>
+<p>Generic synthetic dataset of continuous features for AI explainability.</p>
+<p>This class creates a dataset of continuous features based on a specified distribution,
+which can be used for training and evaluating AI models. It allows for reproducible
+sample creation, customizable features and sample sizes, and supports various distributions.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset.seed">
+<span class="sig-name descname"><span class="pre">seed</span></span><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset.seed" title="Link to this definition"></a></dt>
+<dd><p>Seed for random number generators to ensure reproducibility.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset.n_features">
+<span class="sig-name descname"><span class="pre">n_features</span></span><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset.n_features" title="Link to this definition"></a></dt>
+<dd><p>Number of features in the dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset.n_samples">
+<span class="sig-name descname"><span class="pre">n_samples</span></span><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset.n_samples" title="Link to this definition"></a></dt>
+<dd><p>Number of samples in the dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset.distribution">
+<span class="sig-name descname"><span class="pre">distribution</span></span><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset.distribution" title="Link to this definition"></a></dt>
+<dd><p>Distribution used for generating the samples.
+Defaults to ‘normal’ which uses a multivariate normal distribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str | torch.distributions.Distribution</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset.sample_std_dev">
+<span class="sig-name descname"><span class="pre">sample_std_dev</span></span><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset.sample_std_dev" title="Link to this definition"></a></dt>
+<dd><p>Standard deviation of the noise added to the samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset.label_std_dev">
+<span class="sig-name descname"><span class="pre">label_std_dev</span></span><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset.label_std_dev" title="Link to this definition"></a></dt>
+<dd><p>Standard deviation of the noise added to generate labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset.samples">
+<span class="sig-name descname"><span class="pre">samples</span></span><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset.samples" title="Link to this definition"></a></dt>
+<dd><p>Generated samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset.labels">
+<span class="sig-name descname"><span class="pre">labels</span></span><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset.labels" title="Link to this definition"></a></dt>
+<dd><p>Generated labels with optional noise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset.ground_truth_attribute">
+<span class="sig-name descname"><span class="pre">ground_truth_attribute</span></span><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset.ground_truth_attribute" title="Link to this definition"></a></dt>
+<dd><p>Name of the attribute considered as ground truth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset.subset_data">
+<span class="sig-name descname"><span class="pre">subset_data</span></span><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset.subset_data" title="Link to this definition"></a></dt>
+<dd><p>List of attributes to be included in subsets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset.subset_attribute">
+<span class="sig-name descname"><span class="pre">subset_attribute</span></span><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset.subset_attribute" title="Link to this definition"></a></dt>
+<dd><p>Additional attributes to be considered in subsets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset.cat_features">
+<span class="sig-name descname"><span class="pre">cat_features</span></span><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset.cat_features" title="Link to this definition"></a></dt>
+<dd><p>List of categorical feature names, used in perturbations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Initializes a dataset of continuous features based on a specified distribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seed</strong> (<em>int</em>) – For sample creation reproducibility. Defaults to 0.</p></li>
+<li><p><strong>n_features</strong> (<em>int</em>) – Number of features for each sample. Defaults to 2.</p></li>
+<li><p><strong>n_samples</strong> (<em>int</em>) – Total number of samples. Defaults to 10.</p></li>
+<li><p><strong>distribution</strong> (<em>str</em><em> | </em><em>torch.distributions.Distribution</em>) – Distribution to use for generating samples.
+Defaults to “normal”, which indicates multivariate normal distribution.</p></li>
+<li><p><strong>distribution_params</strong> (<em>dict</em><em>, </em><em>optional</em>) – Parameters for the distribution if a string identifier
+is used. Defaults to None.</p></li>
+<li><p><strong>**kwargs</strong> – <p>Arbitrary keyword arguments, including:</p>
+<ul>
+<li><p>sample_std_dev (float): Standard deviation for sample creation noise. Defaults to 1.</p></li>
+<li><p>label_std_dev (float): Noise standard deviation to generate labels. Defaults to 0.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If an unsupported string identifier is provided.</p></li>
+<li><p><strong>TypeError</strong> – If ‘distribution’ is neither a string nor a torch.distributions.Distribution instance.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset.label_noise">
+<span class="sig-name descname"><span class="pre">label_noise</span></span><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset.label_noise" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset.features">
+<span class="sig-name descname"><span class="pre">features</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'samples'</span></em><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset.features" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">labels</span></span><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">ground_truth_attribute</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'samples'</span></em><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">subset_data</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['samples']</span></em><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">subset_attribute</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['perturb_function',</span> <span class="pre">'name']</span></em><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">cat_features</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'BaseFeaturesDataset'</span></em><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset.__len__" title="Link to this definition"></a></dt>
+<dd><p>Returns the total number of samples in the dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Total number of samples.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">others</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['ground_truth_attribute']</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset.__getitem__" title="Link to this definition"></a></dt>
+<dd><p>Retrieves a sample and its label, along with optional attributes, by index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>idx</strong> (<em>int</em>) – Index of the sample to retrieve.</p></li>
+<li><p><strong>others</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Additional attributes to be retrieved with the sample and label.
+Defaults to [“ground_truth_attribute”].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A tuple containing the sample and label at the specified index,</dt><dd><p>and optionally, a dictionary of additional attributes if requested.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>IndexError</strong> – If the specified index is out of the bounds of the dataset.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset.split">
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">split_lengths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[0.7,</span> <span class="pre">0.3]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#datagenerator.data_generation.BaseFeaturesDataset" title="datagenerator.data_generation.BaseFeaturesDataset"><span class="pre">BaseFeaturesDataset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#datagenerator.data_generation.BaseFeaturesDataset" title="datagenerator.data_generation.BaseFeaturesDataset"><span class="pre">BaseFeaturesDataset</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset.split" title="Link to this definition"></a></dt>
+<dd><p>Splits the dataset into subsets based on specified proportions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>split_lengths</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – Proportions to split the dataset into. The values
+must sum up to 1. Defaults to [0.7, 0.3] for a 70%/30% split.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A tuple containing the split subsets</dt><dd><p>of the dataset.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[<a class="reference internal" href="#datagenerator.data_generation.BaseFeaturesDataset" title="datagenerator.data_generation.BaseFeaturesDataset">BaseFeaturesDataset</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset.save_dataset">
+<span class="sig-name descname"><span class="pre">save_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">os.getcwd()</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset.save_dataset" title="Link to this definition"></a></dt>
+<dd><p>Saves the dataset to a pickle file in the specified directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_name</strong> (<em>str</em>) – Name of the file to save the dataset.</p></li>
+<li><p><strong>directory_path</strong> (<em>str</em>) – Path to the directory where the file will be saved.
+Defaults to the current working directory.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset._validate_inputs">
+<span class="sig-name descname"><span class="pre">_validate_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset._validate_inputs" title="Link to this definition"></a></dt>
+<dd><p>Validates the input parameters for dataset initialization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seed</strong> (<em>int</em>) – Seed for random number generation.</p></li>
+<li><p><strong>n_features</strong> (<em>int</em>) – Number of features.</p></li>
+<li><p><strong>n_samples</strong> (<em>int</em>) – Number of samples.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Validated seed and number of features.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[int, int]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If any input is not an integer or is out of an expected range.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset._init_noise_parameters">
+<span class="sig-name descname"><span class="pre">_init_noise_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset._init_noise_parameters" title="Link to this definition"></a></dt>
+<dd><p>Initializes noise parameters from keyword arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>kwargs</strong> – Keyword arguments passed to the initializer.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Initialized sample and label standard deviations.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the standard deviations are not positive numbers.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset._init_samples">
+<span class="sig-name descname"><span class="pre">_init_samples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">torch.distributions.Distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.distributions.Distribution</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset._init_samples" title="Link to this definition"></a></dt>
+<dd><p>Initializes samples based on the specified distribution and sample size.</p>
+<p>This method supports initialization using either a predefined distribution name (string) or directly
+with a torch.distributions.Distribution instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_samples</strong> (<em>int</em>) – Number of samples to generate, must be positive.</p></li>
+<li><p><strong>distribution</strong> (<em>str</em><em> | </em><em>torch.distributions.Distribution</em>) – The distribution to use for
+generating samples. Can be a string for predefined distributions (‘normal’, ‘uniform’, ‘poisson’)
+or an instance of torch.distributions.Distribution.</p></li>
+<li><p><strong>distribution_params</strong> (<em>dict</em><em>, </em><em>optional</em>) – Parameters for the distribution if a string identifier
+is used. Examples:
+- For ‘normal’: {‘mean’: torch.zeros(n_features), ‘stddev’: torch.ones(n_features)}
+- For ‘uniform’: {‘low’: -1.0, ‘high’: 1.0}
+- For ‘poisson’: {‘rate’: 3.0}</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A tuple containing generated samples (torch.Tensor) with shape [n_samples, n_features]</dt><dd><p>and the distribution instance used.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If ‘distribution’ is a string and is not one of the supported identifiers or
+necessary parameters are missing.</p></li>
+<li><p><strong>TypeError</strong> – If ‘distribution’ is neither a string identifier nor a torch.distributions.Distribution instance,
+or if the provided Distribution instance cannot generate a torch.Tensor.</p></li>
+<li><p><strong>RuntimeError</strong> – If the generated samples do not match the expected shape and cannot be adjusted.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset.perturb_function">
+<span class="sig-name descname"><span class="pre">perturb_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">noise_scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cat_resample_prob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_infidelity_decorator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multipy_by_inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span></span></span><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset.perturb_function" title="Link to this definition"></a></dt>
+<dd><p>Generates perturb function to be used for feature attribution method evaluation. Applies Gaussian noise
+for continuous features, and resampling for categorical features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>noise_scale</strong> (<em>float</em>) – A standard deviation of the Gaussian noise added to the continuous features.
+Defaults to 0.01.</p></li>
+<li><p><strong>cat_resample_prob</strong> (<em>float</em>) – Probability of resampling a categorical feature. Defaults to 0.2.</p></li>
+<li><p><strong>run_infidelity_decorator</strong> (<em>bool</em>) – Set to True if you want the returned fns to be compatible with infidelity.
+Set flag to False for sensitivity. Defaults to True.</p></li>
+<li><p><strong>multiply_by_inputs</strong> (<em>bool</em>) – Parameters for decorator. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A perturbation function compatible with Captum.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>perturb_func (function)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset.generate_model">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset.generate_model" title="Link to this definition"></a></dt>
+<dd><p>Generates a corresponding model for current dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – If the method is not implemented by a subclass.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="datagenerator.data_generation.BaseFeaturesDataset.default_metric">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_metric</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Callable</span></em><a class="headerlink" href="#datagenerator.data_generation.BaseFeaturesDataset.default_metric" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Abstractmethod<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<p>The default metric for evaluating the performance of explanation methods applied
+to this dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – If the property is not implemented by a subclass.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="datagenerator.data_generation.WeightedFeaturesDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">datagenerator.data_generation.</span></span><span class="sig-name descname"><span class="pre">WeightedFeaturesDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">torch.distributions.Distribution</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'normal'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(-1.0,</span> <span class="pre">1.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datagenerator.data_generation.WeightedFeaturesDataset" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#datagenerator.data_generation.BaseFeaturesDataset" title="datagenerator.data_generation.BaseFeaturesDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseFeaturesDataset</span></code></a></p>
+<p>A class extending BaseFeaturesDataset with support for weighted features.</p>
+<p>This class allows for creating a synthetic dataset with continuous features,
+where each feature can be weighted differently. This is particularly useful for
+scenarios where the impact of different features on the labels needs to be
+artificially manipulated or studied.</p>
+<dl class="simple">
+<dt>Inherits from:</dt><dd><p>BaseFeaturesDataset: The base class for creating continuous feature datasets.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.WeightedFeaturesDataset.weights">
+<span class="sig-name descname"><span class="pre">weights</span></span><a class="headerlink" href="#datagenerator.data_generation.WeightedFeaturesDataset.weights" title="Link to this definition"></a></dt>
+<dd><p>Weights applied to each feature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.WeightedFeaturesDataset.weight_range">
+<span class="sig-name descname"><span class="pre">weight_range</span></span><a class="headerlink" href="#datagenerator.data_generation.WeightedFeaturesDataset.weight_range" title="Link to this definition"></a></dt>
+<dd><p>The range (min, max) within which random weights are generated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.WeightedFeaturesDataset.weighted_samples">
+<span class="sig-name descname"><span class="pre">weighted_samples</span></span><a class="headerlink" href="#datagenerator.data_generation.WeightedFeaturesDataset.weighted_samples" title="Link to this definition"></a></dt>
+<dd><p>The samples after applying weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Initializes a WeightedFeaturesDataset object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seed</strong> (<em>int</em>) – Seed for reproducibility. Defaults to 0.</p></li>
+<li><p><strong>n_features</strong> (<em>int</em>) – Number of features. Defaults to 2.</p></li>
+<li><p><strong>n_samples</strong> (<em>int</em>) – Number of samples. Defaults to 10.</p></li>
+<li><p><strong>distribution</strong> (<em>str</em>) – Type of distribution to use for generating samples. Defaults to “normal”.</p></li>
+<li><p><strong>weight_range</strong> (<em>tuple</em>) – Range (min, max) for generating random weights. Defaults to (-1.0, 1.0).</p></li>
+<li><p><strong>weights</strong> (<em>torch.Tensor</em><em>, </em><em>optional</em>) – Specific weights for each feature.
+If None, weights are generated randomly within <cite>weight_range</cite>. Defaults to None.</p></li>
+<li><p><strong>**kwargs</strong> – <p>Arbitrary keyword arguments passed to the base class constructor, including:</p>
+<ul>
+<li><p>sample_std_dev (float): Standard deviation for sample creation noise. Defaults to 1.</p></li>
+<li><p>label_std_dev (float): Noise standard deviation to generate labels. Defaults to 0.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">weighted_samples</span></span><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.WeightedFeaturesDataset.label_noise">
+<span class="sig-name descname"><span class="pre">label_noise</span></span><a class="headerlink" href="#datagenerator.data_generation.WeightedFeaturesDataset.label_noise" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.WeightedFeaturesDataset.labels">
+<span class="sig-name descname"><span class="pre">labels</span></span><a class="headerlink" href="#datagenerator.data_generation.WeightedFeaturesDataset.labels" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.WeightedFeaturesDataset.features">
+<span class="sig-name descname"><span class="pre">features</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'samples'</span></em><a class="headerlink" href="#datagenerator.data_generation.WeightedFeaturesDataset.features" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.WeightedFeaturesDataset.ground_truth_attribute">
+<span class="sig-name descname"><span class="pre">ground_truth_attribute</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'weighted_samples'</span></em><a class="headerlink" href="#datagenerator.data_generation.WeightedFeaturesDataset.ground_truth_attribute" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.WeightedFeaturesDataset.subset_data">
+<span class="sig-name descname"><span class="pre">subset_data</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['samples',</span> <span class="pre">'weighted_samples']</span></em><a class="headerlink" href="#datagenerator.data_generation.WeightedFeaturesDataset.subset_data" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datagenerator.data_generation.WeightedFeaturesDataset.subset_attribute">
+<span class="sig-name descname"><span class="pre">subset_attribute</span></span><a class="headerlink" href="#datagenerator.data_generation.WeightedFeaturesDataset.subset_attribute" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.data_generation.WeightedFeaturesDataset._initialize_weights">
+<span class="sig-name descname"><span class="pre">_initialize_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#datagenerator.data_generation.WeightedFeaturesDataset._initialize_weights" title="Link to this definition"></a></dt>
+<dd><p>Initializes or validates the weights for each feature.</p>
+<p>If weights are not provided, they are randomly generated within the specified range.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>weights</strong> (<em>torch.Tensor</em><em> | </em><em>NoneType</em>) – If provided, these weights are used directly for the features.
+Must be a Tensor with a length equal to <cite>n_features</cite>.</p></li>
+<li><p><strong>weight_range</strong> (<em>tuple</em>) – Specifies the minimum and maximum values used to generate weights if <cite>weights</cite> is None.
+Expected format: (min_value, max_value), where both are floats.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The validated or generated weights and the effective weight range used.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[torch.Tensor, tuple]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>AssertionError</strong> – If the provided weights do not match the number of features or are not a torch.Tensor when provided.</p></li>
+<li><p><strong>ValueError</strong> – If <cite>weight_range</cite> is improperly specified.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datagenerator.data_generation.WeightedFeaturesDataset.generate_model">
+<span class="sig-name descname"><span class="pre">generate_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#datagenerator.data_generation.WeightedFeaturesDataset.generate_model" title="Link to this definition"></a></dt>
+<dd><p>Generates and returns a neural network model configured to use the weighted features of this dataset.</p>
+<p>The model is designed to reflect the differential impact of each feature as specified by the weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>A neural network model that includes mechanisms to account for feature weights,</dt><dd><p>suitable for tasks requiring understanding of feature importance.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../../model/index.html#model.ContinuousFeaturesNN" title="model.ContinuousFeaturesNN">model.ContinuousFeaturesNN</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="datagenerator.data_generation.WeightedFeaturesDataset.default_metric">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_metric</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Callable</span></em><a class="headerlink" href="#datagenerator.data_generation.WeightedFeaturesDataset.default_metric" title="Link to this definition"></a></dt>
+<dd><p>The default metric for evaluating the performance of explanation methods applied
+to this dataset.</p>
+<p>For this dataset, the default metric is the Mean Squared Error (MSE) loss function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>A class that wraps around the default metric to be instantiated</dt><dd><p>within the pipeline.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>type</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="datagenerator.data_generation.load_dataset">
+<span class="sig-prename descclassname"><span class="pre">datagenerator.data_generation.</span></span><span class="sig-name descname"><span class="pre">load_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">os.getcwd()</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#datagenerator.data_generation.BaseFeaturesDataset" title="datagenerator.data_generation.BaseFeaturesDataset"><span class="pre">BaseFeaturesDataset</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#datagenerator.data_generation.WeightedFeaturesDataset" title="datagenerator.data_generation.WeightedFeaturesDataset"><span class="pre">WeightedFeaturesDataset</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#datagenerator.data_generation.load_dataset" title="Link to this definition"></a></dt>
+<dd><p>Loads a previously saved dataset from a binary pickle file.</p>
+<p>This function is designed to retrieve datasets that have been saved to disk, facilitating
+easy sharing and reloading of data for analysis or model training.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_path</strong> (<em>str</em>) – The name of the file to load.</p></li>
+<li><p><strong>directory_path</strong> (<em>str</em>) – The directory where the file is located. Defaults to the current working directory.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The loaded dataset object, or None, if the file does not exist or an error occurs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Object | NoneType</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="datagenerator.data_generation.generate_csv">
+<span class="sig-prename descclassname"><span class="pre">datagenerator.data_generation.</span></span><span class="sig-name descname"><span class="pre">generate_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_rows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#datagenerator.data_generation.generate_csv" title="Link to this definition"></a></dt>
+<dd><p>Generates a CSV file with random data for a specified number of rows and features.</p>
+<p>This function helps create synthetic datasets for testing or development purposes.
+Each row will have a random label and a specified number of features filled with random values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_label</strong> (<em>str</em>) – The base name for the CSV file.</p></li>
+<li><p><strong>num_rows</strong> (<em>int</em>) – Number of rows (samples) to generate. Defaults to 5000.</p></li>
+<li><p><strong>num_features</strong> – Number of features to generate for each sample. Defaults to 20.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="datagenerator.data_generation.data">
+<span class="sig-prename descclassname"><span class="pre">datagenerator.data_generation.</span></span><span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#datagenerator.data_generation.data" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../conflicting/index.html" class="btn btn-neutral float-left" title="datagenerator.conflicting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../foregrounds/index.html" class="btn btn-neutral float-right" title="datagenerator.foregrounds" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, XAI-Units.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

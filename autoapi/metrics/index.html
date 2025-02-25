@@ -1,0 +1,402 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>metrics &mdash; XAI-Units 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="metrics.metrics_wrapper" href="metrics_wrapper/index.html" />
+    <link rel="prev" title="methods.methods_wrapper" href="../methods/methods_wrapper/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            XAI-Units
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../library_quickstart.html">Quickstart - Library Walkthrough</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../image_dataset_example.html">Image Dataset Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../custom_methods_and_custom_datasets.html">Customization Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../model/index.html">model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../methods/index.html">methods</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">metrics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="metrics_wrapper/index.html">metrics.metrics_wrapper</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#attributes">Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#package-contents">Package Contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#metrics._validate_metric_gen_arguments"><code class="docutils literal notranslate"><span class="pre">_validate_metric_gen_arguments()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#metrics.default_metric_input_generator"><code class="docutils literal notranslate"><span class="pre">default_metric_input_generator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#metrics._validate_wrapper_inputs"><code class="docutils literal notranslate"><span class="pre">_validate_wrapper_inputs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#metrics.wrap_metric"><code class="docutils literal notranslate"><span class="pre">wrap_metric()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#metrics.perturb_standard_normal"><code class="docutils literal notranslate"><span class="pre">perturb_standard_normal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#metrics._flatten_cat_features"><code class="docutils literal notranslate"><span class="pre">_flatten_cat_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#metrics._reformat_replacements"><code class="docutils literal notranslate"><span class="pre">_reformat_replacements()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#metrics.perturb_func_constructor"><code class="docutils literal notranslate"><span class="pre">perturb_func_constructor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#metrics.data"><code class="docutils literal notranslate"><span class="pre">data</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../trainer/index.html">trainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pipeline/index.html">pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fine_tune/index.html">fine_tune</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../common_lib/index.html">common_lib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datagenerator/index.html">datagenerator</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">XAI-Units</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">API Reference</a></li>
+      <li class="breadcrumb-item active">metrics</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/autoapi/metrics/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-metrics">
+<span id="metrics"></span><h1>metrics<a class="headerlink" href="#module-metrics" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="metrics_wrapper/index.html">metrics.metrics_wrapper</a></li>
+</ul>
+</div>
+</section>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#metrics.data" title="metrics.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#metrics._validate_metric_gen_arguments" title="metrics._validate_metric_gen_arguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_validate_metric_gen_arguments</span></code></a>(→ None)</p></td>
+<td><p>Validates the input arguments for the metric generator function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#metrics.default_metric_input_generator" title="metrics.default_metric_input_generator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_metric_input_generator</span></code></a>(→ Dict[str, Any])</p></td>
+<td><p>Default input generator.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#metrics._validate_wrapper_inputs" title="metrics._validate_wrapper_inputs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_validate_wrapper_inputs</span></code></a>(→ None)</p></td>
+<td><p>Validates the input wrappers.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#metrics.wrap_metric" title="metrics.wrap_metric"><code class="xref py py-obj docutils literal notranslate"><span class="pre">wrap_metric</span></code></a>(→ Any)</p></td>
+<td><p>Wraps a metric function/callable to be used in a pipeline class.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#metrics.perturb_standard_normal" title="metrics.perturb_standard_normal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">perturb_standard_normal</span></code></a>(→ torch.Tensor)</p></td>
+<td><p>Simple perturbation function for Continuous Dataset.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#metrics._flatten_cat_features" title="metrics._flatten_cat_features"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_flatten_cat_features</span></code></a>(→ List[int])</p></td>
+<td><p>Flattens categorical feature argument.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#metrics._reformat_replacements" title="metrics._reformat_replacements"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_reformat_replacements</span></code></a>(→ Dict[Union[int, Tuple[int]], ...)</p></td>
+<td><p>Reformats replacements arguments with defaults.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#metrics.perturb_func_constructor" title="metrics.perturb_func_constructor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">perturb_func_constructor</span></code></a>(→ Callable)</p></td>
+<td><p>Simple perturbabtion function generator compatible with captum's infidelity and sensitivity method.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="package-contents">
+<h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="metrics._validate_metric_gen_arguments">
+<span class="sig-prename descclassname"><span class="pre">metrics.</span></span><span class="sig-name descname"><span class="pre">_validate_metric_gen_arguments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attribute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method_instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#metrics._validate_metric_gen_arguments" title="Link to this definition"></a></dt>
+<dd><p>Validates the input arguments for the metric generator function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metric</strong> (<em>Callable</em>) – The metric function.</p></li>
+<li><p><strong>feature_input</strong> (<em>torch.Tensor</em>) – Input features.</p></li>
+<li><p><strong>y_labels</strong> (<em>torch.Tensor</em><em>, </em><em>optional</em>) – Ground truth labels.</p></li>
+<li><p><strong>target</strong> (<em>torch.Tensor</em><em>, </em><em>int</em><em>, </em><em>optional</em>) – Target labels.</p></li>
+<li><p><strong>context</strong> (<em>dict</em><em>, </em><em>optional</em>) – Contextual information.</p></li>
+<li><p><strong>attribute</strong> (<em>torch.Tensor</em>) – Attribute of interest.</p></li>
+<li><p><strong>method_instance</strong> (<em>Any</em>) – Method instance.</p></li>
+<li><p><strong>model</strong> (<em>Any</em>) – Model instance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>AssertionError</strong> – If input arguments are not of the expected types with the expected behaviour.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="metrics.default_metric_input_generator">
+<span class="sig-prename descclassname"><span class="pre">metrics.</span></span><span class="sig-name descname"><span class="pre">default_metric_input_generator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attribute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method_instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#metrics.default_metric_input_generator" title="Link to this definition"></a></dt>
+<dd><p>Default input generator.</p>
+<p>Input generator collates information from model, model output, dataset, attribute, method instance
+and others into single dictionary that will be unpack and used as arguments for the metric class method.</p>
+<p>The default keys naming schema is that of captum’s attribute; create a custom input generator
+if you are using functions from other libraries.</p>
+<p>This function only support captum metric’s as well a torch mse loss.</p>
+<p>Some arguments passed in (see pipeline class) are not used by the default function (e.g. y_labels).
+These arguments are there as we anticipate that users who create and pass in their own input generator function
+may require these arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metric</strong> (<em>Callable</em>) – Metric to evaluate attribution score.</p></li>
+<li><p><strong>feature_inputs</strong> (<em>torch.Tensor</em>) – Input tensor.</p></li>
+<li><p><strong>y_labels</strong> (<em>torch.Tensor</em>) – True y label tensor.</p></li>
+<li><p><strong>target</strong> (<em>torch.Tensor</em>) – Target arguments to pass on to Captum attribute function.</p></li>
+<li><p><strong>context</strong> (<em>dict</em>) – Dict containing other relevant data (e.g. ground truth attribution).</p></li>
+<li><p><strong>attribute</strong> (<em>torch.Tensor</em>) – Attribution to be evaluated.</p></li>
+<li><p><strong>method_instance</strong> (<em>Any</em>) – Method used to obtain attribute.</p></li>
+<li><p><strong>other</strong> (<em>Any</em>) – Other keyword arguments to be passed into metric function.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns a dict with all argument required for Captum attribute function.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>TypeError</strong> – If metric given is not supported.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="metrics._validate_wrapper_inputs">
+<span class="sig-prename descclassname"><span class="pre">metrics.</span></span><span class="sig-name descname"><span class="pre">_validate_wrapper_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric_fns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_generator_fns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_processing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#metrics._validate_wrapper_inputs" title="Link to this definition"></a></dt>
+<dd><p>Validates the input wrappers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metric_fns</strong> (<em>Callable</em>) – The metric function to evaluate.</p></li>
+<li><p><strong>input_generator_fns</strong> (<em>Callable</em>) – A function to generate input for the metric.</p></li>
+<li><p><strong>out_processing</strong> (<em>Callable</em>) – A function to post-process the metric evaluation scores.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>AssertionError</strong> – If any of the assertions given fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="metrics.wrap_metric">
+<span class="sig-prename descclassname"><span class="pre">metrics.</span></span><span class="sig-name descname"><span class="pre">wrap_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric_fns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_generator_fns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">default_metric_input_generator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_processing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_fix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">other_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#metrics.wrap_metric" title="Link to this definition"></a></dt>
+<dd><p>Wraps a metric function/callable to be used in a pipeline class.</p>
+<p>Important: default behavior out_processing for mse_loss is MSE.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metric_fns</strong> (<em>Callable</em>) – The metric function to evaluate.</p></li>
+<li><p><strong>input_generator_fns</strong> (<em>Callable</em>) – A function to generate input for the metric. Defaults to default_metric_input_generator.</p></li>
+<li><p><strong>out_processing</strong> (<em>Callable</em><em>, </em><em>optional</em>) – A function to post-process the metric evaluation scores. Defaults to None.</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – The name of the metric. Defaults to the name of the metric function. Defaults to None.</p></li>
+<li><p><strong>pre_fix</strong> (<em>str</em>) – A prefix to add to the name of the wrapped metric. Defaults to “”.</p></li>
+<li><p><strong>other_args</strong> (<em>Any</em>) – Any other keyword arguments to be passed to the input generator.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A class that wraps the metric function.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>type</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="metrics.perturb_standard_normal">
+<span class="sig-prename descclassname"><span class="pre">metrics.</span></span><span class="sig-name descname"><span class="pre">perturb_standard_normal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="headerlink" href="#metrics.perturb_standard_normal" title="Link to this definition"></a></dt>
+<dd><p>Simple perturbation function for Continuous Dataset.</p>
+<p>Important to note that given the infidelity decorator is used, and Multiply by inputs set to true,
+when called function will return a tuple, perturbation and and perturbed inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input</strong> (<em>torch.Tensor</em>) – Input feature tensor which was used to calculate attribution score</p></li>
+<li><p><strong>sd</strong> (<em>float</em>) – A standard deviation of the Gaussian noise added to the continuous features.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Gaussian perturbed input.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(torch.Tensor)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="metrics._flatten_cat_features">
+<span class="sig-prename descclassname"><span class="pre">metrics.</span></span><span class="sig-name descname"><span class="pre">_flatten_cat_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cat_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#metrics._flatten_cat_features" title="Link to this definition"></a></dt>
+<dd><p>Flattens categorical feature argument.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cat_features</strong> (<em>list</em><em>[</em><em>int</em><em> | </em><em>tuple</em><em>]</em>) – A list of int or tuple representing feature or one-hot encoding of features that are categorical.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Flattened list of categorical features.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>Exception</strong> – If invalid categorical feature input is provided.</p></li>
+<li><p><strong>AssertionError</strong> – If there are duplicate features in the flattened list.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="metrics._reformat_replacements">
+<span class="sig-prename descclassname"><span class="pre">metrics.</span></span><span class="sig-name descname"><span class="pre">_reformat_replacements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">replacements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cat_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#metrics._reformat_replacements" title="Link to this definition"></a></dt>
+<dd><p>Reformats replacements arguments with defaults.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cat_features</strong> (<em>list</em><em>[</em><em>int</em><em> | </em><em>tuple</em><em>]</em>) – A list of int or tuple representing feature or one-hot encoding of features that are categorical.</p></li>
+<li><p><strong>replacements</strong> (<em>dict</em><em> | </em><em>torch.Tensor</em>) – Dictionary with tuple or int corresponding to cat features and list of values or
+torch.Tensor representing original dataset to be sampled from.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary containing the categorical features and their corresponding torch.Tensor replacements.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="metrics.perturb_func_constructor">
+<span class="sig-prename descclassname"><span class="pre">metrics.</span></span><span class="sig-name descname"><span class="pre">perturb_func_constructor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">noise_scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cat_resample_prob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cat_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replacements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_infidelity_decorator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multipy_by_inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span></span></span><a class="headerlink" href="#metrics.perturb_func_constructor" title="Link to this definition"></a></dt>
+<dd><p>Simple perturbabtion function generator compatible with captum’s infidelity and sensitivity method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>noise_scale</strong> (<em>float</em>) – A standard deviation of the Gaussian noise added to the continuous features.</p></li>
+<li><p><strong>cat_resample_prob</strong> (<em>float</em>) – Probability of resampling a categorical feature.</p></li>
+<li><p><strong>cat_features</strong> (<em>list</em><em>[</em><em>int</em><em> | </em><em>tuple</em><em>]</em>) – A list of int or tuple representing feature or one-hot encoding of features that are categorical.</p></li>
+<li><p><strong>replacements</strong> (<em>dict</em><em> | </em><em>torch.Tensor</em>) – Dictionary with tuple or int corresponding to cat features and list of values or
+torch.Tensor representing original dataset to be sampled from. Defaults to {}.</p></li>
+<li><p><strong>run_infidelity_decorator</strong> (<em>bool</em>) – Set to True if you want the returned fns to be compatible with infidelity.
+Set flag to False for sensitivity. Defaults to True.</p></li>
+<li><p><strong>multiply_by_inputs</strong> (<em>bool</em>) – Parameters for decorator. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A perturbation function compatible with Captum.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>perturb_func (function)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Given an expected input tensor of shape (N,M), N is batch size and M is number of features.
+If input features a, b, c are independent categorical features, then cat_features = [a, b, c].
+If input features a, b, c are one hot encoding representations, then cat_features = [(a, b, c)]</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="metrics.data">
+<span class="sig-prename descclassname"><span class="pre">metrics.</span></span><span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#metrics.data" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../methods/methods_wrapper/index.html" class="btn btn-neutral float-left" title="methods.methods_wrapper" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="metrics_wrapper/index.html" class="btn btn-neutral float-right" title="metrics.metrics_wrapper" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, XAI-Units.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
