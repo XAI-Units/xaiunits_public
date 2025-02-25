@@ -1,0 +1,26 @@
+# Use 'pre-commit install' to make sure these hooks are being used
+# Usually these checks run on modified files. To run on the whole repo use 'pre-commit run --all-files'
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+exclude: ^reference/.*$
+
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+    -   id: check-added-large-files
+        name: "Files larger than 10MB should go in large file storage"
+        args: ['--maxkb=10240']
+    -   id: check-ast
+    -   id: check-json
+    -   id: check-merge-conflict
+    -   id: check-toml
+    -   id: check-yaml
+    -   id: name-tests-test
+        name: "Test filenames should begin with test_"
+        args: [--pytest-test-first]
+-   repo: https://github.com/psf/black
+    rev: 22.10.0
+    hooks:
+    -   id: black
+

@@ -1,0 +1,241 @@
+@startuml
+    class images.ImbalancedImageDataset {
+    + imbalance: float
+
+    - _prepare_shape_color(): list
+    - _validate_imbalance(): float
+    + generate_samples()
+}
+
+    class images.BalancedImageDataset {
+    - contour_thickness: int
+
+    + generate_samples()
+}
+
+    class images.ImageDataset {
+    + seed: int
+    + backgrounds: int or list
+    + shapes: int or list
+    + n_variants: int
+    + background_size: tuple
+    + shape_type: string
+    + position: string
+    + overlay_scale: float
+    + rotation: bool
+    + shape_colors: string or tuple or None
+    + shuffled: bool
+    + transform: callable
+    + back_gen: BackgroundGenerator
+    + image_gen: ShapeGenerator or DinoGenerator
+    + samples: list
+    + labels: list
+    + fg_shapes: list
+    + bg_labels: list
+    + fg_colors: list
+    + ground_truth: list
+
+    - _validate_n_variants(): int
+    - _prepare_shapes(): list
+    - _prepare_backgrounds(): list
+    - _prepare_shape_color(): list
+    + generate_samples()
+    + shuffle_dataset()
+    - _re_label()
+    + show_image()
+    + default_metric(): type
+}
+
+    class images.ImageBuilder {
+    - shape_type : str
+    - rotation : bool
+    - color : str or tuple
+    - position : str
+    - overlay_scale : float
+    - background_size : tuple
+    - default_background_imagefile : str
+    - back_gen : BackgroundGenerator
+    - image_gen : ShapeGenerator or DinoGenerator
+
+    + resize_overlay_to_background() : Image
+    + img_rotation() : Image
+    + overlay_pos() : tuple
+    + generate_sample() : tuple
+}
+
+    class images.BackgroundGenerator {
+        + background_size : tuple
+        - _data_url : str
+        - _data_folder : str
+        - _data_filename : str
+        + background_names : list
+
+        + get_data_path() : str
+        + download()
+        - _validate_background_size() : tuple
+        + get_background_names() : list
+        + get_background() : Image
+}
+
+    abstract class images.ForegroundGenerator{
+        - _colors_rgba : dict
+        + shape_names : list
+
+        + validate_color() : tuple
+        + apply_color_fill() : Image
+        + get_data_path() : str
+        + get_shape() : Image, str
+}
+
+    class images.GeometricShapeGenerator {
+        + size : int
+        + shape_id_map : dict
+
+        + geometric_shapes() : dict
+        + calculate_ngon_vertices() : list
+        + make_ngon() : Image
+        + make_rectangle() : Image
+        + make_circle() : Image
+        + make_ellipse() : Image
+        + get_shape() : Image, str
+}
+
+    class images.DinosaurShapeGenerator {
+        - _url : str
+        - _data_folder : str
+        + dino_meta_data : list
+        + dino_dict : dict
+        + shape_names : list
+        + shape_id_map : dict
+
+        + clean_dino_name_from_URL() : str
+        + dino_image_metadata() : list
+        + load_dino_image() : Image
+        + load_all_dinos()
+}
+
+    class tabular.UncertaintyAwareDataset {
+        + common_features : list
+        + mask : Tensor
+
+        - _create_weights() : tensor
+        + generate_model() : UncertaintyNN
+}
+
+    class tabular.ShatteredGradientsDataset {
+        + discontinuity_ratios : list
+        + bias : float
+        + act_fun : str
+        + two_distributions_flag : bool
+        + proportion : float
+        + classification : bool
+
+        - _initialize_with_narrow_wide_distributions()
+        - _initialize_with_narrow_distribution()
+        - _initialize_samples_narrow_wide() : tuple
+        - _initialize_discontinuity_ratios() : list
+        - _get_default_distribution_narrow() : tuple
+        - _get_default_distribution_wide() : tuple
+        - _default_activation_function() : nn.Module
+        - _get_weight_scale() : dict
+        - _generate_default_weights() : tensor
+        + generate_model() : ShatteredGradientsNN
+        + default_metric() : type
+}
+
+    class tabular.PertinentNegativesDataset {
+        + PN_features : list of int
+        + PN_zero_likelihood : float
+        + PN_weight_factor : float
+
+        - _intialize_PN_features() : list of int
+        - _initialize_zeros_for_PN()
+        - _get_new_weighted_samples()
+        + generate_model() : PertinentNN
+}
+
+    class tabular.InteractingFeatureDataset {
+        + interacting_features : list of list
+        + zero_likelihood : float
+        + cat_features : list
+
+        + make_cat()
+        - _get_flat_weights() : tensor
+        + generate_model() : InteractionFeaturesNN
+}
+
+    class tabular.ConflictingDataset {
+        + cancellation_features : list of int
+        + cancellation_likelihood : float
+        + cancellation_outcomes : tensor
+        + cancellation_samples : tensor
+        + cancellation_attributions : tensor
+        + ground_truth_attributions : tensor
+
+        - _initialize_cancellation_features()
+        - _get_cancellations() : tensor
+        - _get_cancellation_samples() : tensor
+        - _get_cancellation_attributions() : tensor
+        - generate_model() : ConflictingFeaturesNN
+}
+
+    class tabular.BooleanDataset{
+        + formula : FunctionClass
+        + atoms : tuple
+
+        - _initialize_samples_labels() : tuple[tensor, tensor]
+        + generate_model() : PropFormulaNN
+}
+
+    class tabular.WeightedFeaturesDataset {
+        + weight_range: tuple
+        + weights: tensor
+
+        - _initialize_weights(): tuple
+        + generate_model(): ContinuousFeaturesNN
+}
+
+    class tabular.BaseFeaturesDataset {
+        + seed: int
+        + n_features: int
+        + n_samples: int
+        + distribution: str or Distribution
+        + sample_std_dev: float
+        + label_std_dev: float
+        + label_noise: tensor
+        + samples: tensor
+        + features: str
+        + labels: tensor
+        + ground_truth_attribute: str
+        + subset_data: list of str
+        + subset_attribute: list of str
+        + cat_features: list of str
+
+        + split() : tuple
+        + save_dataset()
+        + perturb_function() : function
+        + generate_model() : None
+        + default_metric() : None
+        - _validate_inputs() : tuple
+        - _init_noise_parameters() : tuple
+        - _init_samples() : tuple
+    }
+
+BaseFeaturesDataset --|> "torch.utils.data".Dataset
+WeightedFeaturesDataset --|> BaseFeaturesDataset
+UncertaintyAwareDataset --|> BaseFeaturesDataset
+BooleanDataset --|> BaseFeaturesDataset
+ConflictingDataset --|> WeightedFeaturesDataset
+InteractingFeatureDataset --|> WeightedFeaturesDataset
+PertinentNegativesDataset --|> WeightedFeaturesDataset
+ShatteredGradientsDataset --|> WeightedFeaturesDataset
+GeometricShapeGenerator --|> ForegroundGenerator
+DinosaurShapeGenerator --|> ForegroundGenerator
+ImageBuilder "1" *-- "1" BackgroundGenerator : uses
+ImageBuilder "1" *-- "1" GeometricShapeGenerator : uses
+ImageBuilder "1" *-- "1" DinosaurShapeGenerator : uses
+ImageDataset --|> "torch.utils.data".Dataset
+ImageDataset "1" *-- "1" ImageBuilder : uses
+BalancedImageDataset --|> ImageDataset
+ImbalancedImageDataset --|> ImageDataset
+@enduml

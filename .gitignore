@@ -1,0 +1,63 @@
+# I have included a wide range of files that typically need to be ignored
+# Note that there is nothing stopping you from tracking one of these filetypes explicitly:
+# `git add -f file.filetype`
+# From that point the file will be tracked in git and treated like a normal file, even if the filetype is in .gitignore
+
+# Environment and Config
+venv/
+*.env
+
+# Byte-compiled
+__pycache__/
+.pytest_cache/
+
+# VSCode settings
+.vscode/
+
+# Archive
+archive/
+*.zip
+
+# Data files
+data/
+*.raw
+*.csv
+*.xlsx
+~$*
+*.bak
+*.tmp
+model/*
+./demo/example/trained_models/**
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+dev.ipynb
+
+# Logs
+logs/
+*.log
+
+# ML intermediate checkpoints
+*.pkl
+*.joblib
+*.model
+
+# Mac OS files
+Thumbs.db
+
+# Build files from local package install using wheel
+build/
+dist/
+*.egg-info/
+
+# Sphinx documentation build
+docs/_build/
+docs/doctrees/
+docs/html/
+
+# Lightning log files
+lightning_logs/
+pyvenv.cfg
+lib64
+
+model/*

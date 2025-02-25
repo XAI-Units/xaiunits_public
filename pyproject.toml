@@ -1,0 +1,34 @@
+[build-system]
+requires      = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "xaiunits"
+version = "0.0.1"
+description = "Toolkit for benchmarking explainable AI methods"
+readme = "README.md"
+# authors = [{ name = "", email = "" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["explainable", "xai", "benchmark"]
+# dependencies = [] To be updated with packages used
+requires-python = ">=3.10"
+
+[project.optional-dependencies]
+dev = ["black", "pytest"]
+# "bumpver", "pip-tools"
+
+[project.urls]
+homepage = "https://github.com/XAI-Units/xaiunits"
+
+[tool.coverage.run]
+source = ["src"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "if __name__ == .__main__.:",
+]
